@@ -1,26 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Header } from './components/Header'
+import { Homepage } from './components/Homepage'
+import { AdminRegister } from './components/Registration/AdminRegister'
+import { UserRegister } from './components/Registration/UserRegister'
+import { AdminLogin } from './components/Login/AdminLogin'
+import { UserLogin } from './components/Login/UserLogin'
 
-function App() {
+
+export const App = () => {
+
+  // useEffect(() => {
+  //   const testAsync = async () => {
+  //     try {
+  //       const response = await fetch('/hello')
+  //       console.log(response)
+  //       const data = await response.json()
+  //     } catch (error) {
+  //     }
+  //   }
+  //   testAsync();
+  // }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <img src="./burger.png"></img>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          <Header />
+          <Homepage />
+        </Route>
+        <Route exact path="/register/admin">
+          <Header />
+          <AdminRegister />
+        </Route>
+        <Route exact path="/register/user">
+          <Header />
+          <UserRegister />
+        </Route>
+        <Route exact path="/login/admin">
+          <Header />
+          <AdminLogin />
+        </Route>
+        <Route exact path="/login/user">
+          <Header />
+          <UserLogin />
+        </Route>
+
+      </Switch>
+    </BrowserRouter>
+
   );
 }
 
-export default App;
