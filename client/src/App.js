@@ -17,6 +17,7 @@ function App() {
         >
           Learn React
         </a>
+        <img src="./burger.png"></img>
       </header>
     </div>
   );
