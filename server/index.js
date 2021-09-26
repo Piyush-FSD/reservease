@@ -6,8 +6,8 @@ const morgan = require("morgan");
 const app = express();
 
 // Handlers
-const { addNewAdmin } = require("./AdminHandlers")
-const { addNewUser } = require('./UserHandlers');
+const { addNewAdmin, loginAdmin } = require("./AdminHandlers")
+const { addNewUser, loginUser } = require('./UserHandlers');
 
 const { Error404 } = require("./ErrorHandler");
 const PORT = 4000;
@@ -33,6 +33,10 @@ express()
     // Register 
     .post("/register/admin", addNewAdmin)
     .post("/register/user", addNewUser)
+
+    // Login
+    .post("/login/admin", loginAdmin)
+    .post("/login/user", loginUser)
 
     // ERROR Handler 404 Not Found
     .get("*", (req, res) => res.status(404).json(Error404))

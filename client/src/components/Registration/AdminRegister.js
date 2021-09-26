@@ -1,28 +1,172 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from 'react-router-dom'
+import { useHistory } from "react-router";
+import { Link } from 'react-router-dom';
 
 export const AdminRegister = () => {
+    // try {
+    const formHistory = useHistory();
+
+    // empty strings which will be updated with user data
+    const [adminRegistration, setAdminRegistration] = useState({
+        busName: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        address: "",
+        postalCode: "",
+        province: "",
+        country: "",
+        phone: ""
+    });
+
+    // tracking user input value when typing
+    const handleInput = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        console.log(name, value)
+
+        // updates userRegistration with name and value entered
+        setAdminRegistration({ ...adminRegistration, [name]: value });
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        fetch("/register/admin", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(adminRegistration)
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.status === 200) {
+                    console.log(data)
+                }
+            });
+        setAdminRegistration({
+            busName: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            address: "",
+            postalCode: "",
+            province: "",
+            country: "",
+            phone: ""
+        });
+        formHistory.push("/");
+    }
+    // } catch (err) {
+    //     console.log(e, "Error")
+    // }
 
     return (
         <Container>
-            <h3>Register! It's quick and easy.</h3>                <UserAdminContainer>
-                <h4>Regsiter as Admin or</h4>
+            <h3>Register! It's quick and easy.</h3>
+            <UserAdminContainer>
+                <h4>Register as Admin or</h4>
                 <UserLink to="/register/user">User</UserLink>
             </UserAdminContainer>
-            <Form>
-                <Input placeholder="Business Name"></Input>
-                <Input placeholder="First Name"></Input>
-                <Input placeholder="Last Name"></Input>
-                <Input placeholder="Email"></Input>
-                <Input placeholder="Password"></Input>
-                <Input placeholder="Confirm Password"></Input>
-                <Input placeholder="Address"></Input>
+            <Form onSubmit={handleSubmit}>
+                <Input
+                    type="text"
+                    placeholder="Business Name"
+                    name="busName"
+                    id="busName"
+                    required
+                    // value={adminRegistration.busName}
+                    onChange={handleInput}
+                >
+                </Input>
+                <Input
+                    type="text"
+                    placeholder="First Name"
+                    name="firstName"
+                    id="firstName"
+                    value={adminRegistration.firstName}
+                    onChange={handleInput}
+                >
+                </Input>
+                <Input
+                    type="text"
+                    placeholder="Last Name"
+                    name="lastName"
+                    id="lastName"
+                    value={adminRegistration.lastName}
+                    onChange={handleInput}
+                >
+                </Input>
+                <Input
+                    placeholder="Email"
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={adminRegistration.email}
+                    onChange={handleInput}
+                >
+                </Input>
+                <Input
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    id="password"
+                    value={adminRegistration.password}
+                    onChange={handleInput}
+                ></Input>
+                <Input
+                    placeholder="Address"
+                    type="text"
+                    name="address"
+                    id="address"
+                    value={adminRegistration.address}
+                    onChange={handleInput}
+                >
+                </Input>
                 <PostalProvinceContainer>
-                    <PostalInput placeholder="Postal Code"></PostalInput>
-                    <ProvinceInput placeholder="Province"></ProvinceInput>
+                    <SplitInput
+                        placeholder="Postal Code"
+                        type="text"
+                        name="postalCode"
+                        id="postalCode"
+                        value={adminRegistration.postalCode}
+                        onChange={handleInput}
+                    >
+                    </SplitInput>
+                    <SplitInput
+                        placeholder="Province"
+                        type="text"
+                        name="province"
+                        id="province"
+                        value={adminRegistration.province}
+                        onChange={handleInput}
+                    >
+                    </SplitInput>
                 </PostalProvinceContainer>
-                <Input placeholder="Country"></Input>
+                <PostalProvinceContainer>
+                    <SplitInput
+                        placeholder="Country"
+                        type="text"
+                        name="country"
+                        id="country"
+                        value={adminRegistration.country}
+                        onChange={handleInput}
+                    >
+                    </SplitInput>
+                    <SplitInput
+                        placeholder="Phone"
+                        type="tel"
+                        name="phone"
+                        id="phone"
+                        value={adminRegistration.phone}
+                        onChange={handleInput}
+                    >
+                    </SplitInput>
+                </PostalProvinceContainer>
                 <SubmitBtn>Register as Admin</SubmitBtn>
             </Form>
         </Container>
@@ -31,7 +175,6 @@ export const AdminRegister = () => {
 
 const Container = styled.div`
 margin-left: 500px;
-
 width: 100%;
 `;
 
@@ -63,15 +206,7 @@ display: flex;
 justify-content: space-between;
 `;
 
-const PostalInput = styled.input`
-width: 190px;
-height: 40px;
-margin-top: 5px;
-margin-bottom: 15px;
-border-radius: 5px;
-`;
-
-const ProvinceInput = styled.input`
+const SplitInput = styled.input`
 width: 190px;
 height: 40px;
 margin-top: 5px;
@@ -82,6 +217,7 @@ border-radius: 5px;
 const UserAdminContainer = styled.div`
 display: flex;
 `
+
 const UserLink = styled(Link)`
 color: blue;
 text-decoration: none;

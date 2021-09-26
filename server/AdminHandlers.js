@@ -26,8 +26,8 @@ const hashPass = async (passToHash) => {
 
 // POST - create new Admin
 const addNewAdmin = async (req, res) => {
-    const { busName, firstName, lastName, email, address, postalCode, province, country } = req.body;
-    let { password, confPassword } = req.body;
+    const { busName, firstName, lastName, email, address, postalCode, province, country, phone } = req.body;
+    let { password } = req.body;
 
     // if any of the field below are not entered -> status 400
     if (!req.body ||
@@ -36,13 +36,13 @@ const addNewAdmin = async (req, res) => {
         !lastName ||
         !email ||
         !password ||
-        !confPassword ||
         !address ||
         !postalCode ||
         !province ||
         !country ||
+        !phone ||
         !email.includes('@')) {
-        client.close();
+        // client.close();
 
         return res.status(400).json({ status: 400, message: "Error. Missing data from one field or more" })
     };
@@ -59,9 +59,8 @@ const addNewAdmin = async (req, res) => {
         return res.status(400).json({ status: 400, data: existingAdmin, message: "That admin email already exists" })
     } else {
         const hashedPassword = await hashPass(req.body.password);
-        const hashedConfPassword = await hashPass(req.body.confPassword)
 
-        const admin = { busName, firstName, lastName, email, password: hashedPassword, confpassword: hashedConfPassword, address, postalCode, province, country };
+        const admin = { busName, firstName, lastName, email, password: hashedPassword, address, postalCode, province, country, phone };
 
         const adminData = { _id: uuidv4(), ...admin };
         const newAdmin = await db.collection("admins").insertOne(adminData);
@@ -71,5 +70,40 @@ const addNewAdmin = async (req, res) => {
     client.close();
 };
 
+// user login based on email
+const loginAdmin = async (req, res) => {
+    const { email, password } = req.body;
 
-module.exports = { addNewAdmin }
+    if (
+        !req.body ||
+        !password ||
+        !email ||
+        !email.includes('@')) {
+        // client.close();
+
+        return res.status(400).json({ status: 400, message: "Error - data missing" })
+    };
+
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    const db = client.db("FinalProject-Bootcamp");
+
+    const findAdmin = await db.collection("admins").findOne({ email });
+
+    if (findAdmin === null) {
+        return res.status(400).json({ status: 400, data: findAdmin, message: "Unable to find admin" })
+    } else {
+        // access hashed password from database
+        const hashpass = findAdmin.password;
+
+        // compare pass from req.body and encrypted database password
+        const decryptPass = await bcrypt.compare(password, hashpass);
+
+        if (decryptPass) {
+            res.status(200).json({ status: 200, data: { ...decryptPass, busName: findAdmin.busName }, message: "Admin login successful" })
+        }
+    }
+    client.close();
+};
+
+module.exports = { addNewAdmin, loginAdmin }

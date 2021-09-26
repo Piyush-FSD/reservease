@@ -27,7 +27,7 @@ const hashPass = async (passToHash) => {
 // POST - create new User
 const addNewUser = async (req, res) => {
     const { firstName, lastName, email } = req.body;
-    let { password, confPassword } = req.body;
+    let { password } = req.body;
 
     // if any of the field below are not entered -> status 400
     if (!req.body ||
@@ -35,9 +35,8 @@ const addNewUser = async (req, res) => {
         !lastName ||
         !email ||
         !password ||
-        !confPassword ||
         !email.includes('@')) {
-        client.close();
+        // client.close();
 
         return res.status(400).json({ status: 400, message: "Error. Missing data from one field or more" })
     };
@@ -49,14 +48,13 @@ const addNewUser = async (req, res) => {
     // check if user already exists by email
     const existingUser = await db.collection("users").findOne({ email });
 
-    // If admin exists, throw an error or else create new admin
+    // If user exists, throw an error or else create new user
     if (existingUser !== null) {
         return res.status(400).json({ status: 400, data: existingUser, message: "That user email already exists" })
     } else {
         const hashedPassword = await hashPass(req.body.password);
-        const hashedConfPassword = await hashPass(req.body.confPassword)
 
-        const user = { firstName, lastName, email, password: hashedPassword, confpassword: hashedConfPassword };
+        const user = { firstName, lastName, email, password: hashedPassword };
 
         const userData = { _id: uuidv4(), ...user };
         const newUser = await db.collection("users").insertOne(userData);
@@ -66,4 +64,37 @@ const addNewUser = async (req, res) => {
     client.close();
 };
 
-module.exports = { addNewUser };
+const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    if (
+        !req.body ||
+        !password ||
+        !email ||
+        !email.includes('@')) {
+        // client.close();
+
+        return res.status(400).json({ status: 400, message: "Error - data missing" })
+    };
+
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    const db = client.db("FinalProject-Bootcamp");
+
+    const findUser = await db.collection("users").findOne({ email });
+
+    if (findUser === null) {
+        return res.status(400).json({ status: 400, data: findUser, message: "Unable to find user" })
+    } else {
+        const hashpass = findUser.password;
+
+        const decryptPass = await bcrypt.compare(password, hashpass);
+
+        if (decryptPass) {
+            res.status(200).json({ status: 200, data: { ...decryptPass, firstName: findUser.firstName }, message: "User login successful" })
+        }
+    }
+    client.close();
+};
+
+module.exports = { addNewUser, loginUser };
