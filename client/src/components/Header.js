@@ -13,14 +13,14 @@ export const Header = () => {
                     <RegisterLink to="/register/user">Register</RegisterLink>
                 </LogRegisterContainer>
             </HeaderContainer>
-
         </>
     )
 };
 
 const HeaderContainer = styled.div`
-height: 140px;
+height: 60px;
 border-bottom: 2px solid green;
+/* display: flex; */
 `;
 
 const Logo = styled.h1`
@@ -35,9 +35,9 @@ text-decoration: none;
 
 const LogRegisterContainer = styled.div`
 float: right;
-top: 10px;
-display: flex;
-margin-right: 5px;
+/* top: 10px; */
+/* display: flex; */
+/* margin-right: 5px; */
 `;
 
 const LoginLink = styled(Link)`

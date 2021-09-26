@@ -1,8 +1,41 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
+import { useHistory } from "react-router";
 
-export const UserLogin = () => {
+export const UserLogin = (setUserLoginData, userLogin, setUserLogin) => {
+    const formHistory = useHistory();
+
+    const handleInput = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        console.log(name, value)
+
+        setUserLogin({ ...userLogin, [name]: value })
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        fetch("/login/user", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userLogin),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.status === 200) {
+                    setUserLoginData(data)
+                    formHistory.push("/")
+                }
+            });
+
+        // clear email and password input fields once submit button clicked
+        setUserLogin({ email: "", password: "" })
+
+    };
 
     return (
         <>
@@ -12,9 +45,25 @@ export const UserLogin = () => {
                     <h4>User Login or</h4>
                     <AdminLink to="/login/admin">Admin Login</AdminLink>
                 </UserAdminContainer>
-                <Form>
-                    <Input placeholder="Email"></Input>
-                    <Input placeholder="Password"></Input>
+                <Form onSubmit={handleSubmit}>
+                    <Input
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        id="email"
+                        onChange={handleInput}
+                        value={userLogin.email}
+                    >
+                    </Input>
+                    <Input
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        id="password"
+                        onChange={handleInput}
+                        value={userLogin.password}
+                    >
+                    </Input>
                     <SubmitBtn>Log In</SubmitBtn>
                 </Form>
             </Container>

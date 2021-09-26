@@ -1,8 +1,40 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
+import { useHistory } from "react-router";
 
-export const AdminLogin = () => {
+export const AdminLogin = (setAdminLoginData, adminLogin, setAdminLogin) => {
+    const formHistory = useHistory();
+
+    const handleInput = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        console.log(name, value)
+
+        setAdminLogin({ ...adminLogin, [name]: value })
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        fetch("/login/admin", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(adminLogin),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.status === 200) {
+                    setAdminLoginData(data)
+                    formHistory.push("/")
+                }
+            });
+
+        // clear email and password input fields once submit button clicked
+        setAdminLogin({ email: "", password: "" });
+    };
 
     return (
         <>
@@ -12,9 +44,25 @@ export const AdminLogin = () => {
                     <h4>Admin Login or</h4>
                     <UserLink to="/login/user">User Login</UserLink>
                 </UserAdminContainer>
-                <Form>
-                    <Input placeholder="Email"></Input>
-                    <Input placeholder="Password"></Input>
+                <Form onSubmit={handleSubmit}>
+                    <Input
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        id="email"
+                        onChange={handleInput}
+                        value={adminLogin.email}
+                    >
+                    </Input>
+                    <Input
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        id="password"
+                        onChange={handleInput}
+                        value={adminLogin.password}
+                    >
+                    </Input>
                     <SubmitBtn>Log In</SubmitBtn>
                 </Form>
             </Container>
