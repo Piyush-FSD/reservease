@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Header } from './components/Header'
 import { Homepage } from './components/Homepage'
@@ -7,6 +7,7 @@ import { UserRegister } from './components/Registration/UserRegister'
 import { AdminLogin } from './components/Login/AdminLogin'
 import { UserLogin } from './components/Login/UserLogin'
 import { SearchResult } from './components/SearchResult';
+import { CartBar } from './components/CartBar';
 
 export const App = () => {
   // admin login
@@ -27,26 +28,35 @@ export const App = () => {
   // state which will hold user's first name to display on homepage upon login
   const [userLoginData, setUserLoginData] = useState();
 
+  // toggle show/hide sidebar
+  const [showCart, setShowCart] = useState(false);
+
+  // track onClick in [showCart] based on true/false toggle
+  useEffect(() => { }, [showCart])
+
   return (
     <BrowserRouter>
+      <Header
+        showCart={showCart}
+        setShowCart={setShowCart}
+      />
+      {showCart && <CartBar />}
       <Switch>
         <Route exact path="/">
-          <Header />
           <Homepage
             adminLoginData={adminLoginData}
+            setAdminLoginData={setAdminLoginData}
             userLoginData={userLoginData}
+            setUserLoginData={setUserLoginData}
           />
         </Route>
         <Route exact path="/register/admin">
-          <Header />
           <AdminRegister />
         </Route>
         <Route exact path="/register/user">
-          <Header />
           <UserRegister />
         </Route>
         <Route exact path="/login/admin">
-          <Header />
           <AdminLogin
             setAdminLoginData={setAdminLoginData}
             adminLogin={adminLogin}
@@ -54,7 +64,6 @@ export const App = () => {
           />
         </Route>
         <Route exact path="/login/user">
-          <Header />
           <UserLogin
             setUserLoginData={setUserLoginData}
             userLogin={userLogin}
@@ -62,7 +71,6 @@ export const App = () => {
           />
         </Route>
         <Route exact path="/searchresult">
-          <Header />
           <SearchResult />
         </Route>
       </Switch>
