@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router";
 
-export const AdminLogin = (setAdminLoginData, adminLogin, setAdminLogin) => {
+export const AdminLogin = ({ setAdminLoginData, adminLogin, setAdminLogin }) => {
     const formHistory = useHistory();
 
     const handleInput = (event) => {
