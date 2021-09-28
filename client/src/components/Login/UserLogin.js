@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
 import { useHistory } from "react-router";
 
 export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
@@ -14,27 +13,30 @@ export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
         setUserLogin({ ...userLogin, [name]: value })
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        fetch("/login/user", {
+        console.log(userLogin)
+        const response = await fetch("/login", {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(userLogin),
         })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.status === 200) {
-                    setUserLoginData(data)
-                    formHistory.push("/")
-                }
-            });
+        const data = await response.json();
+
+        // if fetch is successful, store data in userLoginData & in local storage. Then route homepage ('/')
+        if (data.status === 200) {
+            setUserLoginData(data);
+
+            localStorage.setItem("userLoggedIn", JSON.stringify(data));
+            formHistory.push("/");
+            // window.location.reload();
+        }
 
         // clear email and password input fields once submit button clicked
         setUserLogin({ email: "", password: "" })
-
     };
 
     return (
@@ -42,15 +44,13 @@ export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
             <Container>
                 <h3>Welcome to Order Way</h3>
                 <UserAdminContainer>
-                    <h4>User Login or</h4>
-                    <AdminLink to="/login/admin">Admin Login</AdminLink>
+                    <div to="/login/user">Login</div>
                 </UserAdminContainer>
                 <Form onSubmit={handleSubmit}>
                     <Input
                         type="email"
                         placeholder="Email"
                         name="email"
-                        id="email"
                         onChange={handleInput}
                         value={userLogin.email}
                     >
@@ -59,7 +59,6 @@ export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
                         type="password"
                         placeholder="Password"
                         name="password"
-                        id="password"
                         onChange={handleInput}
                         value={userLogin.password}
                     >
@@ -81,7 +80,7 @@ width: 400px;
 display: flex;
 flex-direction: column;
 justify-content: center;
-`
+`;
 
 const Input = styled.input`
 width: 400px;
@@ -97,13 +96,8 @@ height: 45px;
 margin-top: 15px;
 margin-left: 130px;
 border-radius: 10px;
-`
+`;
+
 const UserAdminContainer = styled.div`
 display: flex;
-`
-const AdminLink = styled(Link)`
-color: blue;
-text-decoration: none;
-margin-top: 22px;
-margin-left: 5px;
-`
+`;

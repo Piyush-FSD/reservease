@@ -1,10 +1,5 @@
 "use strict";
 
-const assert = require("assert");
-const fs = require("file-system")
-const { MongoClient } = require("mongodb");
-require("dotenv").config();
-const { MONGO_URI } = process.env;
 const bcrypt = require('bcrypt')
 
 const options = {
@@ -36,14 +31,11 @@ const addNewUser = async (req, res) => {
         !email ||
         !password ||
         !email.includes('@')) {
-        // client.close();
 
         return res.status(400).json({ status: 400, message: "Error. Missing data from one field or more" })
     };
 
-    const client = new MongoClient(MONGO_URI, options);
-    await client.connect();
-    const db = client.db("FinalProject-Bootcamp");
+    const { db } = req.app.locals;
 
     // check if user already exists by email
     const existingUser = await db.collection("users").findOne({ email });
@@ -54,14 +46,13 @@ const addNewUser = async (req, res) => {
     } else {
         const hashedPassword = await hashPass(req.body.password);
 
-        const user = { firstName, lastName, email, password: hashedPassword };
+        const user = { firstName, lastName, email, password: hashedPassword, isAdmin: false };
 
         const userData = { _id: uuidv4(), ...user };
         const newUser = await db.collection("users").insertOne(userData);
 
         res.status(201).json({ status: 201, data: newUser, message: "New user created and added to database" });
     }
-    client.close();
 };
 
 const loginUser = async (req, res) => {
@@ -76,10 +67,7 @@ const loginUser = async (req, res) => {
 
         return res.status(400).json({ status: 400, message: "Error - data missing" })
     };
-
-    const client = new MongoClient(MONGO_URI, options);
-    await client.connect();
-    const db = client.db("FinalProject-Bootcamp");
+    const { db } = req.app.locals;
 
     const findUser = await db.collection("users").findOne({ email });
 
@@ -94,7 +82,6 @@ const loginUser = async (req, res) => {
             res.status(200).json({ status: 200, data: { ...decryptPass, firstName: findUser.firstName }, message: "User login successful" })
         }
     }
-    client.close();
 };
 
 module.exports = { addNewUser, loginUser };

@@ -77,9 +77,7 @@ export const AdminRegister = () => {
                     type="text"
                     placeholder="Business Name"
                     name="busName"
-                    id="busName"
-                    required
-                    // value={adminRegistration.busName}
+                    value={adminRegistration.busName}
                     onChange={handleInput}
                 >
                 </Input>
@@ -87,7 +85,6 @@ export const AdminRegister = () => {
                     type="text"
                     placeholder="First Name"
                     name="firstName"
-                    id="firstName"
                     value={adminRegistration.firstName}
                     onChange={handleInput}
                 >
@@ -96,7 +93,6 @@ export const AdminRegister = () => {
                     type="text"
                     placeholder="Last Name"
                     name="lastName"
-                    id="lastName"
                     value={adminRegistration.lastName}
                     onChange={handleInput}
                 >
@@ -105,7 +101,6 @@ export const AdminRegister = () => {
                     placeholder="Email"
                     type="email"
                     name="email"
-                    id="email"
                     value={adminRegistration.email}
                     onChange={handleInput}
                 >
@@ -114,7 +109,6 @@ export const AdminRegister = () => {
                     type="password"
                     placeholder="Password"
                     name="password"
-                    id="password"
                     value={adminRegistration.password}
                     onChange={handleInput}
                 ></Input>
@@ -122,7 +116,6 @@ export const AdminRegister = () => {
                     placeholder="Address"
                     type="text"
                     name="address"
-                    id="address"
                     value={adminRegistration.address}
                     onChange={handleInput}
                 >
@@ -132,7 +125,6 @@ export const AdminRegister = () => {
                         placeholder="Postal Code"
                         type="text"
                         name="postalCode"
-                        id="postalCode"
                         value={adminRegistration.postalCode}
                         onChange={handleInput}
                     >
@@ -141,7 +133,6 @@ export const AdminRegister = () => {
                         placeholder="Province"
                         type="text"
                         name="province"
-                        id="province"
                         value={adminRegistration.province}
                         onChange={handleInput}
                     >
@@ -152,7 +143,6 @@ export const AdminRegister = () => {
                         placeholder="Country"
                         type="text"
                         name="country"
-                        id="country"
                         value={adminRegistration.country}
                         onChange={handleInput}
                     >
@@ -161,7 +151,6 @@ export const AdminRegister = () => {
                         placeholder="Phone"
                         type="tel"
                         name="phone"
-                        id="phone"
                         value={adminRegistration.phone}
                         onChange={handleInput}
                     >
