@@ -1,24 +1,17 @@
 "use strict";
-
-const assert = require("assert");
-const fs = require("file-system")
-const { MongoClient } = require("mongodb");
-require("dotenv").config();
-const { MONGO_URI } = process.env;
 const bcrypt = require('bcrypt')
-
-const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-};
+const { cloudinary } = require('./utils/cloudinary')
 
 const { v4: uuidv4 } = require("uuid");
-const e = require("express");
 
+const { Error404 } = require("./ErrorHandler");
+const { projectName, usersCollection, adminRestoInfoCollection, adminMenuCollection } = require('./dbConstants');
+// const { App } = require("../client/src/App");
+
+// encrypting password function to call
 const hashPass = async (passToHash) => {
     try {
         return await bcrypt.hash(passToHash, 10);
-
     } catch (err) {
         console.log(err, "Error hashing password")
     }
@@ -42,17 +35,12 @@ const addNewAdmin = async (req, res) => {
         !country ||
         !phone ||
         !email.includes('@')) {
-        // client.close();
 
         return res.status(400).json({ status: 400, message: "Error. Missing data from one field or more" })
     };
-
-    const client = new MongoClient(MONGO_URI, options);
-    await client.connect();
-    const db = client.db("FinalProject-Bootcamp");
-
+    const { db } = req.app.locals;
     // check if admin already exists by email
-    const existingAdmin = await db.collection("admins").findOne({ email });
+    const existingAdmin = await db.collection(usersCollection).findOne({ email });
 
     // If admin exists, throw an error or else create new admin
     if (existingAdmin !== null) {
@@ -60,50 +48,55 @@ const addNewAdmin = async (req, res) => {
     } else {
         const hashedPassword = await hashPass(req.body.password);
 
-        const admin = { busName, firstName, lastName, email, password: hashedPassword, address, postalCode, province, country, phone };
+        const userId = uuidv4();
 
-        const adminData = { _id: uuidv4(), ...admin };
-        const newAdmin = await db.collection("admins").insertOne(adminData);
+        const adminData = { _id: userId, firstName, lastName, email, password: hashedPassword, isAdmin: true };
 
-        res.status(201).json({ status: 201, data: newAdmin, message: "New admin created and added to database" });
+        const newAdmin = await db.collection(usersCollection).insertOne(adminData);
+
+        const adminRestoInfo = { _id: uuidv4(), busName, address, postalCode, province, country, phone, userId: userId };
+
+        const newAdminRestoInfo = await db.collection(adminRestoInfoCollection).insertOne(adminRestoInfo)
+
+        res.status(201).json({ status: 201, data: { ...newAdmin, ...newAdminRestoInfo }, message: "New admin created and added to database" });
     }
-    client.close();
 };
 
-// user login based on email
-const loginAdmin = async (req, res) => {
-    const { email, password } = req.body;
+const addNewMenuItem = async (req, res) => {
+    try {
+        const { itemTitle, itemDetails, itemPrice } = req.body;
 
-    if (
-        !req.body ||
-        !password ||
-        !email ||
-        !email.includes('@')) {
-        // client.close();
-
-        return res.status(400).json({ status: 400, message: "Error - data missing" })
-    };
-
-    const client = new MongoClient(MONGO_URI, options);
-    await client.connect();
-    const db = client.db("FinalProject-Bootcamp");
-
-    const findAdmin = await db.collection("admins").findOne({ email });
-
-    if (findAdmin === null) {
-        return res.status(400).json({ status: 400, data: findAdmin, message: "Unable to find admin" })
-    } else {
-        // access hashed password from database
-        const hashpass = findAdmin.password;
-
-        // compare pass from req.body and encrypted database password
-        const decryptPass = await bcrypt.compare(password, hashpass);
-
-        if (decryptPass) {
-            res.status(200).json({ status: 200, data: { ...decryptPass, busName: findAdmin.busName }, message: "Admin login successful" })
+        if (!req.body || !itemTitle || !itemDetails || !itemPrice) {
+            return res.status(400).json({ status: 400, message: "Error. Missing data from one field or more" })
         }
+
+        const menuItemId = uuidv4();
+        const menuItemInfo = { _id: menuItemId, itemTitle, itemDetails, itemPrice }
+
+        const { db } = req.app.locals;
+
+        const newMenuItemEntry = await db.collection(adminMenuCollection).insertOne(menuItemInfo);
+
+        res.status(201).json({ status: 201, data: { ...newMenuItemEntry }, message: "Menu item added" })
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error uploading menu item" })
     }
-    client.close();
 };
 
-module.exports = { addNewAdmin, loginAdmin }
+const addNewMenuImg = async (req, res) => {
+    try {
+        const fileStr = req.body.data;
+        const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+            upload_preset: 'test'
+        })
+        console.log(uploadedResponse);
+        res.json({ message: "Image has been uploaded" })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Issue uploading image" })
+    }
+};
+
+module.exports = { addNewAdmin, addNewMenuImg, addNewMenuItem }

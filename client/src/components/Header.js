@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
-import { AdminLogin } from "./Login/AdminLogin";
 import { IoFastFoodOutline } from 'react-icons/io5';
 
-export const Header = ({ adminLoginData, setAdminLoginData, userLoginData, setUserLoginData, showCart, setShowCart }) => {
-
+export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart }) => {
     return (
         <>
             <HeaderContainer>
                 <LogoLink to="/"><Logo>LOGO</Logo></LogoLink>
-
                 <Icon>
                     <IoFastFoodOutline size={40} onClick={() => setShowCart(!showCart)} />
                 </Icon>
 
-                {adminLoginData === undefined ? (
+                {!userLoginData ? (
+                    // {!adminLoginData || !userLoginData ? (
                     <>
                         <LogRegisterContainer>
                             <LoginLink to="/login/user">Log in</LoginLink>
@@ -24,18 +22,31 @@ export const Header = ({ adminLoginData, setAdminLoginData, userLoginData, setUs
                     </>
                 ) : (
                     <>
-                        <span>
-                            Welcome {adminLoginData !== undefined && adminLoginData.data.busName}
-                        </span>
+                        {console.log(userLoginData, ' USER LOGIN DATA FROM HEADER')}
+                        <LoggedInContainer>
+                            <>
+                                <LoginName>
+                                    Welcome {userLoginData.busName}
+                                    {/* Welcome {adminLoginData.busName || userLoginData.firstName} */}
+                                </LoginName>
 
-                        <LoginLink to="/login/user">
-                            <Button onClick={() => {
-                                setAdminLoginData(undefined)
-                            }}
-                            >
-                                Log Out
-                            </Button>
-                        </LoginLink>
+                                <LoginLink to="/login/user">
+
+                                    {/*log out by setting adminLoginData to undefined*/}
+                                    <Button onClick={() => {
+                                        setUserLoginData(undefined)
+                                        localStorage.setItem("userLoggedIn", '')
+                                        // localStorage.clear();
+                                    }}>
+                                        Log Out
+                                    </Button>
+                                </LoginLink>
+                            </>
+                        </LoggedInContainer>
+                        {userLoginData.isAdmin !== false &&
+                            <AdminMenuLinkContainer>
+                                <Link to="/admin/menu">Menu</Link>
+                            </AdminMenuLinkContainer>}
                     </>
                 )}
             </HeaderContainer>
@@ -82,10 +93,27 @@ margin-right: 15px;
 const Button = styled.button`
 border: none;
 background: transparent;
+color: blue;
+font-size: 16px;
+margin-left: 15px;
+font-weight: bold;
 `
 
 const Icon = styled.div`
 float: right;
 margin-right: 20px;
 cursor: pointer;
+`
+
+const LoginName = styled.span`
+font-weight: bold;
+`
+
+const LoggedInContainer = styled.div`
+float: right;
+`
+
+const AdminMenuLinkContainer = styled.div`
+margin-left: 15px;
+margin-top: 50px;
 `
