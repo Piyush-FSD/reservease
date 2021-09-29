@@ -32,22 +32,20 @@ export const AdminRegister = () => {
         setAdminRegistration({ ...adminRegistration, [name]: value });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        fetch("/register/admin", {
+        const response = await fetch("/register/admin", {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(adminRegistration)
         })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.status === 200) {
-                    console.log(data)
-                }
-            });
+        const data = await response.json();
+        if (data.status === 200) {
+            console.log(data)
+        }
         setAdminRegistration({
             busName: "",
             firstName: "",

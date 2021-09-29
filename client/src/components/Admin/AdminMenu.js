@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom'
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
 
 export const AdminMenu = () => {
-
-    // input form submit
-    const handleSubmit = (event) => {
-        event.preventDefault();
-    };
 
     // img file
     const [fileInput, setFileInput] = useState('');
@@ -15,6 +13,8 @@ export const AdminMenu = () => {
     const [selectedFile, setSelectedFile] = useState('');
     // string that represents entire img
     const [previewSource, setPreviewSource] = useState();
+
+    // const [menuData, setMenuData] = useState();
 
     const handleImgFile = (event) => {
         const imgFile = event.target.files[0];
@@ -24,10 +24,8 @@ export const AdminMenu = () => {
     // show admin preview of file when uploading
     const previewFile = (imgFile) => {
         const reader = new FileReader();
-
         //.readAsDataURL -> converts img to URL
         reader.readAsDataURL(imgFile);
-
         //  event is fired when a request has completed (success or fail)
         reader.onloadend = () => {
             // reader.result -> returns file's contents
@@ -41,6 +39,8 @@ export const AdminMenu = () => {
         uploadImage(previewSource)
     };
 
+    // upload image for header and menu item 
+    // images stored in Cloudinary
     const uploadImage = async (base64EncodedImage) => {
         console.log(base64EncodedImage)
         try {
@@ -54,9 +54,53 @@ export const AdminMenu = () => {
         }
     }
 
+    const [menuItemInput, setMenuItemInput] = useState({ itemTitle: "", itemDetails: "", itemPrice: "" });
+
+    const handleInput = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        console.log(name, value)
+
+        setMenuItemInput({ ...menuItemInput, [name]: value })
+    };
+
+    // data from add menu is stored here
+    const [itemData, setItemData] = useState()
+
+    // input form submit
+    const handleAddMenu = async (event) => {
+        event.preventDefault();
+
+        const response = await fetch("/menu/add", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(menuItemInput)
+        })
+        const data = await response.json();
+        if (data.status === 200) {
+            setItemData(data)
+            //if menu is successfuly uploaded
+            //endpoint get all menu items
+        }
+        setMenuItemInput({ itemTitle: "", itemDetails: "", itemPrice: "" })
+    };
+
+    // fetch existing menu items
+    useEffect(() => {
+        //fetch all items
+
+        //setState...
+    }, [handleAddMenu])
+
+    // Modal - toggle open/close
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
     return (
         <>
             <HeaderImgContainer>
+                {/* Move this to a different component */}
                 <form onSubmit={handleSubmitImg}>
                     <input
                         type="file"
@@ -83,29 +127,57 @@ export const AdminMenu = () => {
             </AddressInfoContainer>
             <MenuTextContainer>
                 <h2>Menu</h2>
+                <form onSubmit={handleAddMenu}>
+                    <MenuImgInput
+                        type="file"
+                        name="headerImg"
+                        onChange={handleImgFile}
+                        value={fileInput}
+                    >
+                    </MenuImgInput>
+                    <ItemNameInput
+                        type="text"
+                        placeholder="Item Name"
+                        name="itemTitle"
+                        onChange={handleInput}
+                        value={menuItemInput.itemTitle}
+                    />
+                    <ItemInfoInput
+                        type="text"
+                        placeholder="Item Description"
+                        name="itemDetails"
+                        onChange={handleInput}
+                        value={menuItemInput.itemDetails}
+                    />
+                    <ItemNameInput
+                        type="text"
+                        placeholder="Item Price"
+                        name="itemPrice"
+                        onChange={handleInput}
+                        value={menuItemInput.itemPrice}
+                    />
+                    <AddBtn>Add</AddBtn>
+                </form>
             </MenuTextContainer>
             <MenuContainer>
                 <MenuRowOne>
                     <ItemContainer>
-                        <form onSubmit={handleSubmit}>
-                            <MenuImgInput
-                                type="file"
-                                name="headerImg"
-                                onChange={handleImgFile}
-                                value={fileInput}
-                            >
-                            </MenuImgInput>
-                            <ItemNameInput placeholder="Item Name" />
-                            <ItemInfoInput placeholder="Item Description" />
-                            <AddBtn>Add</AddBtn>
-                        </form>
-                        {/* {previewSource && (
-                            <img
-                                src={previewSource}
-                                alt="selectedImg"
-                                style={{ height: '100px', width: '100px' }}
-                            />
-                        )} */}
+                        <AddItemBtn onClick={() => setModalIsOpen(true)}>+</AddItemBtn>
+                        <Modal
+                            isOpen={modalIsOpen}
+                            onRequestClose={() => setModalIsOpen(false)}
+                            style={{
+                                overlay: {
+                                    backgroundColor: 'grey'
+                                },
+                                content: {
+                                    color: 'green'
+                                }
+                            }}
+                        >
+                            <h2>Add to cart</h2>
+                            <button onClick={() => setModalIsOpen(false)}>X</button>
+                        </Modal>
                     </ItemContainer>
                     <ItemContainer></ItemContainer>
                     <ItemContainer></ItemContainer>
@@ -218,4 +290,14 @@ height: 20px;
 
 const MenuImgInput = styled.input`
 width: 176px;
+`
+
+const AddItemBtn = styled.button`
+height: 40px;
+width: 40px;
+margin: 50px 0 0 270px; 
+`
+
+const Modall = styled.div`
+overlay: 
 `

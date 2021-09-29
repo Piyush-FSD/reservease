@@ -16,7 +16,6 @@ export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        console.log(userLogin)
         const response = await fetch("/login", {
             method: 'POST',
             headers: {
