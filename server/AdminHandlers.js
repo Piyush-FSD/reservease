@@ -90,7 +90,7 @@ const addNewMenuItem = async (req, res) => {
     try {
         const { itemTitle, itemDetails, itemPrice } = req.body;
 
-        if (!req.body || !itemTitle || !itemDetails || !itemPrice) {
+        if (!itemTitle || !itemDetails || !itemPrice) {
             return res.status(400).json({ status: 400, message: "Error. Missing data from one field or more" })
         }
 
@@ -112,8 +112,8 @@ const addNewMenuItem = async (req, res) => {
 const deleteMenuItem = async (req, res) => {
     try {
         const { db } = req.app.locals;
-
         const { _id } = req.params;
+
         const menuItemById = await db.collection(adminMenuCollection).deleteOne({ _id });
 
         if (menuItemById) {
@@ -126,6 +126,32 @@ const deleteMenuItem = async (req, res) => {
         res.status(500).json({ error: "Error deleting menu item" })
     }
 };
+
+const updateMenuItem = async (req, res) => {
+    try {
+        const { db } = req.app.locals;
+        const { _id } = req.params;
+
+        const menuInfo = {
+            $set: {
+                itemTitle: req.body.itemTitle,
+                itemDetails: req.body.itemDetails,
+                itemPrice: req.body.itemPrice
+            }
+        };
+
+        const menuItemById = await db.collection(adminMenuCollection).updateOne({ _id }, menuInfo);
+
+        if (menuItemById) {
+            res.status(200).json({ status: 200, data: menuItemById, message: "Menu item updated" })
+        } else {
+            res.status(404).json({ Error404 })
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error updating menu item" })
+    }
+}
 
 const addNewMenuImg = async (req, res) => {
     try {
@@ -141,4 +167,4 @@ const addNewMenuImg = async (req, res) => {
     }
 };
 
-module.exports = { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem }
+module.exports = { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem, updateMenuItem }

@@ -12,8 +12,7 @@ import { SupremeTaco } from './SupremeTaco';
 
 export const App = () => {
   const [userLogin, setUserLogin] = useState({
-    email: "",
-    password: ""
+    email: "", password: ""
   });
 
   // state which will hold user's first name to display on homepage upon login
@@ -31,6 +30,7 @@ export const App = () => {
   useEffect(() => { }, [showCart]);
 
   return (
+<<<<<<< Updated upstream
     <BrowserRouter>
       <Header
         userLogin={userLogin}
@@ -55,10 +55,10 @@ export const App = () => {
         </Route>
         <Route exact path="/login/user">
           <UserLogin
+            userLoginData={userLoginData}
             setUserLoginData={setUserLoginData}
             userLogin={userLogin}
             setUserLogin={setUserLogin}
-            userLoginData={userLoginData}
           // setUserLogin={setUserLogin}
           />
         </Route>
@@ -73,6 +73,25 @@ export const App = () => {
         </Route>
       </Switch>
     </BrowserRouter>
+=======
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+        <img src="./burger.png"></img>
+      </header>
+    </div>
+>>>>>>> Stashed changes
   );
 };
 

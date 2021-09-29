@@ -22,7 +22,6 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
                     </>
                 ) : (
                     <>
-                        {console.log(userLoginData, ' USER LOGIN DATA FROM HEADER')}
                         <LoggedInContainer>
                             <>
                                 <LoginName>
