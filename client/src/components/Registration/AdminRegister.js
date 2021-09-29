@@ -18,7 +18,8 @@ export const AdminRegister = () => {
         postalCode: "",
         province: "",
         country: "",
-        phone: ""
+        phone: "",
+        website: ""
     });
 
     // tracking user input value when typing
@@ -57,7 +58,8 @@ export const AdminRegister = () => {
             postalCode: "",
             province: "",
             country: "",
-            phone: ""
+            phone: "",
+            website: ""
         });
         formHistory.push("/");
     }
@@ -78,6 +80,14 @@ export const AdminRegister = () => {
                     placeholder="Business Name"
                     name="busName"
                     value={adminRegistration.busName}
+                    onChange={handleInput}
+                >
+                </Input>
+                <Input
+                    type="text"
+                    placeholder="Website"
+                    name="website"
+                    value={adminRegistration.website}
                     onChange={handleInput}
                 >
                 </Input>
