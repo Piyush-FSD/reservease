@@ -3,8 +3,6 @@ import SupremeTacoMenu from './SupremeTaco.menu';
 
 export const SupremeTaco = () => {
 
-
-
     return (
         <div>
             {SupremeTacoMenu.map(({ name, description, price }) => {
@@ -13,7 +11,8 @@ export const SupremeTaco = () => {
                         <h3>{name}</h3>
                         <h4>{description}</h4>
                         <h4>{price}</h4>
-                    </div>)
+                    </div>
+                )
             })}
         </div>
     )

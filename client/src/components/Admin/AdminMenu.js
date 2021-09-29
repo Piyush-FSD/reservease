@@ -36,7 +36,6 @@ export const AdminMenu = () => {
     };
 
     const handleSubmitImg = (event) => {
-        console.log('sub')
         event.preventDefault();
         if (!previewSource) return;
         uploadImage(previewSource)
