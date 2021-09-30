@@ -2,6 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import { Link } from 'react-router-dom';
+import { FaBriefcase } from 'react-icons/fa'
+import { BsFillPersonFill } from "react-icons/bs";
+import { MdEmail } from 'react-icons/md';
+import { AiTwotoneLock } from 'react-icons/ai';
+import { MdWeb } from 'react-icons/md';
+import { FaAddressCard } from 'react-icons/fa';
+import { AiTwotonePhone } from 'react-icons/ai'
+
 
 export const AdminRegister = () => {
     // try {
@@ -73,6 +81,7 @@ export const AdminRegister = () => {
                 <UserLink to="/register/user">User</UserLink>
             </UserAdminContainer>
             <Form onSubmit={handleSubmit}>
+                <FaBriefcase />
                 <Input
                     type="text"
                     placeholder="Business Name"
@@ -81,6 +90,7 @@ export const AdminRegister = () => {
                     onChange={handleInput}
                 >
                 </Input>
+                <MdWeb />
                 <Input
                     type="text"
                     placeholder="Website"
@@ -89,6 +99,7 @@ export const AdminRegister = () => {
                     onChange={handleInput}
                 >
                 </Input>
+                <BsFillPersonFill />
                 <Input
                     type="text"
                     placeholder="First Name"
@@ -97,6 +108,7 @@ export const AdminRegister = () => {
                     onChange={handleInput}
                 >
                 </Input>
+                <BsFillPersonFill />
                 <Input
                     type="text"
                     placeholder="Last Name"
@@ -105,6 +117,7 @@ export const AdminRegister = () => {
                     onChange={handleInput}
                 >
                 </Input>
+                <MdEmail />
                 <Input
                     placeholder="Email"
                     type="email"
@@ -113,6 +126,7 @@ export const AdminRegister = () => {
                     onChange={handleInput}
                 >
                 </Input>
+                <AiTwotoneLock />
                 <Input
                     type="password"
                     placeholder="Password"
@@ -120,6 +134,7 @@ export const AdminRegister = () => {
                     value={adminRegistration.password}
                     onChange={handleInput}
                 ></Input>
+                <FaAddressCard />
                 <Input
                     placeholder="Address"
                     type="text"
@@ -128,6 +143,7 @@ export const AdminRegister = () => {
                     onChange={handleInput}
                 >
                 </Input>
+                <FaAddressCard />
                 <PostalProvinceContainer>
                     <SplitInput
                         placeholder="Postal Code"
@@ -137,6 +153,7 @@ export const AdminRegister = () => {
                         onChange={handleInput}
                     >
                     </SplitInput>
+                    <FaAddressCard />
                     <SplitInput
                         placeholder="Province"
                         type="text"
@@ -146,6 +163,7 @@ export const AdminRegister = () => {
                     >
                     </SplitInput>
                 </PostalProvinceContainer>
+                <FaAddressCard />
                 <PostalProvinceContainer>
                     <SplitInput
                         placeholder="Country"
@@ -155,6 +173,7 @@ export const AdminRegister = () => {
                         onChange={handleInput}
                     >
                     </SplitInput>
+                    <AiTwotonePhone />
                     <SplitInput
                         placeholder="Phone"
                         type="tel"

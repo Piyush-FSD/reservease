@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
 import Modal from 'react-modal';
-import ImageUpload from './ImageUpload';
 import { toast } from 'react-toastify';
 import { Button } from './Button';
+import { PreviewImageUpload } from './PreviewImageUpload';
+// import ImageUpload from './ImageUpload';
 
 export const AddMenuModal = ({ setItemData }) => {
     Modal.setAppElement('#root');
@@ -11,6 +12,8 @@ export const AddMenuModal = ({ setItemData }) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const [menuItemInput, setMenuItemInput] = useState({ itemTitle: "", itemDetails: "", itemPrice: "" });
+
+    const [previewSource, setPreviewSource] = useState();
 
     const handleInput = (event) => {
         const name = event.target.name;
@@ -24,12 +27,21 @@ export const AddMenuModal = ({ setItemData }) => {
     const handleAddMenu = async (event) => {
         event.preventDefault();
 
+        // check if any of the following are missing. If so, return and stop here
+        if (!previewSource || !menuItemInput.itemTitle || !menuItemInput.itemDetails || !menuItemInput.itemPrice) {
+            toast("Missing fields!")
+            return;
+        }
+
+        // data to send to backend
+        const payload = { ...menuItemInput, image: previewSource }
+
         const response = await fetch("/menu/add", {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(menuItemInput)
+            body: JSON.stringify(payload)
         })
         const data = await response.json();
         if (data.status === 201) {
@@ -44,7 +56,7 @@ export const AddMenuModal = ({ setItemData }) => {
 
     return (
         <div>
-            {/* <AddItemBtn onClick={() => setModalIsOpen(true)}>+</AddItemBtn> */}
+            <AddItemBtn onClick={() => setModalIsOpen(true)}>+</AddItemBtn>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={() => setModalIsOpen(false)}
@@ -59,7 +71,7 @@ export const AddMenuModal = ({ setItemData }) => {
             >
                 <h2>Add to cart</h2>
                 <form onSubmit={handleAddMenu}>
-                    <ImageUpload />
+                    <PreviewImageUpload previewSource={previewSource} setPreviewSource={setPreviewSource} />
                     <div>hello</div>
                     <ItemNameInput
                         type="text"

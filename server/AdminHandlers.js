@@ -18,7 +18,6 @@ const hashPass = async (passToHash) => {
     }
 };
 
-
 // POST - create new Admin
 const addNewAdmin = async (req, res) => {
 
@@ -88,16 +87,23 @@ const addNewAdmin = async (req, res) => {
 
 const addNewMenuItem = async (req, res) => {
     try {
-        const { itemTitle, itemDetails, itemPrice } = req.body;
 
-        if (!itemTitle || !itemDetails || !itemPrice) {
+        console.log(req.body)
+        const { itemTitle, itemDetails, itemPrice, image } = req.body;
+
+        if (!itemTitle || !itemDetails || !itemPrice || !image) {
             return res.status(400).json({ status: 400, message: "Error. Missing data from one field or more" })
         }
 
-        const menuItemId = uuidv4();
-        const menuItemInfo = { _id: menuItemId, itemTitle, itemDetails, itemPrice }
 
         const { db } = req.app.locals;
+
+        const uploadedImage = await uploadImageToCloudinary(image);
+
+        console.log(uploadedImage)
+
+        const menuItemId = uuidv4();
+        const menuItemInfo = { _id: menuItemId, itemTitle, itemDetails, itemPrice, itemImage: uploadedImage.secure_url }
 
         const newMenuItemEntry = await db.collection(adminMenuCollection).insertOne(menuItemInfo);
 
@@ -176,7 +182,6 @@ const getAllMenuInfo = async (req, res) => {
         const { db } = req.app.locals;
 
         const allMenuData = await db.collection(adminMenuCollection).find().toArray();
-        console.log(allMenuData, 'SDfsf???')
 
         if (allMenuData.length === 0) {
             throw new Error("No menu items available")
@@ -192,9 +197,8 @@ const getAllMenuInfo = async (req, res) => {
 const addNewMenuImg = async (req, res) => {
     try {
         const fileStr = req.body.data;
-        const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
-            upload_preset: 'test'
-        })
+
+        const uploadedResponse = await uploadImageToCloudinary(fileStr)
         console.log(uploadedResponse);
         res.json({ message: "Image has been uploaded" })
     } catch (error) {
@@ -202,5 +206,14 @@ const addNewMenuImg = async (req, res) => {
         res.status(500).json({ error: "Issue uploading image" })
     }
 };
+
+const uploadImageToCloudinary = async (image) => {
+
+    const uploadedResponse = await cloudinary.uploader.upload(image, {
+        upload_preset: 'test'
+    })
+
+    return uploadedResponse;
+}
 
 module.exports = { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem, updateMenuItem, getMenuInfoById, getAllMenuInfo }

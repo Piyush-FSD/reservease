@@ -1,32 +1,47 @@
 import React from "react";
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { SearchBar } from './SearchBar';
 
 export const Homepage = () => {
 
     return (
         <>
-            <WelcomeContainer>
-                <WelcomeMsg>Order Way.</WelcomeMsg> <Ordering>Ordering just got simpler.</Ordering>
-            </WelcomeContainer>
-            <SearchBarContainer>
-                <SearchInput placeholder="Search a location"></SearchInput>
-            </SearchBarContainer>
+            <Container>
+                <WelcomeContainer>
+                    <WelcomeMsg>Order Way.</WelcomeMsg> <Ordering>Ordering just got simpler.</Ordering>
+                </WelcomeContainer>
+                <SearchBarContainer>
+                    <SearchBar />
+
+                </SearchBarContainer>
+            </Container>
         </>
     )
 };
 
-const SearchBarContainer = styled.div`
+const Container = styled.div`
 display: flex;
-align-items: center;
-justify-content: center;
-margin-top: 30px;
-`;
+flex-direction: column;
+`
 
-const SearchInput = styled.input`
-width: 550px;
-height: 40px;
-border-radius: 5px;
-`;
+const SearchBarContainer = styled.div`
+margin: 1px;
+align-items: center;
+`
+
+
+// const SearchInput = styled.input`
+// width: 550px;
+// height: 50px;
+// border-radius: 5px;
+
+// &::-webkit-input-placeholder {
+//     color: green;
+//     margin-left: 15px;
+//     font-size: 15px;
+//   }
+// `;
+
 const WelcomeContainer = styled.div`
 display: flex;
 align-items: center;

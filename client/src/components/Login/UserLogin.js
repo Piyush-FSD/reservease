@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import { MdEmail } from 'react-icons/md';
+import { AiTwotoneLock } from 'react-icons/ai';
 
 export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
     const formHistory = useHistory();
@@ -43,12 +45,14 @@ export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
             <Container>
                 <h3>Welcome to Order Way</h3>
                 <UserAdminContainer>
-                    <div to="/login/user">Login</div>
+                    <div to="/login/user">Sign In</div>
                 </UserAdminContainer>
                 <Form onSubmit={handleSubmit}>
+                    <MdEmail />
+                    <AiTwotoneLock />
                     <Input
                         type="email"
-                        placeholder="Email"
+                        placeholder="📧 Email"
                         name="email"
                         onChange={handleInput}
                         value={userLogin.email}
@@ -62,7 +66,7 @@ export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
                         value={userLogin.password}
                     >
                     </Input>
-                    <SubmitBtn>Log In</SubmitBtn>
+                    <SubmitBtn>Sign in</SubmitBtn>
                 </Form>
             </Container>
         </>
@@ -79,6 +83,7 @@ width: 400px;
 display: flex;
 flex-direction: column;
 justify-content: center;
+margin-top: 10px;
 `;
 
 const Input = styled.input`
