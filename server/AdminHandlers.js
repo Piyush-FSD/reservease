@@ -101,7 +101,11 @@ const addNewMenuItem = async (req, res) => {
 
         const newMenuItemEntry = await db.collection(adminMenuCollection).insertOne(menuItemInfo);
 
-        res.status(201).json({ status: 201, data: { ...newMenuItemEntry }, message: "Menu item added" })
+        console.log(newMenuItemEntry, 'THIS IS NEW MENU ENTRY')
+
+        if (newMenuItemEntry.acknowledged === true) {
+            res.status(201).json({ status: 201, data: menuItemInfo, message: "Menu item added" })
+        }
 
     } catch (error) {
         console.error(error);
@@ -151,6 +155,38 @@ const updateMenuItem = async (req, res) => {
         console.error(error);
         res.status(500).json({ error: "Error updating menu item" })
     }
+};
+
+const getMenuInfoById = async (req, res) => {
+    try {
+        const { db } = req.app.locals;
+        const { _id } = req.params;
+
+        const menuData = await db.collection(adminMenuCollection).findOne({ _id })
+
+        res.status(201).json({ status: 201, data: menuData, message: "Accessed menu info by ID" })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error retreiving menu info by ID" })
+    }
+};
+
+const getAllMenuInfo = async (req, res) => {
+    try {
+        const { db } = req.app.locals;
+
+        const allMenuData = await db.collection(adminMenuCollection).find().toArray();
+        console.log(allMenuData, 'SDfsf???')
+
+        if (allMenuData.length === 0) {
+            throw new Error("No menu items available")
+        }
+        res.status(200).json({ status: 200, data: allMenuData, message: "Sucessfully obtainned all menu data" })
+
+    } catch (error) {
+        console.error(error, 'hello');
+        res.status(500).json({ error: error.message, message: "Error retreiving menu info" })
+    }
 }
 
 const addNewMenuImg = async (req, res) => {
@@ -167,4 +203,4 @@ const addNewMenuImg = async (req, res) => {
     }
 };
 
-module.exports = { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem, updateMenuItem }
+module.exports = { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem, updateMenuItem, getMenuInfoById, getAllMenuInfo }

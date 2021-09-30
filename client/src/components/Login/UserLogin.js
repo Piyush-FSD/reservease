@@ -71,7 +71,7 @@ export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
 
 const Container = styled.div`
 margin-left: 500px; 
-width: 100%;
+/* width: 100%; */
 `;
 
 const Form = styled.form`

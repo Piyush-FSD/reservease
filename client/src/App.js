@@ -9,6 +9,10 @@ import { SearchResult } from './components/SearchResult';
 import { CartBar } from './components/CartBar';
 import { AdminMenu } from './components/Admin/AdminMenu';
 import { SupremeTaco } from './SupremeTaco';
+// import { BusinessMenu } from './BusinessMenu'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const App = () => {
   const [userLogin, setUserLogin] = useState({
@@ -30,8 +34,9 @@ export const App = () => {
   useEffect(() => { }, [showCart]);
 
   return (
-<<<<<<< Updated upstream
+
     <BrowserRouter>
+      <ToastContainer />
       <Header
         userLogin={userLogin}
         userLoginData={userLoginData}
@@ -68,30 +73,14 @@ export const App = () => {
         <Route exact path="/search/result">
           <SearchResult />
         </Route>
+        {/* <Route exact path="/menu/:_id">
+          <BusinessMenu />
+        </Route> */}
         <Route exact path="/supreme-taco">
           <SupremeTaco />
         </Route>
       </Switch>
     </BrowserRouter>
-=======
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <img src="./burger.png"></img>
-      </header>
-    </div>
->>>>>>> Stashed changes
   );
 };
 

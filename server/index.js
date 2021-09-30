@@ -12,11 +12,11 @@ const { MONGO_URI } = process.env;
 const { projectName, usersCollection, adminRestoInfoCollection, adminMenuInfo: adminMenuCollection } = require('./dbConstants');
 
 // Handlers
-const { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem, updateMenuItem } = require("./AdminHandlers")
+const { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem, updateMenuItem, getMenuInfoById, getAllMenuInfo } = require("./AdminHandlers")
 const { addNewUser, loginUser } = require('./UserHandlers');
 
 const { Error404 } = require("./ErrorHandler");
-const PORT = 3000;
+const PORT = 4000;
 
 const app = express()
     .use(function (req, res, next) {
@@ -53,6 +53,8 @@ const app = express()
     .post("/menu/add", addNewMenuItem)
     .put("/menu/update/:_id", updateMenuItem)
     .delete("/menu/delete/:_id", deleteMenuItem)
+    .get("/menu/:_id", getMenuInfoById)
+    .get("/menu", getAllMenuInfo)
 
 
     // ERROR Handler 404 Not Found
