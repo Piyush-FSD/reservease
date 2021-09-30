@@ -27,6 +27,8 @@ export const AdminMenuItems = ({ itemData }) => {
                         <ItemPrice>
                             {item.itemPrice}
                         </ItemPrice>
+                        {item.itemImage && <img alt="itemImg" src={item.itemImage}></img>}
+
                     </MenuItemContainer>
                 </Container>
             )}
@@ -36,36 +38,37 @@ export const AdminMenuItems = ({ itemData }) => {
 
 const Wrapper = styled.div`
 display: flex;
-width: 33%auto;
+flex-wrap: wrap;
+width: 80%;
+margin: 0 auto;
 `
 
 const MenuItemContainer = styled.div`
-width: 350px;
+width: 300px;
 height: 150px;
-border: 2px solid;
+border: 1px solid rgb(221,221,221);
+border-radius: 12px;
+padding: 10px;
 display: flex;
 flex-direction: column;
 /* justify-content: center; */
-/* align-items: center; */
+align-items: center; 
 justify-content: space-around;
-border-radius: 15px;
-margin-bottom: 10px;
+margin: 5px;
 `;
 
 const ItemTitle = styled.span`
 font-size: 18px;
-color: red;
-float: right;
-display: block;
-right: 0;
+font-weight: 600;
 `;
 
 const ItemDetails = styled.span`
-color: green;
+
 `;
 
 const ItemPrice = styled.span`
-color: purple;
+color: rgb(113,113,113);
+
 `
 
 const Container = styled.div`

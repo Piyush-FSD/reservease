@@ -10,6 +10,8 @@ const options = {
 const { v4: uuidv4 } = require("uuid");
 const e = require("express");
 
+const { adminRestoInfoCollection } = require('./dbConstants');
+
 const hashPass = async (passToHash) => {
     try {
         return await bcrypt.hash(passToHash, 10);
@@ -84,5 +86,17 @@ const loginUser = async (req, res) => {
     }
 };
 
+const getSearchResults = async (req, res) => {
+    try {
+        const { db } = req.app.locals;
 
-module.exports = { addNewUser, loginUser };
+        const searchResults = await db.collection(adminRestoInfoCollection).find().toArray();
+
+        res.status(200).json({ status: 200, data: searchResults, message: "Successfully obtained search results" })
+
+    } catch (error) {
+        res.status(500).json({ error: "Error retreiving search results" })
+    }
+};
+
+module.exports = { addNewUser, loginUser, getSearchResults };

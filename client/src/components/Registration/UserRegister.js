@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router";
+import { BsFillPersonFill } from "react-icons/bs"
+import { MdEmail } from 'react-icons/md'
+import { AiTwotoneLock } from 'react-icons/ai'
 
 export const UserRegister = () => {
     const formHistory = useHistory();
@@ -59,6 +62,9 @@ export const UserRegister = () => {
                 <AdminLink to="/register/admin">Admin</AdminLink>
             </UserAdminContainer>
             <Form onSubmit={handleSubmit}>
+                <BsFillPersonFill />
+                <MdEmail />
+                <AiTwotoneLock />
                 <Input
                     placeholder="First Name"
                     type="text"

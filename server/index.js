@@ -13,7 +13,7 @@ const { projectName, usersCollection, adminRestoInfoCollection, adminMenuInfo: a
 
 // Handlers
 const { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem, updateMenuItem, getMenuInfoById, getAllMenuInfo } = require("./AdminHandlers")
-const { addNewUser, loginUser } = require('./UserHandlers');
+const { addNewUser, loginUser, getSearchResults } = require('./UserHandlers');
 
 const { Error404 } = require("./ErrorHandler");
 const PORT = 4000;
@@ -55,6 +55,9 @@ const app = express()
     .delete("/menu/delete/:_id", deleteMenuItem)
     .get("/menu/:_id", getMenuInfoById)
     .get("/menu", getAllMenuInfo)
+
+    // Search Results
+    .get("/search/results", getSearchResults)
 
 
     // ERROR Handler 404 Not Found
