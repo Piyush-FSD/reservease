@@ -3,14 +3,13 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom'
 
 export const SearchResult = () => {
-
     return (
         <>
             <HeaderImgContainer>
                 <UploadImg>Business image here</UploadImg>
             </HeaderImgContainer>
             <AddressInfoContainer>
-                <Address>2465 Rue Maisonneuve E, Montreal, QC</Address>
+                <Address>address</Address>
                 <div>
                     <MoreInfoLink to="#">More Info</MoreInfoLink>
                 </div>
@@ -71,8 +70,8 @@ const MenuContainer = styled.div`
 width: 100%;
 height: 500px;
 border: 2px solid purple;
-display: flex;
-justify-content: space-around;
+/* display: flex; */
+/* justify-content: space-around; */
 `
 
 const MenuRowOne = styled.div`
