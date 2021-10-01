@@ -9,13 +9,14 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const { MONGO_URI } = process.env;
 
-const { projectName, usersCollection, adminRestoInfoCollection, adminMenuInfo: adminMenuCollection } = require('./dbConstants');
+const { projectName } = require('./dbConstants');
 
 // Handlers
-const { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem, updateMenuItem, getMenuInfoById, getAllMenuInfo } = require("./AdminHandlers")
-const { addNewUser, loginUser, getSearchResults } = require('./UserHandlers');
+const { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem, updateMenuItem, getMenuInfoById, getAllMenuInfo, getAdminEmail } = require("./AdminHandlers")
+const { addNewUser, loginUser, getSearchResults, getMenu } = require('./UserHandlers');
 
 const { Error404 } = require("./ErrorHandler");
+const { adminCheckMiddleware } = require('./Middleware');
 const PORT = 4000;
 
 const app = express()
@@ -49,14 +50,18 @@ const app = express()
     .post("/login", loginUser)
 
     // Menu Items (Admin)
+    .get("/menu/email/:email", getAdminEmail)
     .post("/menu/addImg", addNewMenuImg)
-    .post("/menu/add", addNewMenuItem)
-    .put("/menu/update/:_id", updateMenuItem)
-    .delete("/menu/delete/:_id", deleteMenuItem)
+    .post("/menu/add", adminCheckMiddleware, addNewMenuItem)
+    .put("/menu/update/:_id", adminCheckMiddleware, updateMenuItem)
+    .delete("/menu/delete/:_id", adminCheckMiddleware, deleteMenuItem)
+    .get("/menu/info", getAllMenuInfo)
     .get("/menu/:_id", getMenuInfoById)
-    .get("/menu", getAllMenuInfo)
 
-    // Search Results
+    // Access buisness menu by ID
+    // .get("/menu", getMenu)
+
+    // Business search results
     .get("/search/results", getSearchResults)
 
 

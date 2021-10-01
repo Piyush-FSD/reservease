@@ -55,92 +55,121 @@ export const UserRegister = () => {
     };
 
     return (
-        <Container>
-            <h3>Register! It's quick and easy.</h3>
-            <UserAdminContainer>
-                <h4>Register as User or</h4>
-                <AdminLink to="/register/admin">Admin</AdminLink>
-            </UserAdminContainer>
-            <Form onSubmit={handleSubmit}>
-                <BsFillPersonFill />
-                <MdEmail />
-                <AiTwotoneLock />
-                <Input
-                    placeholder="First Name"
-                    type="text"
-                    name="firstName"
-                    id="firstName"
-                    required
-                    value={userRegistration.firstName}
-                    onChange={handleInput}
-                >
-                </Input>
-                <Input
-                    placeholder="Last Name"
-                    type="text"
-                    name="lastName"
-                    id="lastName"
-                    value={userRegistration.lastName}
-                    onChange={handleInput}
-                >
-                </Input>
-                <Input
-                    placeholder="Email"
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={userRegistration.email}
-                    onChange={handleInput}
-                >
-                </Input>
-                <Input
-                    placeholder="Password"
-                    type="password"
-                    name="password"
-                    id="password"
-                    value={userRegistration.password}
-                    onChange={handleInput}
-                >
-                </Input>
-                <SubmitBtn>Register as User</SubmitBtn>
-            </Form>
-        </Container>
+        <Wrapper>
+            <Container>
+                <RegisterMsg>Register! It's quick and easy.</RegisterMsg>
+                <div>
+                    <UserOr>Register as User or</UserOr>
+                    <AdminLink to="/register/admin">Admin</AdminLink>
+                </div>
+                <Form onSubmit={handleSubmit}>
+                    <BsFillPersonFill />
+                    <MdEmail />
+                    <AiTwotoneLock />
+                    <Input
+                        placeholder="First Name"
+                        type="text"
+                        name="firstName"
+                        id="firstName"
+                        required
+                        value={userRegistration.firstName}
+                        onChange={handleInput}
+                    >
+                    </Input>
+                    <Input
+                        placeholder="Last Name"
+                        type="text"
+                        name="lastName"
+                        id="lastName"
+                        value={userRegistration.lastName}
+                        onChange={handleInput}
+                    >
+                    </Input>
+                    <Input
+                        placeholder="Email"
+                        type="email"
+                        name="email"
+                        id="email"
+                        value={userRegistration.email}
+                        onChange={handleInput}
+                    >
+                    </Input>
+                    <Input
+                        placeholder="Password"
+                        type="password"
+                        name="password"
+                        id="password"
+                        value={userRegistration.password}
+                        onChange={handleInput}
+                    >
+                    </Input>
+                    <SubmitBtn>Register as User</SubmitBtn>
+                </Form>
+            </Container>
+        </Wrapper>
     )
 };
 
+const Wrapper = styled.div`
+text-align: center;
+`
+
 const Container = styled.div`
-margin-left: 500px;
-width: 100%;
+text-align: center;
+margin: auto 0;
+display: inline-block;
+width: 40%;
+background: #faffd8;
+margin-top: 30px;
+padding: 3%;
+border-radius: 5%;
+border: 3px solid #54577c;
 `;
 
 const Form = styled.form`
-width: 400px;
-display: flex;
-flex-direction: column;
-justify-content: center;
+width: 70%;
+display: inline-block;
+margin-top: 10px; 
 `
 
 const Input = styled.input`
-width: 400px;
+width: 100%;
 height: 40px;
 margin-top: 5px;
 margin-bottom: 15px;
 border-radius: 5px;
+background: white;
+color: #fff;
+border: 1px solid #c2c2c2; 
+box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+padding-left: 10px;
 `;
 
 const SubmitBtn = styled.button`
-width: 170px;
+width: 40%;
 height: 45px;
-margin-top: 15px;
-margin-left: 130px;
 border-radius: 10px;
-`
-const UserAdminContainer = styled.div`
-display: flex;
+background: #3C7DA8;
+color: #fff;
 `
 const AdminLink = styled(Link)`
-color: blue;
 text-decoration: none;
-margin-top: 22px;
+margin-top: 6px;
 margin-left: 5px;
+font-size: 1.3em;
+font-weight:500;
+color: #3C7DA8;
+`
+
+const RegisterMsg = styled.h3`
+text-align: center;
+color: #54577c;
+font-size: 1.6em;
+font-weight:600;
+`
+
+const UserOr = styled.span`
+color:#54577c;
+font-size: 1.3em;
+font-weight:500;
 `

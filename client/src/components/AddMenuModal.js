@@ -7,23 +7,26 @@ import { PreviewImageUpload } from './PreviewImageUpload';
 // import ImageUpload from './ImageUpload';
 
 export const AddMenuModal = ({ setItemData }) => {
+
     Modal.setAppElement('#root');
     // Modal - toggle open/close
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
-    const [menuItemInput, setMenuItemInput] = useState({ itemTitle: "", itemDetails: "", itemPrice: "" });
+    // inital values of menu fields are empty strings
+    const [menuItemInput, setMenuItemInput] = useState({ itemTitle: "", itemDetails: "", itemPrice: "", email: "" });
 
-    const [previewSource, setPreviewSource] = useState();
+    const [previewSource, setPreviewSource] = useState(null);
 
+    // tracks inputs entered in menu fields
     const handleInput = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        console.log(name, value)
 
-        setMenuItemInput({ ...menuItemInput, [name]: value })
+        // once fields are inputted, values get stored in menuItemInput
+        setMenuItemInput({ ...menuItemInput, [name]: value });
     };
 
-    // input form submit
+    // add menu item form submit
     const handleAddMenu = async (event) => {
         event.preventDefault();
 
@@ -33,8 +36,11 @@ export const AddMenuModal = ({ setItemData }) => {
             return;
         }
 
-        // data to send to backend
-        const payload = { ...menuItemInput, image: previewSource }
+        const storageData = JSON.parse(localStorage.getItem("userLoggedIn"));
+        console.log(storageData, ' THIS IS STOEAGE DATA')
+
+        // data to send to backend (menu info & image)
+        const payload = { ...menuItemInput, image: previewSource, ...storageData }
 
         const response = await fetch("/menu/add", {
             method: 'POST',
@@ -44,14 +50,13 @@ export const AddMenuModal = ({ setItemData }) => {
             body: JSON.stringify(payload)
         })
         const data = await response.json();
+
         if (data.status === 201) {
             toast("Menu item added!");
-            setItemData(data.data)
-
-            //if menu is successfuly uploaded
-            //endpoint get all menu items
+            setItemData(data.data);
         }
-        setMenuItemInput({ itemTitle: "", itemDetails: "", itemPrice: "" })
+        setMenuItemInput({ itemTitle: "", itemDetails: "", itemPrice: "" });
+        // email: isAdminEmail.data.email 
     };
 
     return (
@@ -73,6 +78,7 @@ export const AddMenuModal = ({ setItemData }) => {
                 <form onSubmit={handleAddMenu}>
                     <PreviewImageUpload previewSource={previewSource} setPreviewSource={setPreviewSource} />
                     <div>hello</div>
+
                     <ItemNameInput
                         type="text"
                         placeholder="Item Name"
@@ -97,12 +103,10 @@ export const AddMenuModal = ({ setItemData }) => {
                     <Button text={"Add"} />
                 </form>
                 <button onClick={() => setModalIsOpen(false)}>X</button>
-
             </Modal>
-
         </div>
     )
-}
+};
 
 
 const ItemNameInput = styled.input`
@@ -110,7 +114,7 @@ width: 200px;
 margin-left: 160px;
 margin-top: 8px;
 height: 20px;
-`
+`;
 
 const ItemInfoInput = styled.input`
 width: 200px;
@@ -119,11 +123,9 @@ margin-top: 8px;
 height: 70px;
 `;
 
-
 const AddItemBtn = styled.button`
 height: 40px;
 width: 40px;
 margin: 50px 0 0 270px;  
 margin-left: 550px;
-
-`
+`;

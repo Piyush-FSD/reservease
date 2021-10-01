@@ -1,34 +1,33 @@
 import React from "react";
 import styled from 'styled-components';
 import { SearchBar } from './SearchBar';
+// import video.mp4 from '../videos'
 
 export const Homepage = () => {
 
     return (
         <>
             <Container>
-                <WelcomeContainer>
+                <div>
+                    {/* <video src="/videos/video.mp4" autoPlay loop muted /> */}
                     <WelcomeMsg>Order Way.</WelcomeMsg> <Ordering>Ordering just got simpler.</Ordering>
-                </WelcomeContainer>
-                <SearchBarContainer>
+                </div>
+                <div>
                     <SearchBar />
-
-                </SearchBarContainer>
+                </div>
             </Container>
         </>
     )
 };
 
 const Container = styled.div`
-display: flex;
-flex-direction: column;
+position: relative;
+display: block;
+width: 100%;
+text-align: center;
+height:50vh;
+background: #FAFFD8;
 `
-
-const SearchBarContainer = styled.div`
-margin: 1px;
-align-items: center;
-`
-
 
 // const SearchInput = styled.input`
 // width: 550px;
@@ -42,18 +41,17 @@ align-items: center;
 //   }
 // `;
 
-const WelcomeContainer = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-margin-top: 70px;
-`;
-
 const WelcomeMsg = styled.h2`
-color: green;
+margin-top: 0;
+padding-top:100px;
+color: #54577c;
+font-size: 1.6em;
+font-weight:600;
 `;
 
 const Ordering = styled.h2`
-color: black;
+color: #3C7DA8;
+font-size: 1.3em;
+font-weight:500;
 margin-left: 5px;
 `

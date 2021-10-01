@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+// itemData -->
+// -> initial null state in AdminMenu
+// -> menu item set from AddMenuModal
+// -> passed to this component
 export const AdminMenuItems = ({ itemData }) => {
-    const [state, setstate] = useState()
 
+    // state to hold menu items from GET fetch
+    const [state, setstate] = useState(null);
+
+    // GET - menu items submitted from host
     useEffect(() => {
         const getAllItems = async () => {
-            const response = await fetch("/menu");
+            const response = await fetch("/menu/info");
             const data = await response.json();
             setstate(data.data)
         }
@@ -15,8 +22,8 @@ export const AdminMenuItems = ({ itemData }) => {
 
     return (
         <Wrapper>
-            {state && state.map((item) =>
-                <Container>
+            {state && state.map((item, index) =>
+                <Container key={index}>
                     <MenuItemContainer>
                         <ItemTitle>
                             {item.itemTitle}

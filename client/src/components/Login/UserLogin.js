@@ -29,11 +29,13 @@ export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
 
         // if fetch is successful, store data in userLoginData & in local storage. Then route homepage ('/')
         if (data.status === 200) {
+
             setUserLoginData(data);
 
-            localStorage.setItem("userLoggedIn", JSON.stringify(data));
+            localStorage.setItem("userLoggedIn", JSON.stringify(data.data));
             formHistory.push("/");
             // window.location.reload();
+            // localStorage.setItem("userEmail", JSON.stringify(userLogin.email))
         }
 
         // clear email and password input fields once submit button clicked
@@ -42,66 +44,92 @@ export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
 
     return (
         <>
-            <Container>
-                <h3>Welcome to Order Way</h3>
-                <UserAdminContainer>
-                    <div to="/login/user">Sign In</div>
-                </UserAdminContainer>
-                <Form onSubmit={handleSubmit}>
-                    <MdEmail />
-                    <AiTwotoneLock />
-                    <Input
-                        type="email"
-                        placeholder="📧 Email"
-                        name="email"
-                        onChange={handleInput}
-                        value={userLogin.email}
-                    >
-                    </Input>
-                    <Input
-                        type="password"
-                        placeholder="Password"
-                        name="password"
-                        onChange={handleInput}
-                        value={userLogin.password}
-                    >
-                    </Input>
-                    <SubmitBtn>Sign in</SubmitBtn>
-                </Form>
-            </Container>
+            <Wrapper>
+                <Container>
+                    <WelcomeMsg>Welcome to Order Way</WelcomeMsg>
+                    <UserAdminContainer>
+                        <SignInMsg to="/login/user">Sign In</SignInMsg>
+                    </UserAdminContainer>
+                    <Form onSubmit={handleSubmit}>
+                        <MdEmail />
+                        <AiTwotoneLock />
+                        <Input
+                            type="email"
+                            placeholder="Email"
+                            name="email"
+                            onChange={handleInput}
+                            value={userLogin.email}
+                        >
+                        </Input>
+                        <Input
+                            type="password"
+                            placeholder="Password"
+                            name="password"
+                            onChange={handleInput}
+                            value={userLogin.password}
+                        >
+                        </Input>
+                        <SubmitBtn>Sign in</SubmitBtn>
+                    </Form>
+                </Container>
+            </Wrapper>
         </>
     )
 };
 
+const Wrapper = styled.div`
+text-align:center;
+`;
 const Container = styled.div`
-margin-left: 500px; 
-/* width: 100%; */
+text-align: center;
+margin: auto 0;
+display: inline-block;
+width: 40%;
+background: #faffd8;
+margin-top: 30px;
+padding: 3%;
+border-radius: 5%;
+border: 3px solid #54577c;
 `;
 
 const Form = styled.form`
-width: 400px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-margin-top: 10px;
+width: 70%;
+display: inline-block;
+margin-top: 10px; 
 `;
 
 const Input = styled.input`
-width: 400px;
+width: 100%;
 height: 40px;
 margin-top: 5px;
 margin-bottom: 15px;
 border-radius: 5px;
+background: white;
+border: 1px solid #c2c2c2; 
+box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+padding-left: 10px;
 `;
 
 const SubmitBtn = styled.button`
 width: 170px;
 height: 45px;
-margin-top: 15px;
-margin-left: 130px;
 border-radius: 10px;
+background: #4a7b9d;
+color: #fff;
 `;
 
 const UserAdminContainer = styled.div`
-display: flex;
+
 `;
+
+const WelcomeMsg = styled.h3`
+color:#54577c;
+font-size: 1.6em;
+font-weight:600;
+`
+
+const SignInMsg = styled.span`
+color:#54577c;
+font-size: 1.4em;
+font-weight:500;
+`

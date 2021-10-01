@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { CgSearch } from 'react-icons/cg';
+// import { CgSearch } from 'react-icons/cg';
 
 // search bar to display all Businesses
 export const SearchBar = () => {
@@ -17,21 +17,22 @@ export const SearchBar = () => {
         setFilteredInput(filteredValue)
     }, [value])
 
-    useEffect(() => {
-        const getBusNames = async () => {
+    // useEffect(() => {
+    //     const getBusNames = async () => {
 
-            const response = await fetch("/search/results")
-            const data = await response.json();
+    //         const response = await fetch("/search/results")
+    //         const data = await response.json();
 
-            setInputValue(data.data.map((item) => {
-                return { busName: item.busName }
-            }))
-        }
-        getBusNames();
-    }, [])
+    //         setInputValue(data.data.map((item) => {
+    //             return { busName: item.busName }
+    //         }))
+    //     }
+    //     getBusNames();
+    // }, []);
+
     return (
         <Container>
-            <CgSearch />
+            {/* <CgSearch /> */}
             <SearchInput
                 type="text"
                 placeholder="Search here"
@@ -64,8 +65,10 @@ export const SearchBar = () => {
 };
 
 const Container = styled.div`
-display: flex;
-justify-content: center;
+    position: relative;
+    display: block;
+    width: 100%;
+    
 `
 
 const SearchContainer = styled.div`
@@ -73,17 +76,15 @@ position: relative;
 `
 
 const SearchInput = styled.input`
-width: 500px;
+width: 30%;
 height: 40px;
-border-radius: 3px;
+border-radius: 5px;
 padding-left: 10px;
-border: 1px solid #c2c2c2;
-outline-color: #a6a6a6;
+border: 1px solid #c2c2c2; 
 box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-position: absolute;
+background: white;
 margin: 0 auto;
-display: flex;
-justify-content: center;
+color: #fff;
 `;
 
 const SuggestionList = styled.li`

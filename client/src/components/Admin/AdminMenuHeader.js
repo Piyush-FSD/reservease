@@ -1,16 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import ImageUpload from '../ImageUpload';
+import { ImageUpload } from '../ImageUpload';
 
-const AdminMenuHeader = () => {
+export const AdminMenuHeader = () => {
     return (
         <HeaderImgContainer>
             <ImageUpload />
         </HeaderImgContainer>
     )
-}
-
-export default AdminMenuHeader
+};
 
 const HeaderImgContainer = styled.div`
 height: 235px;
