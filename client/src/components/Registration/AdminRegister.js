@@ -25,7 +25,7 @@ export const AdminRegister = () => {
         address: "",
         postalCode: "",
         province: "",
-        country: "",
+        city: "",
         phone: "",
         website: ""
     });
@@ -51,8 +51,8 @@ export const AdminRegister = () => {
             body: JSON.stringify(adminRegistration)
         })
         const data = await response.json();
+        console.log(data, " admin resitration dataaaaa")
         if (data.status === 200) {
-            console.log(data)
         }
         setAdminRegistration({
             busName: "",
@@ -63,7 +63,7 @@ export const AdminRegister = () => {
             address: "",
             postalCode: "",
             province: "",
-            country: "",
+            city: "",
             phone: "",
             website: ""
         });
@@ -74,169 +74,206 @@ export const AdminRegister = () => {
     // }
 
     return (
-        <Container>
-            <h3>Register! It's quick and easy.</h3>
-            <UserAdminContainer>
-                <h4>Register as Admin or</h4>
-                <UserLink to="/register/user">User</UserLink>
-            </UserAdminContainer>
-            <Form onSubmit={handleSubmit}>
-                <FaBriefcase />
-                <Input
-                    type="text"
-                    placeholder="Business Name"
-                    name="busName"
-                    value={adminRegistration.busName}
-                    onChange={handleInput}
-                >
-                </Input>
-                <MdWeb />
-                <Input
-                    type="text"
-                    placeholder="Website"
-                    name="website"
-                    value={adminRegistration.website}
-                    onChange={handleInput}
-                >
-                </Input>
-                <BsFillPersonFill />
-                <Input
-                    type="text"
-                    placeholder="First Name"
-                    name="firstName"
-                    value={adminRegistration.firstName}
-                    onChange={handleInput}
-                >
-                </Input>
-                <BsFillPersonFill />
-                <Input
-                    type="text"
-                    placeholder="Last Name"
-                    name="lastName"
-                    value={adminRegistration.lastName}
-                    onChange={handleInput}
-                >
-                </Input>
-                <MdEmail />
-                <Input
-                    placeholder="Email"
-                    type="email"
-                    name="email"
-                    value={adminRegistration.email}
-                    onChange={handleInput}
-                >
-                </Input>
-                <AiTwotoneLock />
-                <Input
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    value={adminRegistration.password}
-                    onChange={handleInput}
-                ></Input>
-                <FaAddressCard />
-                <Input
-                    placeholder="Address"
-                    type="text"
-                    name="address"
-                    value={adminRegistration.address}
-                    onChange={handleInput}
-                >
-                </Input>
-                <FaAddressCard />
-                <PostalProvinceContainer>
-                    <SplitInput
-                        placeholder="Postal Code"
+        <Wrapper>
+            <Container>
+                <RegisterMsg>Register! It's quick and easy.</RegisterMsg>
+                <Splitter>
+                    <AdminOr>Register as Admin or</AdminOr>
+                    <UserLink to="/register/user">User</UserLink>
+                </Splitter>
+                <Form onSubmit={handleSubmit}>
+                    <FaBriefcase />
+                    <Input
                         type="text"
-                        name="postalCode"
-                        value={adminRegistration.postalCode}
+                        placeholder="Business Name"
+                        name="busName"
+                        value={adminRegistration.busName}
                         onChange={handleInput}
                     >
-                    </SplitInput>
+                    </Input>
+                    <MdWeb />
+                    <Input
+                        type="text"
+                        placeholder="Website"
+                        name="website"
+                        value={adminRegistration.website}
+                        onChange={handleInput}
+                    >
+                    </Input>
+                    <BsFillPersonFill />
+                    <Input
+                        type="text"
+                        placeholder="First Name"
+                        name="firstName"
+                        value={adminRegistration.firstName}
+                        onChange={handleInput}
+                    >
+                    </Input>
+                    <BsFillPersonFill />
+                    <Input
+                        type="text"
+                        placeholder="Last Name"
+                        name="lastName"
+                        value={adminRegistration.lastName}
+                        onChange={handleInput}
+                    >
+                    </Input>
+                    <MdEmail />
+                    <Input
+                        placeholder="Email"
+                        type="email"
+                        name="email"
+                        value={adminRegistration.email}
+                        onChange={handleInput}
+                    >
+                    </Input>
+                    <AiTwotoneLock />
+                    <Input
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        value={adminRegistration.password}
+                        onChange={handleInput}
+                    ></Input>
                     <FaAddressCard />
-                    <SplitInput
-                        placeholder="Province"
+                    <Input
+                        placeholder="Address"
                         type="text"
-                        name="province"
-                        value={adminRegistration.province}
+                        name="address"
+                        value={adminRegistration.address}
                         onChange={handleInput}
                     >
-                    </SplitInput>
-                </PostalProvinceContainer>
-                <FaAddressCard />
-                <PostalProvinceContainer>
-                    <SplitInput
-                        placeholder="Country"
-                        type="text"
-                        name="country"
-                        value={adminRegistration.country}
-                        onChange={handleInput}
-                    >
-                    </SplitInput>
-                    <AiTwotonePhone />
-                    <SplitInput
-                        placeholder="Phone"
-                        type="tel"
-                        name="phone"
-                        value={adminRegistration.phone}
-                        onChange={handleInput}
-                    >
-                    </SplitInput>
-                </PostalProvinceContainer>
-                <SubmitBtn>Register as Admin</SubmitBtn>
-            </Form>
-        </Container>
+                    </Input>
+                    <FaAddressCard />
+                    <SplitInputContainer>
+                        <SplitInput
+                            placeholder="City"
+                            type="text"
+                            name="city"
+                            value={adminRegistration.city}
+                            onChange={handleInput}
+                        >
+                        </SplitInput>
+                        <FaAddressCard />
+                        <SplitInput
+                            placeholder="Province"
+                            type="text"
+                            name="province"
+                            value={adminRegistration.province}
+                            onChange={handleInput}
+                        >
+                        </SplitInput>
+                    </SplitInputContainer>
+                    <FaAddressCard />
+                    <SplitInputContainer>
+                        <SplitInput
+                            placeholder="Postal Code"
+                            type="text"
+                            name="postalCode"
+                            value={adminRegistration.postalCode}
+                            onChange={handleInput}
+                        >
+                        </SplitInput>
+                        <AiTwotonePhone />
+                        <SplitInput
+                            placeholder="Phone"
+                            type="tel"
+                            name="phone"
+                            value={adminRegistration.phone}
+                            onChange={handleInput}
+                        >
+                        </SplitInput>
+                    </SplitInputContainer>
+                    <SubmitBtn>Register as Admin</SubmitBtn>
+                </Form>
+            </Container>
+        </Wrapper>
     )
 };
 
+const Wrapper = styled.div`
+text-align: center;
+`
+
 const Container = styled.div`
-margin-left: 500px;
-width: 100%;
+text-align: center;
+margin: auto 0;
+display: inline-block;
+width: 40%;
+background: #faffd8;
+margin-top: 30px;
+padding: 3%;
+border-radius: 5%;
+border: 3px solid #54577c;
 `;
 
 const Form = styled.form`
-width: 400px;
-display: flex;
-flex-direction: column;
-justify-content: center;
+width: 70%;
+display: inline-block;
+margin-top: 10px; 
 `
 
 const Input = styled.input`
-width: 400px;
+width: 100%;
 height: 40px;
 margin-top: 5px;
 margin-bottom: 15px;
 border-radius: 5px;
+background: white;
+color: #fff;
+border: 1px solid #c2c2c2; 
+box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+padding-left: 10px;
 `;
 
 const SubmitBtn = styled.button`
 width: 170px;
 height: 45px;
-margin-top: 15px;
-margin-left: 130px;
 border-radius: 10px;
+background:#4a7b9d;
+color: #fff;
 `
 
-const PostalProvinceContainer = styled.div`
+const SplitInputContainer = styled.div`
 display: flex;
 justify-content: space-between;
 `;
 
 const SplitInput = styled.input`
-width: 190px;
+width: 100%;
 height: 40px;
 margin-top: 5px;
 margin-bottom: 15px;
 border-radius: 5px;
+background: white;
+color: #fff;
+border: 1px solid #c2c2c2; 
+box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+padding-left: 10px;
 `;
 
-const UserAdminContainer = styled.div`
-display: flex;
+const UserLink = styled(Link)`
+text-decoration: none;
+margin-top: 6px;
+margin-left: 5px;
+font-size: 1.3em;
+font-weight:500;
+color: #3C7DA8;
 `
 
-const UserLink = styled(Link)`
-color: blue;
-text-decoration: none;
-margin-top: 22px;
-margin-left: 5px;
+const RegisterMsg = styled.div`
+text-align: center;
+color:#54577c;
+font-size: 1.6em;
+font-weight:600;
+`
+
+const AdminOr = styled.span`
+color:#54577c;
+font-size: 1.3em;
+font-weight:500;
+`
+
+const Splitter = styled.div`
+margin-top: 20px ;
 `

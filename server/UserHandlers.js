@@ -2,15 +2,10 @@
 
 const bcrypt = require('bcrypt')
 
-const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-};
-
 const { v4: uuidv4 } = require("uuid");
 const e = require("express");
 
-const { adminRestoInfoCollection } = require('./dbConstants');
+const { usersCollection, adminRestoInfoCollection } = require('./dbConstants');
 
 const hashPass = async (passToHash) => {
     try {
@@ -40,7 +35,7 @@ const addNewUser = async (req, res) => {
     const { db } = req.app.locals;
 
     // check if user already exists by email
-    const existingUser = await db.collection("users").findOne({ email });
+    const existingUser = await db.collection(usersCollection).findOne({ email });
 
     // If user exists, throw an error or else create new user
     if (existingUser !== null) {
@@ -51,7 +46,7 @@ const addNewUser = async (req, res) => {
         const user = { firstName, lastName, email, password: hashedPassword, isAdmin: false };
 
         const userData = { _id: uuidv4(), ...user };
-        const newUser = await db.collection("users").insertOne(userData);
+        const newUser = await db.collection(usersCollection).insertOne(userData);
 
         res.status(201).json({ status: 201, data: newUser, message: "New user created and added to database" });
     }
@@ -71,7 +66,7 @@ const loginUser = async (req, res) => {
     };
     const { db } = req.app.locals;
 
-    const findUser = await db.collection("users").findOne({ email });
+    const findUser = await db.collection(usersCollection).findOne({ email });
 
     if (findUser === null) {
         return res.status(400).json({ status: 400, data: findUser, message: "Unable to find user" })
@@ -81,7 +76,10 @@ const loginUser = async (req, res) => {
         const decryptPass = await bcrypt.compare(password, hashpass);
 
         if (decryptPass) {
-            res.status(200).json({ status: 200, data: { ...decryptPass, firstName: findUser.firstName }, message: "User login successful" })
+            res.status(200).json({ status: 200, data: { firstName: findUser.firstName, admin: findUser.isAdmin, email: findUser.email, adminId: findUser._id }, message: "User login successful" })
+        } else {
+            // res.status(400).json{}
+            // send error msg if incorrect pass
         }
     }
 };
@@ -90,7 +88,7 @@ const getSearchResults = async (req, res) => {
     try {
         const { db } = req.app.locals;
 
-        const searchResults = await db.collection(adminRestoInfoCollection).find().toArray();
+        const searchResults = await db.collection(adminRestoInfoCollection).findOne();
 
         res.status(200).json({ status: 200, data: searchResults, message: "Successfully obtained search results" })
 
@@ -99,4 +97,24 @@ const getSearchResults = async (req, res) => {
     }
 };
 
-module.exports = { addNewUser, loginUser, getSearchResults };
+// access menu by ID
+const getMenu = async (req, res) => {
+    // try {
+    const { db } = req.app.locals;
+    console.log({ db })
+
+    const { _id } = req.params;
+    console.log({ _id }, ' this is id')
+
+    const adminInfo = await db.collection(adminRestoInfoCollection).find({ _id }).toArray();
+
+
+    if (adminInfo) {
+        res.status(200).json({ status: 200, data: adminInfo, message: "Successfully retreived menu by ID" })
+    }
+    // } catch (error) {
+    //     res.status(500).json({ status: 500, message: "Error retreiving menu by ID" })
+    // }
+};
+
+module.exports = { addNewUser, loginUser, getSearchResults, getMenu };

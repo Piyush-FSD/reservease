@@ -10,8 +10,6 @@ import { CartBar } from './components/CartBar';
 import { AdminMenu } from './components/Admin/AdminMenu';
 import { SupremeTaco } from './SupremeTaco';
 
-// import { BusinessMenu } from './BusinessMenu'
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -25,14 +23,14 @@ export const App = () => {
 
   // toggle show/hide sidebar
   const [showCart, setShowCart] = useState(false);
+  // track onClick in [showCart] based on true/false toggle
+  useEffect(() => { }, [showCart]);
 
   useEffect(() => {
     localStorage.getItem("userLoggedIn") ?
       setUserLoginData(JSON.parse(localStorage.getItem("userLoggedIn"))) : setUserLoginData('')
   }, []);
 
-  // track onClick in [showCart] based on true/false toggle
-  useEffect(() => { }, [showCart]);
 
   return (
 

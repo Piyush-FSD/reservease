@@ -6,7 +6,7 @@ const { cloudinary } = require('./utils/cloudinary')
 const { v4: uuidv4 } = require("uuid");
 
 const { Error404 } = require("./ErrorHandler");
-const { projectName, usersCollection, adminRestoInfoCollection, adminMenuCollection } = require('./dbConstants');
+const { usersCollection, adminRestoInfoCollection, adminMenuCollection } = require('./dbConstants');
 // const { App } = require("../client/src/App");
 
 // encrypting password function to call
@@ -21,7 +21,7 @@ const hashPass = async (passToHash) => {
 // POST - create new Admin
 const addNewAdmin = async (req, res) => {
 
-    const { busName, firstName, lastName, email, address, postalCode, province, country, phone, website } = req.body;
+    const { busName, firstName, lastName, email, address, postalCode, province, city, phone, website } = req.body;
     let { password } = req.body;
 
     // if any of the field below are not entered -> status 400
@@ -34,13 +34,14 @@ const addNewAdmin = async (req, res) => {
         !address ||
         !postalCode ||
         !province ||
-        !country ||
+        !city ||
         !phone ||
         !website ||
         !email.includes('@')) {
 
         return res.status(400).json({ status: 400, message: "Error. Missing data from one field or more" })
     };
+
     const { db } = req.app.locals;
     // check if admin already exists by email
     const existingAdmin = await db.collection(usersCollection).findOne({ email });
@@ -56,11 +57,9 @@ const addNewAdmin = async (req, res) => {
 
         const newAdmin = await db.collection(usersCollection).insertOne(adminData);
 
-        const adminRestoInfo = { _id: uuidv4(), busName, address, postalCode, province, country, phone, website, userId: userId };
+        const adminRestoInfo = { _id: uuidv4(), busName, address, postalCode, province, city, phone, website, userId, menu: [] };
 
-        const newAdminRestoInfo = await db.collection(adminRestoInfoCollection).insertOne(adminRestoInfo)
-
-        res.status(201).json({ status: 201, data: { ...newAdmin, ...newAdminRestoInfo }, message: "New admin created and added to database" });
+        const newAdminRestoInfo = await db.collection(adminRestoInfoCollection).insertOne(adminRestoInfo);
 
         // assign QR code to newly registered admin
         QRCode.toFile(
@@ -76,47 +75,43 @@ const addNewAdmin = async (req, res) => {
                 upload_preset: 'test'
             })
             console.log(uploadedResponse);
-            res.json({ message: "Image has been uploaded" })
+
+            return res.status(201).json({ status: 201, data: { ...newAdmin, ...newAdminRestoInfo }, message: "New admin created, added to database and QR code image has been uploaded" });
 
         } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: "Issue uploading image" })
+            console.log(error, "TRY CATCH ERROR")
+            return res.status(500).json({ error: "Issue uploading image" })
         }
     }
 };
 
 const addNewMenuItem = async (req, res) => {
     try {
-
-        console.log(req.body)
         const { itemTitle, itemDetails, itemPrice, image } = req.body;
 
         if (!itemTitle || !itemDetails || !itemPrice || !image) {
             return res.status(400).json({ status: 400, message: "Error. Missing data from one field or more" })
         }
 
-
         const { db } = req.app.locals;
 
         const uploadedImage = await uploadImageToCloudinary(image);
-
-        console.log(uploadedImage)
+        // console.log(uploadedImage)
 
         const menuItemId = uuidv4();
-        const menuItemInfo = { _id: menuItemId, itemTitle, itemDetails, itemPrice, itemImage: uploadedImage.secure_url }
+        const menuItemInfo = { _id: menuItemId, itemTitle, itemDetails, itemPrice, itemImage: uploadedImage.secure_url };
 
-        const newMenuItemEntry = await db.collection(adminMenuCollection).insertOne(menuItemInfo);
-
-        console.log(newMenuItemEntry, 'THIS IS NEW MENU ENTRY')
+        const newMenuItemEntry = await db.collection(adminRestoInfoCollection).updateOne({ userId: res.locals.adminUser.userId }, { $push: { menu: menuItemInfo } });
 
         if (newMenuItemEntry.acknowledged === true) {
-            res.status(201).json({ status: 201, data: menuItemInfo, message: "Menu item added" })
-        }
+            res.status(201).json({ status: 201, data: newMenuItemEntry, message: "Menu item added" });
+        };
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Error uploading menu item" })
-    }
+        console.log('fail')
+        res.status(500).json({ error: "Error uploading menu item" });
+    };
 };
 
 const deleteMenuItem = async (req, res) => {
@@ -192,14 +187,33 @@ const getAllMenuInfo = async (req, res) => {
         console.error(error, 'hello');
         res.status(500).json({ error: error.message, message: "Error retreiving menu info" })
     }
-}
+};
+
+const getAdminEmail = async (req, res) => {
+    try {
+        const { db } = req.app.locals;
+        console.log('hit')
+
+        // const { email } = req.body;
+        const { email } = req.params;
+
+        const menuInfoEmail = await db.collection(usersCollection).find({ email }).toArray();
+
+        res.status(200).json({ status: 200, data: menuInfoEmail, message: "Successfully got menu info by email" });
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: "Error sending email" })
+    }
+};
 
 const addNewMenuImg = async (req, res) => {
     try {
         const fileStr = req.body.data;
 
-        const uploadedResponse = await uploadImageToCloudinary(fileStr)
+        const uploadedResponse = await uploadImageToCloudinary(fileStr);
         console.log(uploadedResponse);
+
         res.json({ message: "Image has been uploaded" })
     } catch (error) {
         console.error(error);
@@ -216,4 +230,4 @@ const uploadImageToCloudinary = async (image) => {
     return uploadedResponse;
 }
 
-module.exports = { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem, updateMenuItem, getMenuInfoById, getAllMenuInfo }
+module.exports = { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem, updateMenuItem, getMenuInfoById, getAllMenuInfo, getAdminEmail }

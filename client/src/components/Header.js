@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { IoFastFoodOutline } from 'react-icons/io5';
 
 export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart }) => {
+    console.log(userLoginData, 'THIS USER LOGGED IN ')
     return (
         <>
             <HeaderContainer>
@@ -25,7 +26,8 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
                         <LoggedInContainer>
                             <>
                                 <LoginName>
-                                    Welcome {userLoginData.busName}
+                                    Welcome {userLoginData !== undefined && userLoginData.firstName || userLoginData !== undefined && userLoginData.busName}
+
                                     {/* Welcome {adminLoginData.busName || userLoginData.firstName} */}
                                 </LoginName>
 
@@ -35,14 +37,13 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
                                     <Button onClick={() => {
                                         setUserLoginData(undefined)
                                         localStorage.setItem("userLoggedIn", '')
-                                        // localStorage.clear();
                                     }}>
                                         Log Out
                                     </Button>
                                 </LoginLink>
                             </>
                         </LoggedInContainer>
-                        {userLoginData.isAdmin !== false &&
+                        {userLoginData.isAdmin &&
                             <AdminMenuLinkContainer>
                                 <Link to="/admin/menu">Menu</Link>
                             </AdminMenuLinkContainer>}
@@ -54,54 +55,56 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
 };
 
 const HeaderContainer = styled.div`
-height: 110px;
-border-bottom: 2px solid green;
+width: 100%;
+position: relative;
+display: block;
+border-bottom: 3px solid #54577c;
 `;
 
 const Logo = styled.h1`
-color: green;
-width: 20px;
-margin-left: 20px; 
+color: #3C7DA8;
+display: inline-block;
+width: 78%;
 `;
 
 const LogoLink = styled(Link)`
-text-decoration: none;
+
 `
 
 const LogRegisterContainer = styled.div`
-float: right;
-position: absolute;
-right: 0;
-top: 0;
-margin-right: 10px;
-margin-top: 10px;
+width: 12%;
+display: inline-block;;
 `;
 
 const LoginLink = styled(Link)`
-color: blue;
 text-decoration: none;
-margin-right: 15px;
+margin-top: 6px;
+margin-left: 5px;
+font-size: 1.2em;
+font-weight:500;
+color: #3C7DA8;
 `;
 
 const RegisterLink = styled(Link)`
-color: blue;
 text-decoration: none;
-margin-right: 15px;
+margin-top: 6px;
+margin-left: 18px;
+font-size: 1.2em;
+font-weight:500;
+color: #3C7DA8;
+
 `;
 
 const Button = styled.button`
-border: none;
-background: transparent;
-color: blue;
-font-size: 16px;
-margin-left: 15px;
-font-weight: bold;
+
 `
 
 const Icon = styled.div`
+text-decoration: none;
+width: 10%;
+/* display: inline-block; */
 float: right;
-margin-right: 20px;
-cursor: pointer;
+padding-top: 20px;
 `
 
 const LoginName = styled.span`
@@ -109,10 +112,9 @@ font-weight: bold;
 `
 
 const LoggedInContainer = styled.div`
-float: right;
+
 `
 
 const AdminMenuLinkContainer = styled.div`
-margin-left: 15px;
-margin-top: 50px;
+
 `
