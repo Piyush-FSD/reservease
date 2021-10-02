@@ -9,26 +9,28 @@ export const SearchBar = () => {
     const [value, setValue] = useState("");
     const [filteredInput, setFilteredInput] = useState([])
 
+    // business's information fetch
+    useEffect(() => {
+        const getBusNames = async () => {
+            const response = await fetch("/search/results")
+            const data = await response.json();
+            console.log(data.data, ' search data')
+
+            setInputValue(data.data.map((item) => {
+                return { busName: item.busName }
+            }))
+        }
+        getBusNames();
+    }, [])
+
+    // filter through business names
+    // --> used below to map and return matched results
     useEffect(() => {
         const filteredValue = inputValue.filter((item) => {
             return item.busName.toLowerCase().includes(value.toLowerCase());
-
         })
         setFilteredInput(filteredValue)
     }, [value])
-
-    // useEffect(() => {
-    //     const getBusNames = async () => {
-
-    //         const response = await fetch("/search/results")
-    //         const data = await response.json();
-
-    //         setInputValue(data.data.map((item) => {
-    //             return { busName: item.busName }
-    //         }))
-    //     }
-    //     getBusNames();
-    // }, []);
 
     return (
         <Container>
@@ -48,11 +50,9 @@ export const SearchBar = () => {
                                         <SuggestionList>
                                             {item.busName.slice(0, value.length)}
                                             <Result>
-                                                {item.busName.slice(
-                                                    value.length
-                                                )}
+                                                {item.busName.slice(value.length)}
                                             </Result>
-                                            {" "}
+                                            {/* {" "} */}
                                         </SuggestionList>
                                     </DetailLink>
                                 )
@@ -65,10 +65,9 @@ export const SearchBar = () => {
 };
 
 const Container = styled.div`
-    position: relative;
-    display: block;
-    width: 100%;
-    
+position: relative;
+display: block;
+width: 100%;
 `
 
 const SearchContainer = styled.div`
@@ -84,7 +83,7 @@ border: 1px solid #c2c2c2;
 box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 background: white;
 margin: 0 auto;
-color: #fff;
+color: black;
 `;
 
 const SuggestionList = styled.li`

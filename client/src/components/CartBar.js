@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 
 export const CartBar = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState()
+
+    useEffect(() => {
+        setIsLoggedIn(JSON.parse(localStorage.getItem("userLoggedIn")))
+    }, []);
+
+    // if logged in show whether cart is empty or not via local storage item info
+    // if !logged in, show steps 1) to log in  2) visit "rest" & scan QR code  3) add item to cart
+
     return (
         <div>
             <CartInfo>

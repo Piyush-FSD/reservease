@@ -25,14 +25,14 @@ export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
             },
             body: JSON.stringify(userLogin),
         })
-        const data = await response.json();
+        const result = await response.json();
 
         // if fetch is successful, store data in userLoginData & in local storage. Then route homepage ('/')
-        if (data.status === 200) {
+        if (result.status === 200) {
 
-            setUserLoginData(data);
+            setUserLoginData(result.data);
 
-            localStorage.setItem("userLoggedIn", JSON.stringify(data.data));
+            localStorage.setItem("userLoggedIn", JSON.stringify(result.data));
             formHistory.push("/");
             // window.location.reload();
             // localStorage.setItem("userEmail", JSON.stringify(userLogin.email))
@@ -47,9 +47,9 @@ export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
             <Wrapper>
                 <Container>
                     <WelcomeMsg>Welcome to Order Way</WelcomeMsg>
-                    <UserAdminContainer>
+                    <div>
                         <SignInMsg to="/login/user">Sign In</SignInMsg>
-                    </UserAdminContainer>
+                    </div>
                     <Form onSubmit={handleSubmit}>
                         <MdEmail />
                         <AiTwotoneLock />
@@ -116,10 +116,6 @@ height: 45px;
 border-radius: 10px;
 background: #4a7b9d;
 color: #fff;
-`;
-
-const UserAdminContainer = styled.div`
-
 `;
 
 const WelcomeMsg = styled.h3`

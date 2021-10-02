@@ -72,23 +72,35 @@ const loginUser = async (req, res) => {
         return res.status(400).json({ status: 400, data: findUser, message: "Unable to find user" })
     } else {
         const hashpass = findUser.password;
-
         const decryptPass = await bcrypt.compare(password, hashpass);
 
         if (decryptPass) {
             res.status(200).json({ status: 200, data: { firstName: findUser.firstName, admin: findUser.isAdmin, email: findUser.email, adminId: findUser._id }, message: "User login successful" })
         } else {
-            // res.status(400).json{}
-            // send error msg if incorrect pass
+            res.status(500).json({ message: 'something went wrong' })
         }
     }
 };
 
-const getSearchResults = async (req, res) => {
+const getSignedInAdminInfo = async (req, res) => {
     try {
         const { db } = req.app.locals;
 
         const searchResults = await db.collection(adminRestoInfoCollection).findOne();
+
+        res.status(200).json({ status: 200, data: searchResults, message: "Successfully obtained search results" })
+
+    } catch (error) {
+        res.status(500).json({ error: "Error retreiving search results" })
+    }
+};
+
+const getSearchBarResults = async (req, res) => {
+    try {
+        const { db } = req.app.locals;
+
+        const searchResults = await db.collection(adminRestoInfoCollection).find().toArray();
+        console.log(searchResults)
 
         res.status(200).json({ status: 200, data: searchResults, message: "Successfully obtained search results" })
 
@@ -117,4 +129,4 @@ const getMenu = async (req, res) => {
     // }
 };
 
-module.exports = { addNewUser, loginUser, getSearchResults, getMenu };
+module.exports = { addNewUser, loginUser, getSignedInAdminInfo, getSearchBarResults, getMenu };
