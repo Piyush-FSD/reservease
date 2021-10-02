@@ -13,7 +13,8 @@ const { projectName } = require('./dbConstants');
 
 // Handlers
 const { addNewAdmin, addNewMenuImg, addNewMenuItem, deleteMenuItem, updateMenuItem, getMenuInfoById, getAllMenuInfo, getAdminEmail } = require("./AdminHandlers")
-const { addNewUser, loginUser, getSearchResults, getMenu } = require('./UserHandlers');
+
+const { addNewUser, loginUser, getSignedInAdminInfo, getSearchBarResults, getMenu } = require('./UserHandlers');
 
 const { Error404 } = require("./ErrorHandler");
 const { adminCheckMiddleware } = require('./Middleware');
@@ -62,7 +63,10 @@ const app = express()
     // .get("/menu", getMenu)
 
     // Business search results
-    .get("/search/results", getSearchResults)
+    .get("/search/results", getSearchBarResults)
+
+    // Admin (business) info
+    .get("/admin/info", getSignedInAdminInfo)
 
 
     // ERROR Handler 404 Not Found

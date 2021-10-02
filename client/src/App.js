@@ -27,8 +27,12 @@ export const App = () => {
   useEffect(() => { }, [showCart]);
 
   useEffect(() => {
-    localStorage.getItem("userLoggedIn") ?
-      setUserLoginData(JSON.parse(localStorage.getItem("userLoggedIn"))) : setUserLoginData('')
+    const isUserLoggedIn = localStorage.getItem("userLoggedIn");
+
+    if (isUserLoggedIn) {
+      setUserLoginData(JSON.parse(isUserLoggedIn))
+    }
+
   }, []);
 
 
