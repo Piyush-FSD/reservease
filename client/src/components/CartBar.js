@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 
-export const CartBar = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState()
-
-    useEffect(() => {
-        setIsLoggedIn(JSON.parse(localStorage.getItem("userLoggedIn")))
-    }, []);
-
-    // if logged in show whether cart is empty or not via local storage item info
-    // if !logged in, show steps 1) to log in  2) visit "rest" & scan QR code  3) add item to cart
+export const CartBar = (userLoginData) => {
+    const cartInfoFromStorage = localStorage.getItem("cartInfo");
 
     return (
         <div>
             <CartInfo>
-                <X>If signed in, it will show "VISIT VENUE, SCAN QR CODE AND ADD ITEM"</X>
-                <Seperator />
-                <X>if NOT signed in, it will show "SIGN IN TO ADD ITEMS TO CART"</X>
+                {!userLoginData.userLoginData ? (
+                    <>
+                        <h3>To add items to your cart:</h3>
+                        <div>1- Sign In</div>
+                        <div>2- Visit a desired location</div>
+                        <div>3- Scan QR Code</div>
+                        <div>4- Choose available items and add to cart</div>
+                    </>
+                ) : (
+                    <>
+                        {/* {check length if array} */}
+                        {/* {cartInfoFromStorage === null || cartInfoFromStorage.length === 0 ? (<b>Your Cart is Empty</b>) : (x)} */}
+                        <span>connect to session storage and check if items there or not.</span>
+                        <span>if items in session storage, display them</span>
+                    </>
+                )
+                }
             </CartInfo>
         </div>
     )
@@ -32,16 +39,6 @@ transition: all 1s;
 display: block;
 right: 0;
 z-index: 1;
-`
-
-const Seperator = styled.div`
-margin-top: 50px;
-`
-
-const X = styled.span`
-color:#54577c;
-font-size: 1.3em;
-font-weight:500;
 `
 
 

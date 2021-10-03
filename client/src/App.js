@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Header } from './components/Header'
-import { Homepage } from './components/Homepage'
-import { AdminRegister } from './components/Registration/AdminRegister'
-import { UserRegister } from './components/Registration/UserRegister'
-import { UserLogin } from './components/Login/UserLogin'
-import { SearchResult } from './components/SearchResult';
+import { Header } from './components/Header';
+import { Homepage } from './components/Homepage';
+import { AdminRegister } from './components/Registration/AdminRegister';
+import { UserRegister } from './components/Registration/UserRegister';
+import { UserLogin } from './components/Login/UserLogin';
 import { CartBar } from './components/CartBar';
 import { AdminMenu } from './components/Admin/AdminMenu';
-import { SupremeTaco } from './SupremeTaco';
+import { UserMenu } from './components/UserMenu'
 
+import { SupremeTaco } from './SupremeTaco';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -33,8 +33,14 @@ export const App = () => {
       setUserLoginData(JSON.parse(isUserLoggedIn))
     }
 
-  }, []);
+    const testtt = async () => {
+      const response = await fetch("/test")
+      const data = await response.json();
 
+      // console.log(data)
+    }
+    testtt()
+  }, []);
 
   return (
 
@@ -47,7 +53,9 @@ export const App = () => {
         showCart={showCart}
         setShowCart={setShowCart}
       />
-      {showCart && <CartBar />}
+      {showCart && <CartBar
+        userLoginData={userLoginData}
+      />}
       <Switch>
         <Route exact path="/">
           <Homepage
@@ -70,15 +78,15 @@ export const App = () => {
           // setUserLogin={setUserLogin}
           />
         </Route>
-        <Route exact path="/admin/menu">
+        {/* <Route exact path="/admin/menu">
           <AdminMenu />
-        </Route>
-        <Route exact path="/search/result">
-          <SearchResult />
-        </Route>
-        {/* <Route exact path="/menu/:_id">
-          <BusinessMenu />
         </Route> */}
+        <Route exact path="/admin/menu/:userId">
+          {userLoginData !== undefined && userLoginData.admin === true && <AdminMenu />}
+        </Route>
+        <Route exact path="/user/menu/:userId">
+          <UserMenu />
+        </Route>
         <Route exact path="/supreme-taco">
           <SupremeTaco />
         </Route>

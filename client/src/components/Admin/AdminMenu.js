@@ -12,21 +12,30 @@ export const AdminMenu = () => {
     const [addressInfo, setAddressInfo] = useState();
     const [menuData, setMenuData] = useState()
 
-    // const { _id } = useParams();
+    const { userId } = useParams();
 
+    // useEffect(() => {
+    //     const getAdminInfo = async () => {
+    //         const response = await fetch('/admin/info');
+    //         const data = await response.json();
+
+    //         setMenuData(data.data.menu)
+    //         setAddressInfo(data.data)
+    //     }
+    //     getAdminInfo();
+    // }, []);
+
+    // fetch logged in admin data by ID
     useEffect(() => {
-        const getAddress = async () => {
-            const response = await fetch('/admin/info');
+        const getAdminInfoById = async () => {
+            const response = await fetch(`/menu/${userId}`);
             const data = await response.json();
-
-            console.log(data.data.menu, 'menu data')
-            console.log(data.data, 'address info')
 
             setMenuData(data.data.menu)
             setAddressInfo(data.data)
         }
-        getAddress();
-    }, []);
+        getAdminInfoById();
+    }, [])
 
     return (
         <>
@@ -49,7 +58,7 @@ export const AdminMenu = () => {
             </AddressInfoContainer>
             <MenuTextContainer>
                 <h2>Menu</h2>
-                <div>
+                <MenuItemWrapper>
                     {menuData && menuData.map((item) => {
                         return (
                             <>
@@ -61,12 +70,16 @@ export const AdminMenu = () => {
                                         <MenuItemName>{item.itemTitle}</MenuItemName>
                                         <div>{item.itemDetails}</div>
                                         <div>{item.itemPrice}</div>
+                                        <EditDelContainer>
+                                            <EditBtn>Edit</EditBtn>
+                                            <DeleteBtn>Delete</DeleteBtn>
+                                        </EditDelContainer>
                                     </MenuInfo>
                                 </MenuItemContainer>
                             </>
                         )
                     })}
-                </div>
+                </MenuItemWrapper>
             </MenuTextContainer>
             <>
                 <AddMenuModal setItemData={setItemData} />
@@ -77,7 +90,7 @@ export const AdminMenu = () => {
 };
 
 const AddressInfoContainer = styled.div`
-margin-top: 10px;;
+margin-top: 10px;
 height: 100px;
 width: 36%;
 border: 2px solid orange;
@@ -86,8 +99,8 @@ margin-left: 10px;
 `
 
 const AddressWebContainer = styled.span`
-display: flex;
-flex-direction: column;
+/* display: flex; */
+/* flex-direction: column; */
 `
 
 const MenuTextContainer = styled.div`
@@ -104,7 +117,7 @@ margin-top: 5px;
 
 const MenuItemContainer = styled.div`
 display: flex;
-flex-direction: row;
+/* flex-direction: row; */
 border: 1px solid red;
 width: 30%;
 border-radius: 20px;
@@ -140,3 +153,28 @@ width: 50%;
 const MenuItemName = styled.div`
 font-weight: bold;
 `;
+
+const DeleteBtn = styled.button`
+width: 80px;
+height: 30px;
+border-radius: 10px;
+background: #4a7b9d;
+color: #fff;
+`;
+
+const EditBtn = styled.button`
+width: 80px;
+height: 30px;
+border-radius: 10px;
+background: #4a7b9d;
+color: #fff;
+`;
+
+const EditDelContainer = styled.div`
+display: flex;
+justify-content: space-around;
+`;
+const MenuItemWrapper = styled.div`
+display: flex;
+width: 80%;
+`

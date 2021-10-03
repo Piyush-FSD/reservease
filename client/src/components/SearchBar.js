@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+// import { UserMenu } from './UserMenu';
 // import { CgSearch } from 'react-icons/cg';
 
 // search bar to display all Businesses
 export const SearchBar = () => {
-    const [inputValue, setInputValue] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
     const [value, setValue] = useState("");
     const [filteredInput, setFilteredInput] = useState([])
 
@@ -14,21 +15,26 @@ export const SearchBar = () => {
         const getBusNames = async () => {
             const response = await fetch("/search/results")
             const data = await response.json();
-            console.log(data.data, ' search data')
 
-            setInputValue(data.data.map((item) => {
-                return { busName: item.busName }
+            setSearchResults(data.data.map((item) => {
+                return { busName: item.busName, userId: item.userId }
             }))
         }
         getBusNames();
     }, [])
 
+
     // filter through business names
     // --> used below to map and return matched results
     useEffect(() => {
-        const filteredValue = inputValue.filter((item) => {
+
+        if (searchResults.length === 0) return;
+        if (!value) return;
+
+        const filteredValue = searchResults.filter((item) => {
             return item.busName.toLowerCase().includes(value.toLowerCase());
         })
+
         setFilteredInput(filteredValue)
     }, [value])
 
@@ -40,25 +46,24 @@ export const SearchBar = () => {
                 placeholder="Search here"
                 onChange={(event) => setValue(event.target.value)}
             />
-            {filteredInput.length && <SearchContainer>
-                {value.length > 1 && (
-                    <>
-                        <UnorderedList>
-                            {filteredInput.map((item, index) => {
-                                return (
-                                    <DetailLink key={index} to="#">
-                                        <SuggestionList>
-                                            {item.busName.slice(0, value.length)}
-                                            <Result>
-                                                {item.busName.slice(value.length)}
-                                            </Result>
-                                            {/* {" "} */}
-                                        </SuggestionList>
-                                    </DetailLink>
-                                )
-                            })}
-                        </UnorderedList>
-                    </>)}
+            {filteredInput.length !== 0 && <SearchContainer>
+                <>
+                    <UnorderedList>
+                        {filteredInput.map((item, index) => {
+                            return (
+                                <DetailLink key={index} to={`user/menu/${item.userId}`}>
+                                    <SuggestionList>
+                                        {item.busName.slice(0, value.length)}
+                                        <Result>
+                                            {item.busName.slice(value.length)}
+                                        </Result>
+                                        {/* {" "} */}
+                                    </SuggestionList>
+                                </DetailLink>
+                            )
+                        })}
+                    </UnorderedList>
+                </>
             </SearchContainer>}
         </Container>
     )

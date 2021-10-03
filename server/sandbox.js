@@ -22,7 +22,6 @@ const test = async (db) => {
                 }
             }
         })
-    console.log('exiting')
     process.exit();
 }
 

@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import { MdEmail } from 'react-icons/md';
 import { AiTwotoneLock } from 'react-icons/ai';
 
-export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
+export const UserLogin = ({ userLoginData, setUserLoginData, userLogin, setUserLogin }) => {
     const formHistory = useHistory();
 
     const handleInput = (event) => {
@@ -29,7 +29,6 @@ export const UserLogin = ({ setUserLoginData, userLogin, setUserLogin }) => {
 
         // if fetch is successful, store data in userLoginData & in local storage. Then route homepage ('/')
         if (result.status === 200) {
-
             setUserLoginData(result.data);
 
             localStorage.setItem("userLoggedIn", JSON.stringify(result.data));
@@ -108,6 +107,7 @@ background: white;
 border: 1px solid #c2c2c2; 
 box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 padding-left: 10px;
+color: black
 `;
 
 const SubmitBtn = styled.button`

@@ -4,6 +4,15 @@ import { Link } from 'react-router-dom';
 import { IoFastFoodOutline } from 'react-icons/io5';
 
 export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart }) => {
+    const [id, setId] = useState();
+
+    useEffect(() => {
+        const storageData = localStorage.getItem("userLoggedIn");
+        if (storageData) {
+            const isUserLoggedIn = JSON.parse(storageData);
+            setId(isUserLoggedIn.adminId)
+        }
+    }, []);
 
     return (
         <>
@@ -12,9 +21,7 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
                 <Icon>
                     <IoFastFoodOutline size={40} onClick={() => setShowCart(!showCart)} />
                 </Icon>
-
                 {!userLoginData ? (
-                    // {!adminLoginData || !userLoginData ? (
                     <>
                         <LogRegisterContainer>
                             <LoginLink to="/login/user">Log in</LoginLink>
@@ -47,7 +54,7 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
                         </div>
                         {userLoginData.admin === true &&
                             <div>
-                                <Link to="/admin/menu">Menu</Link>
+                                <Link to={`/menu/${id}`}>Menu</Link>
                             </div>}
                     </>
                 )}

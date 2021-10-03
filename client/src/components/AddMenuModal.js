@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import { toast } from 'react-toastify';
-import { Button } from './Button';
+// import { Button } from './Button';
 import { PreviewImageUpload } from './PreviewImageUpload';
 // import ImageUpload from './ImageUpload';
 
@@ -37,7 +37,6 @@ export const AddMenuModal = ({ setItemData }) => {
         }
 
         const storageData = JSON.parse(localStorage.getItem("userLoggedIn"));
-        console.log(storageData, ' THIS IS STOEAGE DATA')
 
         // data to send to backend (menu info & image)
         const payload = { ...menuItemInput, image: previewSource, ...storageData }
@@ -61,7 +60,7 @@ export const AddMenuModal = ({ setItemData }) => {
 
     return (
         <div>
-            <AddItemBtn onClick={() => setModalIsOpen(true)}>+</AddItemBtn>
+            <AddItemBtn onClick={() => setModalIsOpen(true)}>Add New Menu Item</AddItemBtn>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={() => setModalIsOpen(false)}
@@ -77,8 +76,6 @@ export const AddMenuModal = ({ setItemData }) => {
                 <h2>Add to cart</h2>
                 <form onSubmit={handleAddMenu}>
                     <PreviewImageUpload previewSource={previewSource} setPreviewSource={setPreviewSource} />
-                    <div>hello</div>
-
                     <ItemNameInput
                         type="text"
                         placeholder="Item Name"
@@ -100,9 +97,9 @@ export const AddMenuModal = ({ setItemData }) => {
                         onChange={handleInput}
                         value={menuItemInput.itemPrice}
                     />
-                    <Button text={"Add"} />
+                    <AddBtn>Add to Menu</AddBtn>
                 </form>
-                <button onClick={() => setModalIsOpen(false)}>X</button>
+                <CloseModalBtn onClick={() => setModalIsOpen(false)}>Go Back</CloseModalBtn>
             </Modal>
         </div>
     )
@@ -123,9 +120,28 @@ margin-top: 8px;
 height: 70px;
 `;
 
+const AddBtn = styled.button`
+height: 40px;
+width: 120px;
+border-radius: 10px;
+background: #4a7b9d;
+color: #fff;
+`
+
 const AddItemBtn = styled.button`
 height: 40px;
-width: 40px;
+width: 140px;
 margin: 50px 0 0 270px;  
 margin-left: 550px;
+border-radius: 10px;
+background: #4a7b9d;
+color: #fff;
 `;
+
+const CloseModalBtn = styled.button`
+height: 40px;
+width: 120px;
+border-radius: 10px;
+background: #4a7b9d;
+color: #fff;
+`

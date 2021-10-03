@@ -139,7 +139,7 @@ margin-top: 5px;
 margin-bottom: 15px;
 border-radius: 5px;
 background: white;
-color: #fff;
+color: black;
 border: 1px solid #c2c2c2; 
 box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 padding-left: 10px;
