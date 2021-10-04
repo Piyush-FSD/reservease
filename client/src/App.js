@@ -10,8 +10,8 @@ import { AdminMenu } from './components/Admin/AdminMenu';
 import { UserMenu } from './components/UserMenu'
 
 import { SupremeTaco } from './SupremeTaco';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
 
 export const App = () => {
   const [userLogin, setUserLogin] = useState({
@@ -33,13 +33,7 @@ export const App = () => {
       setUserLoginData(JSON.parse(isUserLoggedIn))
     }
 
-    const testtt = async () => {
-      const response = await fetch("/test")
-      const data = await response.json();
 
-      // console.log(data)
-    }
-    testtt()
   }, []);
 
   return (
@@ -58,10 +52,7 @@ export const App = () => {
       />}
       <Switch>
         <Route exact path="/">
-          <Homepage
-            userLoginData={userLoginData}
-            setUserLoginData={setUserLoginData}
-          />
+          <Homepage />
         </Route>
         <Route exact path="/register/admin">
           <AdminRegister />
@@ -85,7 +76,11 @@ export const App = () => {
           {userLoginData !== undefined && userLoginData.admin === true && <AdminMenu />}
         </Route>
         <Route exact path="/user/menu/:userId">
-          <UserMenu />
+          <>
+            <UserMenu
+              userLoginData={userLoginData}
+            />
+          </>
         </Route>
         <Route exact path="/supreme-taco">
           <SupremeTaco />

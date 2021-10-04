@@ -2,43 +2,40 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom'
 import { AdminMenuHeader } from './Admin/AdminMenuHeader';
-import { CartBar } from './CartBar';
 import { toast } from 'react-toastify';
 
 // menu the user sees after searching and choosing a business
-export const UserMenu = () => {
+export const UserMenu = (userLoginData) => {
     const [busInfo, setBusInfo] = useState();
-    const [menuData, setMenuData] = useState()
+    const [menuData, setMenuData] = useState();
+
+    // state holding the param
+    const [adminId, setAdminId] = useState();
     const { userId } = useParams();
 
+    // put state in session storage to have access in CartBar
+    useEffect(() => {
+        setAdminId(userId);
+        sessionStorage.setItem("adminData", adminId);
+    }, [userId]);
+
+    // GET - fetch all menu's by id
     useEffect(() => {
         const getAdminInfoById = async () => {
             const response = await fetch(`/menu/${userId}`);
             const data = await response.json();
 
-            setBusInfo(data.data)
-            setMenuData(data.data.menu)
+            setBusInfo(data.data);
+            setMenuData(data.data.menu);
         }
         getAdminInfoById();
-    }, []);
+    }, [userId]);
 
-    // 1) get menu id of item that was clicked on //
-    // 2) keep track of how many of each item is being added. default = 1
-    // 3) use array to keep track of all items // 
-    // 4) each item being pushed in the array is an object
-    // 5) item in array -> item name, details, price, id
-    // OBJECT --> {menuId: menuId, name: itemName, details: itemDetails, price: itemPrice, quantity: itemQuantity}
-    // 6) push into an array
-    // 7) put array into session storage
-    // 8) if session storage already exists, take exisiting item and increment
-    // 9) console.log and do the flow 
-
+    // onClick add button
     const handleAddToCart = (item) => {
-
         const cartInfoKeyName = "cartInfo";
 
         let cartArray = sessionStorage.getItem(cartInfoKeyName);
-
         if (!cartArray) {
             cartArray = [];
         }
@@ -109,7 +106,9 @@ export const UserMenu = () => {
                                         <MenuItemName>{item.itemTitle}</MenuItemName>
                                         <div>{item.itemDetails}</div>
                                         <div>{item.itemPrice}</div>
-                                        <AddToCartBtn onClick={() => handleAddToCart(item)}>Add to Cart</AddToCartBtn>
+                                        {userLoginData &&
+                                            <AddToCartBtn onClick={() => handleAddToCart(item)}>Add to Cart</AddToCartBtn>
+                                        }
                                     </MenuInfo>
                                 </MenuItemContainer>
                             </>

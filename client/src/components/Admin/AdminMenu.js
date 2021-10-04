@@ -35,7 +35,7 @@ export const AdminMenu = () => {
             setAddressInfo(data.data)
         }
         getAdminInfoById();
-    }, [])
+    }, [userId])
 
     return (
         <>

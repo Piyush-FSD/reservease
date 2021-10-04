@@ -36,7 +36,7 @@ export const SearchBar = () => {
         })
 
         setFilteredInput(filteredValue)
-    }, [value])
+    }, [value, searchResults])
 
     return (
         <Container>
