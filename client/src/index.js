@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
+import { OrderProvider } from './OrderProvider'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <OrderProvider>
+      <App />
+    </OrderProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

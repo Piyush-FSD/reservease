@@ -12,4 +12,4 @@ export const uploadImage = async (base64EncodedImage) => {
     } catch (error) {
         console.log(error)
     }
-}
+};

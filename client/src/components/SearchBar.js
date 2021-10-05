@@ -77,6 +77,7 @@ width: 100%;
 
 const SearchContainer = styled.div`
 position: relative;
+margin-left: 35.5vw;
 `
 
 const SearchInput = styled.input`
@@ -107,7 +108,7 @@ background-color: #fff8dc;
 const UnorderedList = styled.ul`
 position: absolute;
 left: 0px;
-width: 298px;
+width: 380px;
 float: right;
 background-color: white;
 border: 2px solid black;

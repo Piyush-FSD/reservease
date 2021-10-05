@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import { IoFastFoodOutline } from 'react-icons/io5';
+import { Navbar } from "./NavBar";
+import LogoImg from '../Logo/LogoImg.png'
 
 export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart }) => {
     const [id, setId] = useState();
@@ -17,10 +19,12 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
     return (
         <>
             <HeaderContainer>
-                <Link to="/"><Logo>Order Way.</Logo></Link>
+                <Link to="/"><LogoImgg src={LogoImg}></LogoImgg>
+                    <LogoText>Order Way.</LogoText></Link>
                 <Icon>
                     <IoFastFoodOutline size={40} onClick={() => setShowCart(!showCart)} />
                 </Icon>
+                <Navbar />
                 {!userLoginData ? (
                     <>
                         <LogRegisterContainer>
@@ -29,8 +33,8 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
                         </LogRegisterContainer>
                     </>
                 ) : (
-                    <>
-                        <div>
+                    <LoginMenuContainer>
+                        <WelcomeContainer>
                             <>
                                 <LoginName>
                                     <WelcomeText>Welcome {userLoginData !== undefined && userLoginData.firstName}
@@ -51,12 +55,12 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
                                     </Button>
                                 </LoginLink>
                             </>
-                        </div>
-                        {userLoginData.admin === true &&
-                            <div>
-                                <Link to={`/menu/${id}`}>Menu</Link>
-                            </div>}
-                    </>
+                            {userLoginData.admin === true &&
+                                <MenuContainer>
+                                    <AdminMenuLink to={`/menu/${id}`}>Edit Menu</AdminMenuLink>
+                                </MenuContainer>}
+                        </WelcomeContainer>
+                    </LoginMenuContainer>
                 )}
             </HeaderContainer>
         </>
@@ -64,36 +68,38 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
 };
 
 const HeaderContainer = styled.div`
-width: 100%;
+width: 85rem;
+margin: 0 auto;
 position: relative;
 display: block;
-border-bottom: 3px solid #54577c;
+padding: 30px 0px;
 `;
 
-const Logo = styled.h1`
-color: #3C7DA8;
-display: inline-block;
-width: 78%;
+const LogoText = styled.h1`
+    color: #f6b210;
+    display: inline-block;
+    width: 78%;
+    margin: 0;
+    padding-bottom: 0;
+    padding-left: 10px;
 `;
 
 const LogRegisterContainer = styled.div`
-width: 12%;
-display: inline-block;;
+width: 40%;
+display: inline-block;
+text-align: right;
 `;
 
 const LoginLink = styled(Link)`
 text-decoration: none;
-margin-top: 6px;
-margin-left: 5px;
-font-size: 1.2em;
-font-weight: 500;
-color: #3C7DA8;
+display: inline-block;
+width: 17%;
+float: right;
+margin-top: 2px;
 `;
 
 const RegisterLink = styled(Link)`
 text-decoration: none;
-margin-top: 6px;
-margin-left: 18px;
 font-size: 1.2em;
 font-weight: 500;
 color: #3C7DA8;
@@ -102,9 +108,9 @@ color: #3C7DA8;
 const Button = styled.button`
 border: none;
 background: transparent;
+font-size: 1.2em;
+font-weight: 548;
 color: #3C7DA8;
-font-size: 0.9em;
-font-weight: 500;
 `
 
 const Icon = styled.div`
@@ -114,12 +120,42 @@ float: right;
 padding-top: 20px;
 `
 
-const LoginName = styled.span`
+const LoginName = styled.div`
 font-weight: bold;
+display: inline-block;
+width: 40%;
 `;
 
-const WelcomeText = styled.div`
+const WelcomeText = styled.span`
 color: #54577c;
 font-size: 1.3em;
 font-weight: 600;
+`
+
+const AdminMenuLink = styled(Link)`
+font-size: 1.2em;
+font-weight: 500;
+color: #3C7DA8;
+text-decoration: none;
+`
+
+const LogoImgg = styled.img`
+width: 80px;
+padding-left: 5px;
+
+`
+
+const LoginMenuContainer = styled.div`
+display:inline-block;
+width: 40%;
+`
+
+const MenuContainer = styled.div`
+display: inline-block;
+width: 20%;
+`
+
+const WelcomeContainer = styled.div`
+text-align:right;
+
 `

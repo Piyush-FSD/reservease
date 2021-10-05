@@ -1,58 +1,41 @@
-import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router';
+import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from "react-router";
 import styled from 'styled-components';
+import { OrderContext } from '../OrderProvider';
 
 export const CartBar = (userLoginData) => {
-    const [storageInfo, setStorageInfo] = useState();
-    //se params to get the admin id...
+    const formHistory = useHistory();
+
+    const { state, actions: { deleteOrder } } = useContext(OrderContext);
 
     const handleDeleteItem = (itemId) => {
-        if (!storageInfo) return;
         if (!itemId) return;
 
-        const itemIndex = storageInfo.findIndex(item => item._id === itemId);
-        if (itemIndex === -1) return;
-
-        //delete
-        storageInfo.splice(itemIndex, 1);
-        sessionStorage.setItem("cartInfo", JSON.stringify(storageInfo));
+        deleteOrder(itemId)
     }
-
-    //useEffect... handle the case if it doesnt exist.
-    useEffect(() => {
-        const storageItems = sessionStorage.getItem("cartInfo")
-
-        if (storageItems) {
-            const parsedItems = JSON.parse(storageItems);
-            setStorageInfo(parsedItems);
-        }
-    }, [])
-    // handleDeleteItem
-
 
     // POST - when user click Order button
     const handleSubmitOrder = async (event) => {
         event.preventDefault();
 
-        const userIdStorageInfo = localStorage.getItem("userLoggedIn");
+        const userIdStorageInfo = JSON.parse(localStorage.getItem("userLoggedIn"));
         const adminIdStorageInfo = sessionStorage.getItem("adminData");
         const orderIdStorageInfo = JSON.parse(sessionStorage.getItem("cartInfo"));
-
-        const orderId = orderIdStorageInfo.map(item => { return item._id });
-
-        console.log(userIdStorageInfo.userId, 'cart userId')
-        console.log(adminIdStorageInfo._id, 'cart adminId')
+        const userId = userIdStorageInfo.userId;
 
         if (!adminIdStorageInfo) return;
+        const status = 'order sent';
 
-        const response = await fetch("/orders", {
+        const response = await fetch("/order", {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ ...adminIdStorageInfo, ...userIdStorageInfo.userId, orderId })
+            body: JSON.stringify({ adminIdStorageInfo, userId, orderIdStorageInfo, status: status })
         })
-        const data = await response.json();
+        const result = await response.json();
+        // if (result)
+        console.log(result)
     };
 
     return (
@@ -67,26 +50,27 @@ export const CartBar = (userLoginData) => {
                 </>
             ) : (
                 <>
-                    {!storageInfo ? (
+                    {!state.orders.length > 0 ? (
                         <b>Your Cart is Empty</b>
-                    ) :
+                    ) : (
                         <>
                             <h2>Orders</h2>
-                            {storageInfo.map((item) => {
+                            {state.orders.map((item, index) => {
                                 return (
-                                    <>
+                                    <div key={index}>
                                         <OrderContainer>
                                             <ItemTitle>{item.itemTitle}</ItemTitle>
                                             <ItemQuantity>x{item.quantity}</ItemQuantity>
                                             <ItemPrice>{item.itemPrice}</ItemPrice>
                                             <ItemDelBtn onClick={() => handleDeleteItem(item._id)}>x</ItemDelBtn>
                                         </OrderContainer>
-                                        <ConfirmBtn onClick={handleSubmitOrder}>Confirm Order</ConfirmBtn>
-                                    </>
+                                    </div>
                                 )
                             })
                             }
+                            <ConfirmBtn onClick={handleSubmitOrder}>Confirm Order</ConfirmBtn>
                         </>
+                    )
                         // Once order confirmed, hide <h2>Order</h2>, <button> and display "Order Confirmed! <order number>"
                         // Order status
                     }

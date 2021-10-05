@@ -1,22 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom'
 import { AdminMenuHeader } from './Admin/AdminMenuHeader';
 import { toast } from 'react-toastify';
+import { OrderContext } from '../OrderProvider';
 
 // menu the user sees after searching and choosing a business
 export const UserMenu = (userLoginData) => {
     const [busInfo, setBusInfo] = useState();
     const [menuData, setMenuData] = useState();
 
+    const { state, actions: { addOrder }, } = useContext(OrderContext);
+
     // state holding the param
-    const [adminId, setAdminId] = useState();
+    // const [adminId, setAdminId] = useState();
     const { userId } = useParams();
 
     // put state in session storage to have access in CartBar
     useEffect(() => {
-        setAdminId(userId);
-        sessionStorage.setItem("adminData", adminId);
+        // setAdminId(userId);
+        sessionStorage.setItem("adminData", userId);
     }, [userId]);
 
     // GET - fetch all menu's by id
@@ -33,44 +36,56 @@ export const UserMenu = (userLoginData) => {
 
     // onClick add button
     const handleAddToCart = (item) => {
-        const cartInfoKeyName = "cartInfo";
 
-        let cartArray = sessionStorage.getItem(cartInfoKeyName);
-        if (!cartArray) {
-            cartArray = [];
-        }
-        else {
-            cartArray = JSON.parse(cartArray);
-        }
+        if (!item) return
 
-        //Find the matching item in the cartArray
-        const itemMatch = cartArray.find((elem) => elem._id === item._id);
+        //add quantity key
 
-        //What happens if we find it?
-        if (itemMatch) {
-            // update item quantity locally
-            itemMatch.quantity = itemMatch.quantity + 1
+        const itemWithQuantity = { ...item, quantity: 1 }
 
-            //how do you know which index to replace?
-            const itemIndex = cartArray.findIndex((elem) => elem._id === item._id);
+        addOrder(itemWithQuantity);
 
-            // replace the cart array with updated item (object)
-            cartArray[itemIndex] = itemMatch;
 
-            // replace existing session storage cartInfo with new.
-            sessionStorage.setItem(cartInfoKeyName, JSON.stringify(cartArray));
 
-            //toast -> Item Succesfully added - Name of the item
-            toast(`${item.itemTitle} added to cart`);
-        } else {
-            //Get existing cartArray
-            //Add to that existing carArray
-            cartArray.push({ ...item, quantity: 1 })
-            //Set to session storage 
-            sessionStorage.setItem(cartInfoKeyName, JSON.stringify(cartArray))
-            //toast -> Item Succesfully added - Name of the item
-            toast(`${item.itemTitle} added to cart`);
-        }
+        // const cartInfoKeyName = "cartInfo";
+
+        // let cartArray = sessionStorage.getItem(cartInfoKeyName);
+        // if (!cartArray) {
+        //     cartArray = [];
+        // }
+        // else {
+        //     cartArray = JSON.parse(cartArray);
+        // }
+        // console.log(cartArray, ' cart arraty')
+
+        // //Find the matching item in the cartArray
+        // const itemMatch = cartArray.find((elem) => elem._id === item._id);
+
+        // //What happens if we find it?
+        // if (itemMatch) {
+        //     // update item quantity locally
+        //     itemMatch.quantity = itemMatch.quantity + 1
+
+        //     //how do you know which index to replace?
+        //     const itemIndex = cartArray.findIndex((elem) => elem._id === item._id);
+
+        //     // replace the cart array with updated item (object)
+        //     cartArray[itemIndex] = itemMatch;
+
+        //     // replace existing session storage cartInfo with new.
+        //     sessionStorage.setItem(cartInfoKeyName, JSON.stringify(cartArray));
+
+        //     //toast -> Item Succesfully added - Name of the item
+        //     toast(`${item.itemTitle} added to cart`);
+        // } else {
+        //     //Get existing cartArray
+        //     //Add to that existing carArray
+        //     cartArray.push({ ...item, quantity: 1 })
+        //     //Set to session storage 
+        //     sessionStorage.setItem(cartInfoKeyName, JSON.stringify(cartArray))
+        //     //toast -> Item Succesfully added - Name of the item
+        //     toast(`${item.itemTitle} added to cart`);
+        // }
     };
 
     return (
@@ -97,7 +112,7 @@ export const UserMenu = (userLoginData) => {
                 <MenuItemWrapper>
                     {menuData && menuData.map((item, index) => {
                         return (
-                            <>
+                            <div key={index}>
                                 <MenuItemContainer key={index}>
                                     <MenuImg>
                                         <ItemImg src={item.itemImage} />
@@ -111,7 +126,7 @@ export const UserMenu = (userLoginData) => {
                                         }
                                     </MenuInfo>
                                 </MenuItemContainer>
-                            </>
+                            </div>
                         )
                     })}
                 </MenuItemWrapper>
