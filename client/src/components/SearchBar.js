@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { apiUrl } from '../urls';
 // import { UserMenu } from './UserMenu';
 // import { CgSearch } from 'react-icons/cg';
 
@@ -13,7 +14,7 @@ export const SearchBar = () => {
     // business's information fetch
     useEffect(() => {
         const getBusNames = async () => {
-            const response = await fetch("/search/results")
+            const response = await fetch(`${apiUrl}/search/results`)
             const data = await response.json();
 
             setSearchResults(data.data.map((item) => {

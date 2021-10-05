@@ -12,14 +12,12 @@ export const UserMenu = (userLoginData) => {
 
     const { state, actions: { addOrder }, } = useContext(OrderContext);
 
-    // state holding the param
-    // const [adminId, setAdminId] = useState();
     const { userId } = useParams();
 
     // put state in session storage to have access in CartBar
     useEffect(() => {
         // setAdminId(userId);
-        sessionStorage.setItem("adminData", userId);
+        sessionStorage.setItem("adminId", userId);
     }, [userId]);
 
     // GET - fetch all menu's by id
@@ -34,58 +32,16 @@ export const UserMenu = (userLoginData) => {
         getAdminInfoById();
     }, [userId]);
 
-    // onClick add button
+
     const handleAddToCart = (item) => {
 
-        if (!item) return
+        console.log(process.env, 'process.env')
 
-        //add quantity key
+        if (!item) return
 
         const itemWithQuantity = { ...item, quantity: 1 }
 
         addOrder(itemWithQuantity);
-
-
-
-        // const cartInfoKeyName = "cartInfo";
-
-        // let cartArray = sessionStorage.getItem(cartInfoKeyName);
-        // if (!cartArray) {
-        //     cartArray = [];
-        // }
-        // else {
-        //     cartArray = JSON.parse(cartArray);
-        // }
-        // console.log(cartArray, ' cart arraty')
-
-        // //Find the matching item in the cartArray
-        // const itemMatch = cartArray.find((elem) => elem._id === item._id);
-
-        // //What happens if we find it?
-        // if (itemMatch) {
-        //     // update item quantity locally
-        //     itemMatch.quantity = itemMatch.quantity + 1
-
-        //     //how do you know which index to replace?
-        //     const itemIndex = cartArray.findIndex((elem) => elem._id === item._id);
-
-        //     // replace the cart array with updated item (object)
-        //     cartArray[itemIndex] = itemMatch;
-
-        //     // replace existing session storage cartInfo with new.
-        //     sessionStorage.setItem(cartInfoKeyName, JSON.stringify(cartArray));
-
-        //     //toast -> Item Succesfully added - Name of the item
-        //     toast(`${item.itemTitle} added to cart`);
-        // } else {
-        //     //Get existing cartArray
-        //     //Add to that existing carArray
-        //     cartArray.push({ ...item, quantity: 1 })
-        //     //Set to session storage 
-        //     sessionStorage.setItem(cartInfoKeyName, JSON.stringify(cartArray))
-        //     //toast -> Item Succesfully added - Name of the item
-        //     toast(`${item.itemTitle} added to cart`);
-        // }
     };
 
     return (
