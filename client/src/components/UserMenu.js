@@ -34,9 +34,6 @@ export const UserMenu = (userLoginData) => {
 
 
     const handleAddToCart = (item) => {
-
-        console.log(process.env, 'process.env')
-
         if (!item) return
 
         const itemWithQuantity = { ...item, quantity: 1 }

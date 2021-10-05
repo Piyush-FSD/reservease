@@ -1,14 +1,12 @@
-import React, { useState, useReducer, createContext } from "react";
+import React, { useReducer, createContext } from "react";
 
 export const OrderContext = createContext(null);
 
 const initalState = {
-    adminId: '',
     orders: []
 };
 
 const reducer = (state, action) => {
-    console.log(action, 'this is action')
     switch (action.type) {
         case 'menu-item-added': {
             //copy over exisiting orders
@@ -48,11 +46,10 @@ const reducer = (state, action) => {
             }
         }
 
-        case 'order-submitted':
-            return
         default: throw new Error(`Unrecognized action: ${action.type}`)
     }
-}
+};
+
 export const OrderProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initalState);
 
@@ -72,11 +69,6 @@ export const OrderProvider = ({ children }) => {
             itemIdToDeleteFromOrder
         })
     }
-
-    //change all to cart
-
-    //action for updating just the admin id. 
-
 
     return (
         <>

@@ -1,29 +1,33 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from "react-router";
+import React, { useContext } from 'react';
+// import { useHistory } from "react-router";
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
 import { OrderContext } from '../OrderProvider';
 
 export const CartBar = (userLoginData) => {
-    const formHistory = useHistory();
+    // const formHistory = useHistory();
 
     const { state, actions: { deleteOrder } } = useContext(OrderContext);
 
     const handleDeleteItem = (itemId) => {
         if (!itemId) return;
-
         deleteOrder(itemId)
     }
 
     // POST - when user click Order button
     const handleSubmitOrder = async (event) => {
         event.preventDefault();
+        //get orders from order cart -> state context
+        //do the post
+        //rest is backend.
 
         const userIdStorageInfo = JSON.parse(localStorage.getItem("userLoggedIn"));
+        const userId = userIdStorageInfo.userId
         const adminIdStorageInfo = sessionStorage.getItem("adminData");
-        const orderIdStorageInfo = JSON.parse(sessionStorage.getItem("cartInfo"));
-        const userId = userIdStorageInfo.userId;
 
         if (!adminIdStorageInfo) return;
+
+        // initial order status when order is placed
         const status = 'order sent';
 
         const response = await fetch("/order", {
@@ -31,11 +35,12 @@ export const CartBar = (userLoginData) => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ adminIdStorageInfo, userId, orderIdStorageInfo, status: status })
+            body: JSON.stringify({ adminIdStorageInfo, userId, state, status: status })
         })
         const result = await response.json();
-        // if (result)
-        console.log(result)
+        if (result.status === 201) {
+            toast("Order has been placed!")
+        }
     };
 
     return (

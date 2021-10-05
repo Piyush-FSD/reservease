@@ -14,7 +14,7 @@ export const SearchBar = () => {
     // business's information fetch
     useEffect(() => {
         const getBusNames = async () => {
-            const response = await fetch(`${apiUrl}/search/results`)
+            const response = await fetch(`/search/results`)
             const data = await response.json();
 
             setSearchResults(data.data.map((item) => {
