@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import { OrderContext } from '../OrderProvider';
 
+import LogoImg from '../Logo/LogoImg.png';
+
 export const CartBar = (userLoginData) => {
     // const formHistory = useHistory();
 
@@ -28,7 +30,7 @@ export const CartBar = (userLoginData) => {
         if (!adminIdStorageInfo) return;
 
         // initial order status when order is placed
-        const status = 'order sent';
+        const status = 'order placed';
 
         const response = await fetch("/order", {
             method: 'POST',
@@ -45,13 +47,19 @@ export const CartBar = (userLoginData) => {
 
     return (
         <Container>
+            <LogoContainer>
+                <LogoImgg src={LogoImg}></LogoImgg>
+                <LogoText>Order Way.</LogoText>
+            </LogoContainer>
             {!userLoginData.userLoginData ? (
                 <>
-                    <h3>To add items to your cart:</h3>
-                    <div>1- Sign In</div>
-                    <div>2- Visit a desired location</div>
-                    <div>3- Scan QR Code</div>
-                    <div>4- Choose available items and add to cart</div>
+                    <CartSteps>To add items to your cart:</CartSteps>
+                    <InstructionsContainer>
+                        <Steps>1) Sign In</Steps>
+                        <Steps>2) Visit a desired location</Steps>
+                        <Steps>3) Scan QR Code</Steps>
+                        <Steps>4) Choose available items and add to cart</Steps>
+                    </InstructionsContainer>
                 </>
             ) : (
                 <>
@@ -88,7 +96,7 @@ export const CartBar = (userLoginData) => {
 
 const Container = styled.div`
 width: 290px;
-background: #9AA899;
+background: #000;
 position: absolute;
 height: 95vh;
 padding: 0 30px;
@@ -141,3 +149,53 @@ border-radius: 10px;
 background:#4a7b9d;
 color: #fff;
 `;
+
+const LogoText = styled.h1`
+display: inline-block;
+color: #fff;
+text-transform: uppercase;
+-webkit-letter-spacing: 2px;
+-moz-letter-spacing: 2px;
+-ms-letter-spacing: 2px;
+letter-spacing: 2px;
+font-size: 16px;
+
+:hover {
+    color: #f6b210;
+}
+`;
+
+const LogoImgg = styled.img`
+width: 80px;
+`
+
+const LogoContainer = styled.div`
+margin-top: 15px;;
+`;
+
+const CartSteps = styled.h3`
+font-weight: 700;
+color: white;
+text-decoration: none;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 15px;
+`
+
+const Steps = styled.span`
+color: white;
+width: 100%;
+margin-top: 50px;
+font-weight: 500;
+color: white;
+text-decoration: none;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 15px;
+`
+
+const InstructionsContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+`

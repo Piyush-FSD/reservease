@@ -45,7 +45,7 @@ export const UserLogin = ({ userLoginData, setUserLoginData, userLogin, setUserL
         <>
             <Wrapper>
                 <Container>
-                    <WelcomeMsg>Welcome to Order Way</WelcomeMsg>
+                    <WelcomeMsg>Welcome to Order Way.</WelcomeMsg>
                     <div>
                         <SignInMsg to="/login/user">Sign In</SignInMsg>
                     </div>
@@ -68,7 +68,7 @@ export const UserLogin = ({ userLoginData, setUserLoginData, userLogin, setUserL
                             value={userLogin.password}
                         >
                         </Input>
-                        <SubmitBtn>Sign in</SubmitBtn>
+                        <SubmitBtn><SignInText>Sign In</SignInText></SubmitBtn>
                     </Form>
                 </Container>
             </Wrapper>
@@ -78,17 +78,20 @@ export const UserLogin = ({ userLoginData, setUserLoginData, userLogin, setUserL
 
 const Wrapper = styled.div`
 text-align:center;
+
 `;
 const Container = styled.div`
 text-align: center;
 margin: auto 0;
 display: inline-block;
 width: 40%;
-background: #faffd8;
+background: black;
 margin-top: 30px;
 padding: 3%;
 border-radius: 5%;
 border: 3px solid #54577c;
+border: 3px solid #f6b210;
+
 `;
 
 const Form = styled.form`
@@ -108,24 +111,50 @@ border: 1px solid #c2c2c2;
 box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 padding-left: 10px;
 color: black;
+border: 3px solid #f6b210;
+
 `;
 
 const SubmitBtn = styled.button`
 width: 170px;
 height: 45px;
 border-radius: 10px;
-background: #4a7b9d;
-color: #fff;
+background: white;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 15px;
+color: black;
+border: 3px solid #f6b210;
+
 `;
 
 const WelcomeMsg = styled.h3`
-color:#54577c;
-font-size: 1.6em;
-font-weight:600;
+font-weight: 500;
+color: white;
+-webkit-text-decoration: none;
+text-decoration: none;
+margin-left: 15px;
+padding: 0 35px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 25px;
 `
 
 const SignInMsg = styled.span`
-color:#54577c;
-font-size: 1.4em;
-font-weight:500;
+font-weight: 500;
+color: white;
+-webkit-text-decoration: none;
+text-decoration: none;
+margin-left: 15px;
+padding: 0 35px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 22px;
+`
+
+const SignInText = styled.div`
+font-weight: 700;
+:hover {
+    color: #f6b210;
+}
 `

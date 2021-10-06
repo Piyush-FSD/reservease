@@ -14,7 +14,7 @@ export const SearchBar = () => {
     // business's information fetch
     useEffect(() => {
         const getBusNames = async () => {
-            const response = await fetch(`/search/results`)
+            const response = await fetch("/search/results")
             const data = await response.json();
 
             setSearchResults(data.data.map((item) => {
@@ -78,19 +78,20 @@ width: 100%;
 
 const SearchContainer = styled.div`
 position: relative;
-margin-left: 35.5vw;
 `
 
 const SearchInput = styled.input`
-width: 30%;
-height: 40px;
-border-radius: 5px;
-padding-left: 10px;
-border: 1px solid #c2c2c2; 
-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-background: white;
-margin: 0 auto;
-color: black;
+    width: 400px;
+    height: 40px;
+    border-radius: 5px;
+    padding-left: 10px;
+    border: 1px solid #c2c2c2;
+    box-shadow: 0 0 4px 0 rgb(0 0 0 / 20%);
+    background: white;
+    margin: 0 auto;
+    color: black;
+border: 3px solid #f6b210;
+
 `;
 
 const SuggestionList = styled.li`
@@ -107,18 +108,19 @@ background-color: #fff8dc;
 `;
 
 const UnorderedList = styled.ul`
-position: absolute;
-left: 0px;
-width: 380px;
-float: right;
-background-color: white;
-border: 2px solid black;
-border-bottom: 1px solid black;
-max-height: 300px;
-text-align: left;
-border-radius: 4px;
-overflow-y: scroll;
-z-index: 1;
+    position: absolute;
+    left: 0px;
+    width: 370px;
+    /* float: right; */
+    background-color: white;
+    border: 2px solid black;
+    border-bottom: 1px solid black;
+    max-height: 300px;
+    text-align: left;
+    border-radius: 4px;
+    overflow-y: scroll;
+    z-index: 1;
+    margin: 0;
 `;
 
 const Result = styled.span`

@@ -199,11 +199,12 @@ text-align: center;
 margin: auto 0;
 display: inline-block;
 width: 40%;
-background: #faffd8;
+background: black;
 margin-top: 30px;
 padding: 3%;
 border-radius: 5%;
-border: 3px solid #54577c;
+border: 3px solid #f6b210;
+
 `;
 
 const Form = styled.form`
@@ -223,14 +224,20 @@ color: black;
 border: 1px solid #c2c2c2; 
 box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 padding-left: 10px;
+border: 3px solid #f6b210;
+
 `;
 
 const SubmitBtn = styled.button`
-width: 170px;
-height: 45px;
+width: 200px;
+height: 50px;
 border-radius: 10px;
-background:#4a7b9d;
-color: #fff;
+background: white;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 12px;
+color: black;
+border: 3px solid #f6b210;
 `
 
 const SplitInputContainer = styled.div`
@@ -249,6 +256,8 @@ color: black;
 border: 1px solid #c2c2c2; 
 box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 padding-left: 10px;
+border: 3px solid #f6b210;
+
 `;
 
 const UserLink = styled(Link)`
@@ -260,17 +269,28 @@ font-weight:500;
 color: #3C7DA8;
 `
 
-const RegisterMsg = styled.div`
-text-align: center;
-color:#54577c;
-font-size: 1.6em;
-font-weight:600;
+const RegisterMsg = styled.h3`
+font-weight: 500;
+color: white;
+-webkit-text-decoration: none;
+text-decoration: none;
+margin-left: 15px;
+padding: 0 35px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 23px;
 `
 
 const AdminOr = styled.span`
-color:#54577c;
-font-size: 1.3em;
-font-weight:500;
+font-weight: 500;
+color: white;
+-webkit-text-decoration: none;
+text-decoration: none;
+margin-left: 15px;
+padding: 0 35px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 20px;
 `
 
 const Splitter = styled.div`

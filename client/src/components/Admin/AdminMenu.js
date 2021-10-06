@@ -14,17 +14,6 @@ export const AdminMenu = () => {
 
     const { userId } = useParams();
 
-    // useEffect(() => {
-    //     const getAdminInfo = async () => {
-    //         const response = await fetch('/admin/info');
-    //         const data = await response.json();
-
-    //         setMenuData(data.data.menu)
-    //         setAddressInfo(data.data)
-    //     }
-    //     getAdminInfo();
-    // }, []);
-
     // fetch logged in admin data by ID
     useEffect(() => {
         const getAdminInfoById = async () => {
@@ -42,15 +31,14 @@ export const AdminMenu = () => {
             <AdminMenuHeader />
             <AddressInfoContainer>
                 <AddressWebContainer>
+                    <BusName>
+                        {addressInfo && addressInfo.busName}
+                    </BusName>
                     <div>
                         {addressInfo && addressInfo.address},
                         {addressInfo && addressInfo.city},
                         {addressInfo && addressInfo.postalCode}
-                        <MoreInfoLink to="#">More Info</MoreInfoLink>
                     </div>
-                    <BusName>
-                        {addressInfo && addressInfo.busName}
-                    </BusName>
                     <WebsiteContainer>
                         {addressInfo && addressInfo.website}
                     </WebsiteContainer>
@@ -108,13 +96,6 @@ margin-left: 10px;
 `
 
 
-const MoreInfoLink = styled(Link)`
-font-size: 13px;
-text-decoration: none;
-margin-left: 10px;
-margin-top: 5px;
-`
-
 const MenuItemContainer = styled.div`
 display: flex;
 /* flex-direction: row; */
@@ -129,7 +110,7 @@ margin-top: 15px;
 
 const BusName = styled.div`
 margin-top: 10px;
-color: green;
+color: red;
 `
 
 const ItemImg = styled.img`

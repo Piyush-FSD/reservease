@@ -1,6 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
 import { SearchBar } from './SearchBar';
+// import homepage from '../Logo/homepage.png'
 
 export const Homepage = () => {
     return (
@@ -19,24 +20,36 @@ export const Homepage = () => {
 
 const Container = styled.div`
 position: relative;
-display: block;
-width: 100%;
-text-align: center;
-height:50vh;
-background: #FAFFD8;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    height: 50vh;
+    background: #000;
 `;
 
 const WelcomeMsg = styled.h2`
-margin-top: 0;
-padding-top:100px;
-color: #54577c;
-font-size: 1.6em;
-font-weight:600;
+    font-weight: 500;
+    color: #f6b210;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    margin-left: 15px;
+    padding: 0 35px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 2em;
 `;
 
 const Ordering = styled.h2`
-color: #3C7DA8;
-font-size: 1.3em;
-font-weight:500;
-margin-left: 5px;
+    font-weight: 500;
+    color: #fff;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    margin-left: 15px;
+    padding: 0 35px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.3em;
 `;

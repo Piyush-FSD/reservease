@@ -9,10 +9,8 @@ import { OrderContext } from '../OrderProvider';
 export const UserMenu = (userLoginData) => {
     const [busInfo, setBusInfo] = useState();
     const [menuData, setMenuData] = useState();
-
-    const { state, actions: { addOrder }, } = useContext(OrderContext);
-
     const { userId } = useParams();
+    const { state, actions: { addOrder }, } = useContext(OrderContext);
 
     // put state in session storage to have access in CartBar
     useEffect(() => {
@@ -32,12 +30,10 @@ export const UserMenu = (userLoginData) => {
         getAdminInfoById();
     }, [userId]);
 
-
     const handleAddToCart = (item) => {
         if (!item) return
 
         const itemWithQuantity = { ...item, quantity: 1 }
-
         addOrder(itemWithQuantity);
     };
 
@@ -46,22 +42,21 @@ export const UserMenu = (userLoginData) => {
             <AdminMenuHeader />
             <AddressInfoContainer>
                 <AddressWebContainer>
-                    <div>
-                        {busInfo && busInfo.address},
-                        {busInfo && busInfo.city},
-                        {busInfo && busInfo.postalCode}
-                        <MoreInfoLink to="#">More Info</MoreInfoLink>
-                    </div>
                     <BusName>
                         {busInfo && busInfo.busName}
                     </BusName>
+                    <Address>
+                        {busInfo && busInfo.address},
+                        {busInfo && busInfo.city},
+                        {busInfo && busInfo.postalCode}
+                    </Address>
                     <WebsiteContainer>
                         {busInfo && busInfo.website}
                     </WebsiteContainer>
                 </AddressWebContainer>
             </AddressInfoContainer>
             <MenuTextContainer>
-                <h2>Menu</h2>
+                <MenuHeader>Menu</MenuHeader>
                 <MenuItemWrapper>
                     {menuData && menuData.map((item, index) => {
                         return (
@@ -75,6 +70,7 @@ export const UserMenu = (userLoginData) => {
                                         <div>{item.itemDetails}</div>
                                         <div>{item.itemPrice}</div>
                                         {userLoginData &&
+
                                             <AddToCartBtn onClick={() => handleAddToCart(item)}>Add to Cart</AddToCartBtn>
                                         }
                                     </MenuInfo>
@@ -90,16 +86,19 @@ export const UserMenu = (userLoginData) => {
 
 const AddressInfoContainer = styled.div`
 margin-top: 10px;
-height: 100px;
+height: 150px;
 width: 36%;
-border: 2px solid orange;
+border: 3px solid #f6b210;
 margin-left: 10px;
+background-color: black;
 /* display: flex; */
 `
 
 const AddressWebContainer = styled.span`
-/* display: flex; */
-/* flex-direction: column; */
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 17px;
+padding-left: 10px;
 `
 
 const MenuTextContainer = styled.div`
@@ -116,18 +115,26 @@ margin-top: 5px;
 const MenuItemContainer = styled.div`
 display: flex;
 /* flex-direction: row; */
-border: 1px solid red;
-width: 30%;
+border: 3px solid #f6b210;
+background-color: black;
+width: 400px;
 border-radius: 20px;
+
 `;
 
 const WebsiteContainer = styled.div`
 margin-top: 15px;
+margin-left: 10px;
+color: white;
 `;
 
 const BusName = styled.div`
-margin-top: 10px;
-color: green;
+color: #f6b210;
+margin-bottom: 10px;
+font-size: 35px;
+font-weight: 650;
+margin-left: 10px;
+
 `
 
 const ItemImg = styled.img`
@@ -141,7 +148,10 @@ flex-direction: column;
 text-align: center;
 justify-content: space-around;
 box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 15px;
+color: white;
 `;
 
 const MenuImg = styled.div`
@@ -149,7 +159,7 @@ width: 50%;
 `;
 
 const MenuItemName = styled.div`
-font-weight: bold;
+/* font-weight: bold; */
 `;
 
 const MenuItemWrapper = styled.div`
@@ -158,9 +168,30 @@ width: 80%;
 `;
 
 const AddToCartBtn = styled.button`
-width: 80px;
-height: 30px;
+width: 120px;
+height: 35px;
 border-radius: 10px;
 background: #4a7b9d;
 color: #fff;
+margin-left: 50px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 10px;
+
+:hover {
+    color: #f6b210;
+}
 `;
+
+
+const MenuHeader = styled.h1`
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 30px;
+`
+
+const Address = styled.div`
+margin-left: 10px;
+color: white;
+`

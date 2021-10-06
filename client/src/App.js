@@ -14,7 +14,7 @@ import { Orders } from './components/Orders'
 
 import { SupremeTaco } from './SupremeTaco';
 import { ToastContainer } from 'react-toastify';
-
+import 'react-toastify/dist/ReactToastify.css';
 
 export const App = () => {
   const [userLogin, setUserLogin] = useState({
@@ -23,19 +23,20 @@ export const App = () => {
 
   // state which will hold user's first name to display on homepage upon login
   const [userLoginData, setUserLoginData] = useState();
+  console.log(userLoginData, ' user login data from app')
+
+  useEffect(() => {
+    const isUserLoggedIn = localStorage.getItem("userLoggedIn");
+    if (isUserLoggedIn) {
+      setUserLoginData(JSON.parse(isUserLoggedIn))
+    }
+  }, []);
 
   // toggle show/hide sidebar
   const [showCart, setShowCart] = useState(false);
   // track onClick in [showCart] based on true/false toggle
   useEffect(() => { }, [showCart]);
 
-  useEffect(() => {
-    const isUserLoggedIn = localStorage.getItem("userLoggedIn");
-
-    if (isUserLoggedIn) {
-      setUserLoginData(JSON.parse(isUserLoggedIn))
-    }
-  }, []);
 
   return (
 
@@ -84,8 +85,8 @@ export const App = () => {
             <UserMenu userLoginData={userLoginData} />
           </>
         </Route>
-        <Route exact path="/orders">
-          <Orders />
+        <Route exact path="/orders/">
+          <Orders userLoginData={userLoginData} />
         </Route>
         <Route exact path="/supreme-taco">
           <SupremeTaco />

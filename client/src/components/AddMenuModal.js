@@ -36,6 +36,7 @@ export const AddMenuModal = ({ setItemData }) => {
             return;
         }
 
+        // data in local storage for the user who is logged in
         const storageData = JSON.parse(localStorage.getItem("userLoggedIn"));
 
         // data to send to backend (menu info & image)

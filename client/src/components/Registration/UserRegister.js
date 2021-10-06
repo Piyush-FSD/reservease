@@ -103,7 +103,7 @@ export const UserRegister = () => {
                         onChange={handleInput}
                     >
                     </Input>
-                    <SubmitBtn>Register as User</SubmitBtn>
+                    <SubmitBtn><RegisterText>Register as User</RegisterText></SubmitBtn>
                 </Form>
             </Container>
         </Wrapper>
@@ -119,11 +119,11 @@ text-align: center;
 margin: auto 0;
 display: inline-block;
 width: 40%;
-background: #faffd8;
+background: black;;
 margin-top: 30px;
 padding: 3%;
 border-radius: 5%;
-border: 3px solid #54577c;
+border: 3px solid #f6b210;
 `;
 
 const Form = styled.form`
@@ -143,33 +143,57 @@ color: black;
 border: 1px solid #c2c2c2; 
 box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 padding-left: 10px;
+border: 3px solid #f6b210;
+
 `;
 
 const SubmitBtn = styled.button`
-width: 40%;
-height: 45px;
+width: 200px;
+height: 50px;
 border-radius: 10px;
-background: #3C7DA8;
-color: #fff;
+background: white;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 12px;
+color: black;
+border: 3px solid #f6b210;
+
 `
 const AdminLink = styled(Link)`
-text-decoration: none;
-margin-top: 6px;
-margin-left: 5px;
-font-size: 1.3em;
-font-weight:500;
-color: #3C7DA8;
+font-weight: 500;
+color: white;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 22px;
 `
 
 const RegisterMsg = styled.h3`
-text-align: center;
-color: #54577c;
-font-size: 1.6em;
-font-weight:600;
+font-weight: 500;
+color: white;
+-webkit-text-decoration: none;
+text-decoration: none;
+margin-left: 15px;
+padding: 0 35px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 23px;
 `
 
 const UserOr = styled.span`
-color:#54577c;
-font-size: 1.3em;
-font-weight:500;
-`
+font-weight: 500;
+color: white;
+-webkit-text-decoration: none;
+text-decoration: none;
+margin-left: 15px;
+padding: 0 35px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 20px;
+`;
+
+const RegisterText = styled.div`
+font-weight: 700;
+:hover {
+    color: #f6b210;
+}
+`;

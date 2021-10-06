@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
-
     return (
         <>
             <NavLinkContainer>
@@ -17,17 +16,24 @@ export const Navbar = () => {
 };
 
 const NavLinks = styled(Link)`
-font-size: 1.2em;
-font-weight: 500;
-color: #3C7DA8;
-text-decoration: none;
-margin-left: 15px;
+    font-weight: 500;
+    color: #000;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    margin-left: 15px;
+    padding: 0 35px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 15px;
+
+&:hover {
+    color: #f6b210;
+  }
 `;
 
-
 const NavLinkContainer = styled.div`
-width: 60%;
-display: inline-block;
-text-align: right;
-`
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+`;
 
