@@ -22,7 +22,6 @@ export const UserRegister = () => {
     const handleInput = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        console.log(name, value)
 
         // updates userRegistration with name and value entered
         setUserRegistration({ ...userRegistration, [name]: value });
@@ -171,7 +170,6 @@ font-size: 22px;
 const RegisterMsg = styled.h3`
 font-weight: 500;
 color: white;
--webkit-text-decoration: none;
 text-decoration: none;
 margin-left: 15px;
 padding: 0 35px;

@@ -13,7 +13,6 @@ import { apiUrl } from '../../urls';
 
 
 export const AdminRegister = () => {
-    // try {
     const formHistory = useHistory();
 
     // empty strings which will be updated with user data
@@ -35,7 +34,6 @@ export const AdminRegister = () => {
     const handleInput = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        console.log(name, value)
 
         // updates userRegistration with name and value entered
         setAdminRegistration({ ...adminRegistration, [name]: value });
@@ -69,9 +67,6 @@ export const AdminRegister = () => {
         });
         formHistory.push("/");
     }
-    // } catch (err) {
-    //     console.log(e, "Error")
-    // }
 
     return (
         <Wrapper>
@@ -262,12 +257,11 @@ border: 3px solid #f6b210;
 `;
 
 const UserLink = styled(Link)`
-text-decoration: none;
-margin-top: 6px;
-margin-left: 5px;
-font-size: 1.3em;
-font-weight:500;
-color: #3C7DA8;
+font-weight: 500;
+color: white;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 22px;
 `
 
 const RegisterMsg = styled.h3`
@@ -285,7 +279,6 @@ font-size: 23px;
 const AdminOr = styled.span`
 font-weight: 500;
 color: white;
--webkit-text-decoration: none;
 text-decoration: none;
 margin-left: 15px;
 padding: 0 35px;

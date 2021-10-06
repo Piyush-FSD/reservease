@@ -25,13 +25,9 @@ export const Orders = (props) => {
         }
     }, [userId, admin]);
 
-    console.log(orders, 'trhishdfjdskjfnsdfjnd')
-
-
     // filter orders which have a items in them and not and map through them
     const orderArr = orders && orders.filter(item => item.order && item.order.length).map(item => ({ order: item.order, userId: item.userId, status: item.status, _id: item._id }))
 
-    console.log(orderArr, 'orders')
     // PATCH - update order status
     const updateOrder = async (event, orderId) => {
 
@@ -57,13 +53,30 @@ export const Orders = (props) => {
     };
 
     // if user is an admin, display the following: 
-    if (admin) {
+
+    if (!admin || !userId) {
+        return (
+            <>
+                <OrderHeader>Orders</OrderHeader>
+
+                <div>
+                    <InstructionsContainer>
+                        <CartSteps>TO VIEW ORDERS:</CartSteps>
+                        <Steps>1- SIGN IN</Steps>
+                        <Steps>2- VISIT A DESIRED LOCATION</Steps>
+                        <Steps>3- SCAN QR CODE</Steps>
+                        <Steps>4- CHOOSE AVAILABLE ITEMS AND ADD TO CART</Steps>
+                    </InstructionsContainer>
+                </div>
+            </>
+        )
+    }
+    else if (admin) {
         return (
             <Container>
                 <OrderHeader>Orders</OrderHeader>
                 {orderArr && orderArr.map(({ order, userId, _id }) => {
                     return <div>
-                        {console.log(order, 'this is order in map')}
                         <h3>User ID: {userId.slice(0, 5)}</h3>
                         {order.map(item => {
                             return (
@@ -114,15 +127,12 @@ export const Orders = (props) => {
 };
 
 const Container = styled.div`
-/* display: flex; */
 `
 
 const OrderWrapper = styled.div`
 display: flex;
 justify-content: space-evenly;
-
 `
-
 const OrderContainer = styled.div`
 width: 250px;
 height: 300px;
@@ -136,11 +146,11 @@ font-weight: 600;
 text-transform: uppercase;
 letter-spacing: 2px;
 font-size: 30px;
+margin-left: 15px;
 `
 
 const ItemId = styled.div`
 color: white;
-
 `
 
 const ItemTitle = styled.div`
@@ -149,7 +159,6 @@ color: white;
 
 const ItemPrice = styled.div`
 color: white;
-
 `
 
 const ItemImage = styled.img`
@@ -160,9 +169,42 @@ width: 200px;
 
 const DeleteBtnContainer = styled.div`
 color: white;
-
 `
 
 const OrderStatus = styled.div`
-
 `
+
+const CartSteps = styled.h3`
+font-weight: 700;
+color: white;
+text-decoration: none;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 18px;
+margin-left: 15px;
+`;
+
+const InstructionsContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+border: 2px solid grey;
+width: 38%;
+height: 350px;
+background-color: black;
+margin-left: 15px;;
+border: 3px solid #f6b210;
+`;
+
+const Steps = styled.span`
+color: white;
+width: 100%;
+margin-top: 50px;
+font-weight: 500;
+color: white;
+text-decoration: none;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 18px;
+padding-left: 15px;
+`;

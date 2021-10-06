@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { AdminMenuHeader } from './Admin/AdminMenuHeader';
-import { toast } from 'react-toastify';
 import { OrderContext } from '../OrderProvider';
 import { apiUrl } from '../urls'
 
@@ -12,7 +11,7 @@ export const UserMenu = (userLoginData) => {
     const [busInfo, setBusInfo] = useState();
     const [menuData, setMenuData] = useState();
     const { userId } = useParams();
-    const { state, actions: { addOrder }, } = useContext(OrderContext);
+    const { actions: { addOrder }, } = useContext(OrderContext);
 
     // put state in session storage to have access in CartBar
     useEffect(() => {
@@ -105,13 +104,6 @@ padding-left: 10px;
 
 const MenuTextContainer = styled.div`
 margin-left: 10px;
-`
-
-const MoreInfoLink = styled(Link)`
-font-size: 13px;
-text-decoration: none;
-margin-left: 10px;
-margin-top: 5px;
 `
 
 const MenuItemContainer = styled.div`

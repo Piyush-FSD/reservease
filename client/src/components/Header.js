@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
-import { IoFastFoodOutline } from 'react-icons/io5';
+// import { IoFastFoodOutline } from 'react-icons/io5';
+import { RiShoppingCartLine } from "react-icons/ri";
 import { Navbar } from "./NavBar";
 import LogoImg from '../Logo/LogoImg.png'
 
@@ -28,7 +29,7 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
                     <>
                         <LogRegisterContainer>
                             <CartIconContainer>
-                                <IoFastFoodOutline size={40} onClick={() => setShowCart(!showCart)} />
+                                <RiShoppingCartLine size={40} onClick={() => setShowCart(!showCart)} />
                             </CartIconContainer>
                             <LoginLink to="/login/user">Log in</LoginLink>
                             <RegisterLink to="/register/user">Register</RegisterLink>

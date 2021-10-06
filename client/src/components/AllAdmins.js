@@ -19,15 +19,14 @@ export const AllAdmins = () => {
         }
         getBusNames();
     }, [])
-    console.log(searchResults, ' searchh')
 
     return (
         <>
             <AllHostsHeader>All Hosts</AllHostsHeader>
             <AdminContainer>
-                {searchResults.map((item) => {
+                {searchResults.map((item, index) => {
                     return (
-                        <LinksContainer>
+                        <LinksContainer key={index}>
                             <Links to={`user/menu/${item.userId}`}>
                                 <Hosts>{item.busName}</Hosts>
                             </Links>
@@ -79,4 +78,5 @@ font-weight: 600;
 text-transform: uppercase;
 letter-spacing: 2px;
 font-size: 30px;
+margin-left: 15px;;
 `

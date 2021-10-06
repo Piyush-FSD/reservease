@@ -1,7 +1,9 @@
 import React from "react";
 import styled from 'styled-components';
 import { SearchBar } from './SearchBar';
-// import homepage from '../Logo/homepage.png'
+// import homepage from '../Logo/homepage.jpg'
+import homepage from '../Logo/homepage.jpg'
+
 
 export const Homepage = () => {
     return (
@@ -9,6 +11,9 @@ export const Homepage = () => {
             <Container>
                 <div>
                     <WelcomeMsg>Order Way.</WelcomeMsg> <Ordering>Ordering just got simpler.</Ordering>
+                </div>
+                <div style={{ backgroud: `url(${homepage})` }}>
+
                 </div>
                 <div>
                     <SearchBar />

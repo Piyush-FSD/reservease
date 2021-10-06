@@ -23,7 +23,6 @@ export const App = () => {
 
   // state which will hold user's first name to display on homepage upon login
   const [userLoginData, setUserLoginData] = useState();
-  console.log(userLoginData, ' user login data from app')
 
   useEffect(() => {
     const isUserLoggedIn = localStorage.getItem("userLoggedIn");
