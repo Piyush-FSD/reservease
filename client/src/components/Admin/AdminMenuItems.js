@@ -13,7 +13,7 @@ export const AdminMenuItems = ({ itemData }) => {
     // GET - menu items submitted from host
     useEffect(() => {
         const getAllItems = async () => {
-            const response = await fetch("/menu/info");
+            const response = await fetch(`${apiUrl}/menu/info`);
             const data = await response.json();
             setstate(data.data)
         }

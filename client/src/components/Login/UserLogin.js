@@ -18,7 +18,7 @@ export const UserLogin = ({ userLoginData, setUserLoginData, userLogin, setUserL
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const response = await fetch("/login", {
+        const response = await fetch(`${apiUrl}/login`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",

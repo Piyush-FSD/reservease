@@ -31,7 +31,7 @@ export const UserRegister = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        fetch("/register/user", {
+        fetch(`${apiUrl}/register/user`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

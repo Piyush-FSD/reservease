@@ -4,7 +4,7 @@
 export const uploadImage = async (base64EncodedImage) => {
     console.log(base64EncodedImage)
     try {
-        await fetch('/menu/addImg', {
+        await fetch(`${apiUrl}/menu/addImg`, {
             method: 'POST',
             body: JSON.stringify({ data: base64EncodedImage }),
             headers: { 'Content-type': 'application/json' }

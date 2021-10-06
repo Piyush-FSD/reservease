@@ -43,7 +43,7 @@ export const AdminRegister = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const response = await fetch("/register/admin", {
+        const response = await fetch(`${apiUrl}/register/admin`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

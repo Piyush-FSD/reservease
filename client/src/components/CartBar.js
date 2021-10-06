@@ -32,7 +32,7 @@ export const CartBar = (userLoginData) => {
         // initial order status when order is placed
         const status = 'order placed';
 
-        const response = await fetch("/order", {
+        const response = await fetch(`${apiUrl}/order`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -55,10 +55,10 @@ export const CartBar = (userLoginData) => {
                 <>
                     <CartSteps>To add items to your cart:</CartSteps>
                     <InstructionsContainer>
-                        <Steps>1) Sign In</Steps>
-                        <Steps>2) Visit a desired location</Steps>
-                        <Steps>3) Scan QR Code</Steps>
-                        <Steps>4) Choose available items and add to cart</Steps>
+                        <Steps>1- Sign In</Steps>
+                        <Steps>2- Visit a desired location</Steps>
+                        <Steps>3- Scan QR Code</Steps>
+                        <Steps>4- Choose available items and add to cart</Steps>
                     </InstructionsContainer>
                 </>
             ) : (
@@ -109,7 +109,7 @@ overflow-y: scroll;
 
 const OrderContainer = styled.div`
 display: flex;
-justify-content: space-between;
+justify-content: space - between;
 align-items: center;
 border-bottom: 1px solid black;
 `;
@@ -151,7 +151,7 @@ color: #fff;
 `;
 
 const LogoText = styled.h1`
-display: inline-block;
+display: inline - block;
 color: #fff;
 text-transform: uppercase;
 -webkit-letter-spacing: 2px;
@@ -161,7 +161,7 @@ letter-spacing: 2px;
 font-size: 16px;
 
 :hover {
-    color: #f6b210;
+color: #f6b210;
 }
 `;
 

@@ -16,11 +16,11 @@ export const Orders = (props) => {
     useEffect(() => {
         if (typeof admin !== "boolean") return;
         if (admin) {
-            fetch(`/order/all/${userId}`)
+            fetch(`${apiUrl}/order/all/${userId}`)
                 .then((res) => res.json())
                 .then((data) => setOrders(data.data))
         } else {
-            fetch(`/order/info/${userId}`)
+            fetch(`${apiUrl}/order/info/${userId}`)
                 .then((res) => res.json())
                 .then((data) => setOrders(data.data))
         }
@@ -40,7 +40,7 @@ export const Orders = (props) => {
 
         const selectedItem = event.target.value;
 
-        const response = await fetch("/order/status", {
+        const response = await fetch(`${apiUrl}/order/status`, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json"

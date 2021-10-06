@@ -21,7 +21,7 @@ export const UserMenu = (userLoginData) => {
     // GET - fetch all menu's by id
     useEffect(() => {
         const getAdminInfoById = async () => {
-            const response = await fetch(`/menu/${userId}`);
+            const response = await fetch(`${apiUrl}/menu/${userId}`);
             const data = await response.json();
 
             setBusInfo(data.data);

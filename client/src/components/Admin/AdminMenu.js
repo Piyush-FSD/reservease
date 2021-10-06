@@ -17,7 +17,7 @@ export const AdminMenu = () => {
     // fetch logged in admin data by ID
     useEffect(() => {
         const getAdminInfoById = async () => {
-            const response = await fetch(`/menu/${userId}`);
+            const response = await fetch(`${apiUrl}/menu/${userId}`);
             const data = await response.json();
 
             setMenuData(data.data.menu)
