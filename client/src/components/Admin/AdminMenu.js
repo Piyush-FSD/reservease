@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom'
 import { AdminMenuHeader } from './AdminMenuHeader';
 import { AddMenuModal } from '../AddMenuModal';
-import { apiUrl } from '../urls'
+import { apiUrl } from '../../urls';
 import { AdminMenuItems } from './AdminMenuItems'
+
 
 export const AdminMenu = () => {
 

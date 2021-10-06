@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { apiUrl } from '../urls'
+import { apiUrl } from '../../urls';
 
 // itemData -->
 // -> initial null state in AdminMenu
