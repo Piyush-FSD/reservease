@@ -9,7 +9,7 @@ import { AiTwotoneLock } from 'react-icons/ai';
 import { MdWeb } from 'react-icons/md';
 import { FaAddressCard } from 'react-icons/fa';
 import { AiTwotonePhone } from 'react-icons/ai'
-import { apiUrl } from '../urls'
+import { apiUrl } from '../../urls';
 
 
 export const AdminRegister = () => {
