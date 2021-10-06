@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import { BsFillPersonFill } from "react-icons/bs"
 import { MdEmail } from 'react-icons/md'
 import { AiTwotoneLock } from 'react-icons/ai'
+import { apiUrl } from '../urls'
 
 export const UserRegister = () => {
     const formHistory = useHistory();

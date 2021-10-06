@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import { OrderContext } from '../OrderProvider';
+import { apiUrl } from '../urls'
 
 import LogoImg from '../Logo/LogoImg.png';
 

@@ -1,3 +1,6 @@
+import { apiUrl } from '../urls'
+
+
 // once image is passed from upload, it will be stored in Cloudinary database
 // upload image for header and menu item 
 // images stored in Cloudinary

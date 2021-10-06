@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+import { apiUrl } from '../urls'
+
 
 export const Orders = (props) => {
     const { userId, admin } = props.userLoginData || {};
-    console.log(props, 'props from ORDERS')
-    console.log(admin, ' THIS IS ADMINNNN')
-    console.log(userId, 'USER IDD')
 
     // inital state which will hold users orders
     const [orders, setOrders] = useState(null);

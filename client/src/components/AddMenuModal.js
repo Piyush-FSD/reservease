@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 // import { Button } from './Button';
 import { PreviewImageUpload } from './PreviewImageUpload';
 // import ImageUpload from './ImageUpload';
+import { apiUrl } from '../urls'
+
 
 export const AddMenuModal = ({ setItemData }) => {
 
