@@ -109,7 +109,7 @@ overflow-y: scroll;
 
 const OrderContainer = styled.div`
 display: flex;
-justify-content: space - between;
+justify-content: space-between;
 align-items: center;
 border-bottom: 1px solid black;
 `;
@@ -151,7 +151,7 @@ color: #fff;
 `;
 
 const LogoText = styled.h1`
-display: inline - block;
+display: inline-block;
 color: #fff;
 text-transform: uppercase;
 -webkit-letter-spacing: 2px;
