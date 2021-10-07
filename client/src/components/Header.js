@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import { RiShoppingCartLine } from "react-icons/ri";
 import { Navbar } from "./NavBar";
-import LogoImg from '../Logo/LogoImg.png'
+import LogoImg from '../WebImages/OrderWayLogo.png'
 
 export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart }) => {
 
@@ -65,6 +65,7 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
                                         {userLoginData.admin === true &&
                                             <MenuContainer>
                                                 <AdminMenuLink to={`/admin/menu/${id}`}>Edit Menu</AdminMenuLink>
+                                                {console.log(id, ' this is id')}
                                             </MenuContainer>}
                                     </CartFlex>
                                 </>

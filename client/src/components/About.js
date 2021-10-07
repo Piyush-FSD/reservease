@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import aboutimagee from '../Logo/aboutimagee.jpeg';
+import aboutimagee from '../WebImages/aboutimagee.jpeg';
 
 export const About = () => {
     return (

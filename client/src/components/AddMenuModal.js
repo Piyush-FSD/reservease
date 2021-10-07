@@ -43,7 +43,6 @@ export const AddMenuModal = ({ setItemData }) => {
 
         // data to send to backend (menu info & image)
         const payload = { ...menuItemInput, image: previewSource, ...storageData }
-        console.log(payload, 'p a y lo a d')
 
         const response = await fetch(`${apiUrl}/menu/add`, {
             method: 'POST',

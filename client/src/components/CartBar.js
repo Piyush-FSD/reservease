@@ -5,8 +5,7 @@ import { toast } from 'react-toastify';
 import { OrderContext } from '../OrderProvider';
 import { apiUrl } from '../urls'
 
-import LogoImg from '../Logo/LogoImg.png';
-
+import LogoImg from '../WebImages/OrderWayLogo.png'
 export const CartBar = (userLoginData) => {
     // const formHistory = useHistory();
 

@@ -91,7 +91,7 @@ export const UserMenu = (userLoginData) => {
 const AddressInfoContainer = styled.div`
 margin-top: 10px;
 height: 150px;
-width: 36%;
+width: 80%;
 border: 3px solid #f6b210;
 margin-left: 10px;
 background-color: black;
@@ -153,11 +153,13 @@ width: 50%;
 `;
 
 const MenuItemName = styled.div`
+
 `;
 
 const MenuItemWrapper = styled.div`
 display: flex;
-width: 80%;
+justify-content: center;    
+flex-wrap: wrap;
 `;
 
 const AddToCartBtn = styled.button`
@@ -177,6 +179,7 @@ font-weight: 600;
 text-transform: uppercase;
 letter-spacing: 2px;
 font-size: 30px;
+color: white;
 `;
 
 const Address = styled.div`
