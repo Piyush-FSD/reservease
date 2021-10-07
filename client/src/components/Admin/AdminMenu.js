@@ -22,7 +22,6 @@ export const AdminMenu = () => {
             const response = await fetch(`${apiUrl}/menu/${userId}`);
             const data = await response.json();
 
-            console.log(data, ' data')
             setMenuData(data.data.menu)
             setAddressInfo(data.data)
         }

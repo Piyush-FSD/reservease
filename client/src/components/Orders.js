@@ -54,8 +54,6 @@ export const Orders = (props) => {
     };
 
     // if user is an admin, display the following: 
-    console.log(admin, 'ADMIN')
-    console.log(userId, 'USER')
     if (!admin && !userId) {
         return (
             <>
@@ -92,7 +90,7 @@ export const Orders = (props) => {
                                         <ItemImage src={item.itemImage} />
                                         <div>
                                             <SelectOrder onChange={(event) => updateOrder(event, _id)} >
-                                                <Options disabled>Order Status</Options>
+                                                <Options hidden>Order Status</Options>
                                                 <Options value="Order in Progress">Order in progress</Options>
                                                 <Options value="Order Delivered">Order delivered</Options>
                                             </SelectOrder>

@@ -65,7 +65,6 @@ export const Header = ({ userLoginData, setUserLoginData, showCart, setShowCart 
                                         {userLoginData.admin === true &&
                                             <MenuContainer>
                                                 <AdminMenuLink to={`/admin/menu/${id}`}>Edit Menu</AdminMenuLink>
-                                                {console.log(id, ' this is id')}
                                             </MenuContainer>}
                                     </CartFlex>
                                 </>
@@ -105,6 +104,11 @@ width: 50%;
 display: flex;
 align-items: center;
 justify-content: end;
+
+@media screen and (max-width: 767px){
+    width: 100%!important;
+    margin: 3vh 2vh;
+}
 `;
 
 const LoginLink = styled(Link)`

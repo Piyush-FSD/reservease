@@ -50,9 +50,6 @@ margin: 20px 0;
 border-radius: 10px;
 background: #000000;
 color: #ffffff;
--webkit-align-items: center;
--webkit-box-align: center;
--ms-flex-align: center;
 align-items: center;
 border: 3px solid #f6b210;
 
@@ -79,5 +76,5 @@ font-weight: 600;
 text-transform: uppercase;
 letter-spacing: 2px;
 font-size: 30px;
-margin-left: 15px;;
+margin-left: 11vw;;
 `

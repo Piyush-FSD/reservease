@@ -52,7 +52,6 @@ export const AddMenuModal = ({ setItemData }) => {
             body: JSON.stringify(payload),
         }
         )
-        console.log(JSON.stringify(payload))
         const data = await response.json();
 
         if (data.status === 201) {

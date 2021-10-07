@@ -18,7 +18,6 @@ export const CartBar = (userLoginData) => {
 
     // POST - when user click Order button
     const handleSubmitOrder = async (event) => {
-        console.log(event.target.value, 'event submit')
         event.preventDefault();
 
         const userIdStorageInfo = JSON.parse(localStorage.getItem("userLoggedIn"));

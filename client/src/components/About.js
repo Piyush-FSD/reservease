@@ -28,8 +28,6 @@ border: 3px solid #f6b210;
     width: 80%;
 
 }
-
-
 `;
 
 const AboutHeader = styled.h1`
@@ -37,6 +35,7 @@ font-weight: 600;
 text-transform: uppercase;
 letter-spacing: 2px;
 font-size: 30px;
+margin-left:35px;
 `;
 
 const AboutText = styled.div`
