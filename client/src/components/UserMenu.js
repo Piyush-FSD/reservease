@@ -4,18 +4,19 @@ import { useParams } from 'react-router-dom'
 import { AdminMenuHeader } from './Admin/AdminMenuHeader';
 import { OrderContext } from '../OrderProvider';
 import { apiUrl } from '../urls'
-
+import { toast } from 'react-toastify';
 
 // menu the user sees after searching and choosing a business
 export const UserMenu = (userLoginData) => {
     const [busInfo, setBusInfo] = useState();
     const [menuData, setMenuData] = useState();
     const { userId } = useParams();
-    const { actions: { addOrder }, } = useContext(OrderContext);
+
+    // add to cart action from Provider
+    const { actions: { addOrder } } = useContext(OrderContext);
 
     // put state in session storage to have access in CartBar
     useEffect(() => {
-        // setAdminId(userId);
         sessionStorage.setItem("adminId", userId);
     }, [userId]);
 
@@ -31,11 +32,14 @@ export const UserMenu = (userLoginData) => {
         getAdminInfoById();
     }, [userId]);
 
+    // onClick for Add to Order button
     const handleAddToCart = (item) => {
         if (!item) return
 
         const itemWithQuantity = { ...item, quantity: 1 }
         addOrder(itemWithQuantity);
+
+        toast("Item added to cart!")
     };
 
     return (
@@ -71,7 +75,6 @@ export const UserMenu = (userLoginData) => {
                                         <div>{item.itemDetails}</div>
                                         <div>{item.itemPrice}</div>
                                         {userLoginData &&
-
                                             <AddToCartBtn onClick={() => handleAddToCart(item)}>Add to Cart</AddToCartBtn>
                                         }
                                     </MenuInfo>
@@ -92,28 +95,26 @@ width: 36%;
 border: 3px solid #f6b210;
 margin-left: 10px;
 background-color: black;
-/* display: flex; */
-`
+`;
 
 const AddressWebContainer = styled.span`
 text-transform: uppercase;
 letter-spacing: 2px;
 font-size: 17px;
 padding-left: 10px;
-`
+`;
 
 const MenuTextContainer = styled.div`
 margin-left: 10px;
-`
+`;
 
 const MenuItemContainer = styled.div`
 display: flex;
-/* flex-direction: row; */
 border: 3px solid #f6b210;
 background-color: black;
 width: 400px;
 border-radius: 20px;
-
+flex-wrap: wrap;
 `;
 
 const WebsiteContainer = styled.div`
@@ -128,8 +129,7 @@ margin-bottom: 10px;
 font-size: 35px;
 font-weight: 650;
 margin-left: 10px;
-
-`
+`;
 
 const ItemImg = styled.img`
 height: 150px;
@@ -153,7 +153,6 @@ width: 50%;
 `;
 
 const MenuItemName = styled.div`
-/* font-weight: bold; */
 `;
 
 const MenuItemWrapper = styled.div`
@@ -165,16 +164,11 @@ const AddToCartBtn = styled.button`
 width: 120px;
 height: 35px;
 border-radius: 10px;
-background: #4a7b9d;
-color: #fff;
+background: white;
 margin-left: 50px;
 text-transform: uppercase;
 letter-spacing: 2px;
 font-size: 10px;
-
-:hover {
-    color: #f6b210;
-}
 `;
 
 
@@ -183,9 +177,9 @@ font-weight: 600;
 text-transform: uppercase;
 letter-spacing: 2px;
 font-size: 30px;
-`
+`;
 
 const Address = styled.div`
 margin-left: 10px;
 color: white;
-`
+`;

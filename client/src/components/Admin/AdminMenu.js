@@ -36,16 +36,20 @@ export const AdminMenu = () => {
                     <BusName>
                         {addressInfo && addressInfo.busName}
                     </BusName>
-                    <div>
+                    <Address>
                         {addressInfo && addressInfo.address},
                         {addressInfo && addressInfo.city},
                         {addressInfo && addressInfo.postalCode}
-                    </div>
-                    <WebsiteContainer>
-                        {addressInfo && addressInfo.website}
-                    </WebsiteContainer>
+                        <WebsiteContainer>
+                            {addressInfo && addressInfo.website}
+                        </WebsiteContainer>
+                    </Address>
                 </AddressWebContainer>
             </AddressInfoContainer>
+            <>
+                <AddMenuModal setItemData={setItemData} />
+                <AdminMenuItems itemData={itemData} />
+            </>
             <MenuTextContainer>
                 <h2>Menu</h2>
                 <MenuItemWrapper>
@@ -71,48 +75,60 @@ export const AdminMenu = () => {
                     })}
                 </MenuItemWrapper>
             </MenuTextContainer>
-            <>
-                <AddMenuModal setItemData={setItemData} />
-                <AdminMenuItems itemData={itemData} />
-            </>
         </>
     )
 };
 
 const AddressInfoContainer = styled.div`
 margin-top: 10px;
-height: 100px;
-width: 36%;
-border: 2px solid orange;
+border: 3px solid #f6b210;
 margin-left: 10px;
-/* display: flex; */
+background-color: black;
+width: 400px;
+margin: 0 auto;
+`;
+
+const Address = styled.div`
+color: white;
 `
 
+
 const AddressWebContainer = styled.span`
-/* display: flex; */
-/* flex-direction: column; */
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 17px;
+
 `
 
 const MenuTextContainer = styled.div`
-margin-left: 10px;
+
+    h2 {
+        text-align: center;
+    }
 `
 
 
 const MenuItemContainer = styled.div`
 display: flex;
-/* flex-direction: row; */
-border: 1px solid red;
-width: 30%;
+border: 3px solid #f6b210;
+background-color: black;
+width: 350px;
 border-radius: 20px;
+color: white;
+margin: 5px;
+/* flex-wrap: wrap; */
 `;
 
 const WebsiteContainer = styled.div`
 margin-top: 15px;
+
 `;
 
 const BusName = styled.div`
-margin-top: 10px;
-color: red;
+color: #f6b210;
+margin-bottom: 10px;
+font-size: 35px;
+font-weight: 650;
 `
 
 const ItemImg = styled.img`
@@ -126,7 +142,10 @@ flex-direction: column;
 text-align: center;
 justify-content: space-around;
 box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 15px;
+color: white;
 `;
 
 const MenuImg = styled.div`
@@ -134,30 +153,37 @@ width: 50%;
 `;
 
 const MenuItemName = styled.div`
-font-weight: bold;
+/* font-weight: bold; */
 `;
 
 const DeleteBtn = styled.button`
-width: 80px;
-height: 30px;
+width: 120px;
+height: 35px;
 border-radius: 10px;
-background: #4a7b9d;
-color: #fff;
+background: white;
+/* margin-left: 50px; */
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 10px;
 `;
 
 const EditBtn = styled.button`
-width: 80px;
-height: 30px;
+width: 120px;
+height: 35px;
 border-radius: 10px;
-background: #4a7b9d;
-color: #fff;
+background: white;
+
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 10px;
 `;
 
 const EditDelContainer = styled.div`
-display: flex;
-justify-content: space-around;
-`;
+display: flex; 
+`
+
 const MenuItemWrapper = styled.div`
 display: flex;
-width: 80%;
+justify-content: center;    
+flex-wrap: wrap;
 `

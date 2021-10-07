@@ -6,6 +6,7 @@ import { BsFillPersonFill } from "react-icons/bs"
 import { MdEmail } from 'react-icons/md'
 import { AiTwotoneLock } from 'react-icons/ai'
 import { apiUrl } from '../../urls';
+import { toast } from 'react-toastify';
 
 export const UserRegister = () => {
     const formHistory = useHistory();
@@ -52,6 +53,7 @@ export const UserRegister = () => {
 
         });
         formHistory.push("/");
+        toast("Registration successful")
     };
 
     return (
@@ -124,6 +126,11 @@ margin-top: 30px;
 padding: 3%;
 border-radius: 5%;
 border: 3px solid #f6b210;
+
+@media screen and (max-width: 600px){
+    width: 80%;
+
+}
 `;
 
 const Form = styled.form`
@@ -145,6 +152,11 @@ box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 padding-left: 10px;
 border: 3px solid #f6b210;
 
+::placeholder {
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 12px;
+}
 `;
 
 const SubmitBtn = styled.button`

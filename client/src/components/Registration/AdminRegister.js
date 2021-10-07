@@ -10,7 +10,7 @@ import { MdWeb } from 'react-icons/md';
 import { FaAddressCard } from 'react-icons/fa';
 import { AiTwotonePhone } from 'react-icons/ai'
 import { apiUrl } from '../../urls';
-
+import { toast } from 'react-toastify';
 
 export const AdminRegister = () => {
     const formHistory = useHistory();
@@ -66,6 +66,7 @@ export const AdminRegister = () => {
             website: ""
         });
         formHistory.push("/");
+        toast("Successfully registered as a host!")
     }
 
     return (
@@ -200,6 +201,10 @@ margin-top: 30px;
 padding: 3%;
 border-radius: 5%;
 border: 3px solid #f6b210;
+@media screen and (max-width: 600px){
+    width: 80%;
+
+}
 
 `;
 
@@ -221,6 +226,12 @@ border: 1px solid #c2c2c2;
 box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 padding-left: 10px;
 border: 3px solid #f6b210;
+
+::placeholder {
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 12px;
+}
 
 `;
 
@@ -254,6 +265,11 @@ box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 padding-left: 10px;
 border: 3px solid #f6b210;
 
+::placeholder {
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 12px;
+}
 `;
 
 const UserLink = styled(Link)`

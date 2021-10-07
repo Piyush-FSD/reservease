@@ -14,19 +14,18 @@ export const CartBar = (userLoginData) => {
 
     const handleDeleteItem = (itemId) => {
         if (!itemId) return;
-        deleteOrder(itemId)
-    }
+        deleteOrder(itemId);
+    };
 
     // POST - when user click Order button
     const handleSubmitOrder = async (event) => {
+        console.log(event.target.value, 'event submit')
         event.preventDefault();
-        //get orders from order cart -> state context
-        //do the post
-        //rest is backend.
 
         const userIdStorageInfo = JSON.parse(localStorage.getItem("userLoggedIn"));
-        const userId = userIdStorageInfo.userId
-        const adminIdStorageInfo = sessionStorage.getItem("adminData");
+        const userId = userIdStorageInfo.userId;
+
+        const adminIdStorageInfo = sessionStorage.getItem("adminId");
 
         if (!adminIdStorageInfo) return;
 
@@ -39,10 +38,10 @@ export const CartBar = (userLoginData) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ adminIdStorageInfo, userId, state, status: status })
-        })
+        });
         const result = await response.json();
         if (result.status === 201) {
-            toast("Order has been placed!")
+            toast("Order has been placed!");
         }
     };
 
@@ -119,36 +118,55 @@ const ItemTitle = styled.span`
 font-size: 19px;
 margin-top: 30px;
 margin-bottom: 10px;
-color: yellow;
+color: #f6b210;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 17px;
 `;
+
 
 const ItemQuantity = styled.span`
 margin-top: 30px;
 margin-bottom: 10px;
-color: purple;
+color: #f6b210;
+letter-spacing: 2px;
+font-size: 15px;
 `;
 
 const ItemPrice = styled.span`
 font-size: 17px;
 margin-top: 30px;
 margin-bottom: 10px;
-color: darkgreen;
+color: #f6b210;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 15px;
 `;
 
 const ConfirmBtn = styled.button`
+width: 190px;
 height: 45px;
-width: 150px;
-margin-top: 40px;
 border-radius: 10px;
-background:#4a7b9d;
-color: #fff;
+background: white;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 15px;
+color: black;
+border: 3px solid #f6b210;
 `;
 
 const ItemDelBtn = styled.button`
 margin-top: 25px;
+width: 30px;
+height: 25px;
+padding: 2px;
 border-radius: 10px;
-background:#4a7b9d;
-color: #fff;
+background: white;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 15px;
+color: black;
+border: 2px solid #f6b210;
 `;
 
 const LogoText = styled.h1`
@@ -168,10 +186,10 @@ color: #f6b210;
 
 const LogoImgg = styled.img`
 width: 80px;
-`
+`;
 
 const LogoContainer = styled.div`
-margin-top: 15px;;
+margin-top: 15px;
 `;
 
 const CartSteps = styled.h3`
@@ -181,7 +199,7 @@ text-decoration: none;
 text-transform: uppercase;
 letter-spacing: 2px;
 font-size: 15px;
-`
+`;
 
 const Steps = styled.span`
 color: white;
@@ -193,10 +211,10 @@ text-decoration: none;
 text-transform: uppercase;
 letter-spacing: 2px;
 font-size: 15px;
-`
+`;
 
 const InstructionsContainer = styled.div`
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-`
+`;

@@ -89,9 +89,12 @@ background: black;
 margin-top: 30px;
 padding: 3%;
 border-radius: 5%;
-border: 3px solid #54577c;
 border: 3px solid #f6b210;
 
+@media screen and (max-width: 600px){
+    width: 80%;
+
+}
 `;
 
 const Form = styled.form`
@@ -113,6 +116,11 @@ padding-left: 10px;
 color: black;
 border: 3px solid #f6b210;
 
+::placeholder {
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 12px;
+}
 `;
 
 const SubmitBtn = styled.button`
@@ -125,7 +133,6 @@ letter-spacing: 2px;
 font-size: 15px;
 color: black;
 border: 3px solid #f6b210;
-
 `;
 
 const WelcomeMsg = styled.h3`

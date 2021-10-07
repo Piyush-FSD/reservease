@@ -43,14 +43,17 @@ export const AddMenuModal = ({ setItemData }) => {
 
         // data to send to backend (menu info & image)
         const payload = { ...menuItemInput, image: previewSource, ...storageData }
+        console.log(payload, 'p a y lo a d')
 
         const response = await fetch(`${apiUrl}/menu/add`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(payload)
-        })
+            body: JSON.stringify(payload),
+        }
+        )
+        console.log(JSON.stringify(payload))
         const data = await response.json();
 
         if (data.status === 201) {
@@ -67,42 +70,36 @@ export const AddMenuModal = ({ setItemData }) => {
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={() => setModalIsOpen(false)}
-                style={{
-                    overlay: {
-                        backgroundColor: 'grey'
-                    },
-                    content: {
-                        color: 'blue'
-                    }
-                }}
             >
-                <h2>Add to cart</h2>
+                <ModalHeader>Add to cart </ModalHeader>
                 <form onSubmit={handleAddMenu}>
                     <PreviewImageUpload previewSource={previewSource} setPreviewSource={setPreviewSource} />
-                    <ItemNameInput
-                        type="text"
-                        placeholder="Item Name"
-                        name="itemTitle"
-                        onChange={handleInput}
-                        value={menuItemInput.itemTitle}
-                    />
-                    <ItemInfoInput
-                        type="text"
-                        placeholder="Item Description"
-                        name="itemDetails"
-                        onChange={handleInput}
-                        value={menuItemInput.itemDetails}
-                    />
-                    <ItemNameInput
-                        type="text"
-                        placeholder="Item Price"
-                        name="itemPrice"
-                        onChange={handleInput}
-                        value={menuItemInput.itemPrice}
-                    />
-                    <AddBtn>Add to Menu</AddBtn>
+                    <InputsContainer>
+                        <ItemNameInput
+                            type="text"
+                            placeholder="Item Name"
+                            name="itemTitle"
+                            onChange={handleInput}
+                            value={menuItemInput.itemTitle}
+                        />
+                        <ItemInfoInput
+                            type="text"
+                            placeholder="Item Description"
+                            name="itemDetails"
+                            onChange={handleInput}
+                            value={menuItemInput.itemDetails}
+                        />
+                        <ItemNameInput
+                            type="text"
+                            placeholder="Item Price"
+                            name="itemPrice"
+                            onChange={handleInput}
+                            value={menuItemInput.itemPrice}
+                        />
+                        <AddBtn>Add to Menu</AddBtn>
+                        <CloseModalBtn onClick={() => setModalIsOpen(false)}>Go Back</CloseModalBtn>
+                    </InputsContainer>
                 </form>
-                <CloseModalBtn onClick={() => setModalIsOpen(false)}>Go Back</CloseModalBtn>
             </Modal>
         </div>
     )
@@ -110,41 +107,70 @@ export const AddMenuModal = ({ setItemData }) => {
 
 
 const ItemNameInput = styled.input`
-width: 200px;
-margin-left: 160px;
-margin-top: 8px;
-height: 20px;
+width: 400px;
+margin: 15px;
+height: 30px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 10px;
 `;
 
 const ItemInfoInput = styled.input`
-width: 200px;
-margin-left: 160px;
+width: 400px;
+margin: 15px;
 margin-top: 8px;
 height: 70px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 10px;
+`;
+
+const AddItemBtn = styled.button`
+width: 130px;
+height: 35px;
+border-radius: 10px;
+background: white;
+margin-left: 50px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 10px;
+margin-left: 90px;
 `;
 
 const AddBtn = styled.button`
 height: 40px;
-width: 120px;
+width: 150px;
 border-radius: 10px;
 background: #4a7b9d;
 color: #fff;
-`
-
-const AddItemBtn = styled.button`
-height: 40px;
-width: 140px;
-margin: 50px 0 0 270px;  
-margin-left: 550px;
-border-radius: 10px;
-background: #4a7b9d;
-color: #fff;
+margin: 15px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 12px;
 `;
+
 
 const CloseModalBtn = styled.button`
 height: 40px;
-width: 120px;
+width: 150px;
 border-radius: 10px;
 background: #4a7b9d;
 color: #fff;
+margin: 5px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 12px;
+`;
+const InputsContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+`
+
+const ModalHeader = styled.h2`
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 23px;
+color: black;
 `

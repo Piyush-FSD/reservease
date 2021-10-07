@@ -25,36 +25,34 @@ export const Homepage = () => {
 
 const Container = styled.div`
 position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    height: 50vh;
-    background: #000;
+display: flex;
+align-items: center;
+width: 100%;
+justify-content: center;
+flex-direction: column;
+text-align: center;
+height: 50vh;
+background: #000;
 `;
 
 const WelcomeMsg = styled.h2`
-    font-weight: 500;
-    color: #f6b210;
-    -webkit-text-decoration: none;
-    text-decoration: none;
-    margin-left: 15px;
-    padding: 0 35px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 2em;
+font-weight: 500;
+color: #f6b210;
+text-decoration: none;
+margin-left: 15px;
+padding: 0 35px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 2em;
 `;
 
 const Ordering = styled.h2`
-    font-weight: 500;
-    color: #fff;
-    -webkit-text-decoration: none;
-    text-decoration: none;
-    margin-left: 15px;
-    padding: 0 35px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 1.3em;
+font-weight: 500;
+color: #fff;
+text-decoration: none;
+margin-left: 15px;
+padding: 0 35px;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 1.3em;
 `;

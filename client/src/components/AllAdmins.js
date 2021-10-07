@@ -71,6 +71,7 @@ justify-content: space-evenly;
 const LinksContainer = styled.div`
 width: calc(25% - 200px);
 margin: 0 100px;
+width: 200px;
 `;
 
 const AllHostsHeader = styled.h1`
