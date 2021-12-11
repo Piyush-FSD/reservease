@@ -10,20 +10,23 @@ import { apiUrl } from '../urls';
 export const SearchBar = () => {
     const [searchResults, setSearchResults] = useState([]);
     const [value, setValue] = useState("");
-    const [filteredInput, setFilteredInput] = useState([])
+    const [filteredInput, setFilteredInput] = useState([]);
 
     // business's information fetch
     useEffect(() => {
         const getBusNames = async () => {
             const response = await fetch(`${apiUrl}/search/results`)
             const data = await response.json();
+            console.log(data, 'dataa ')
 
-            setSearchResults(data.data.map((item) => {
-                return { busName: item.busName, userId: item.userId }
-            }))
+            // setSearchResults(data.data.map((item) => {
+            //     return { busName: item.busName, userId: item.userId }
+            // }))
         }
         getBusNames();
     }, [])
+
+    // console.log(searchResults, 'search res')
 
 
     // filter through business names
@@ -41,33 +44,35 @@ export const SearchBar = () => {
     }, [value, searchResults])
 
     return (
-        <Container>
-            {/* <CgSearch /> */}
-            <SearchInput
-                type="text"
-                placeholder="Search here"
-                onChange={(event) => setValue(event.target.value)}
-            />
-            {filteredInput.length !== 0 && <SearchContainer>
-                <>
-                    <UnorderedList>
-                        {filteredInput.map((item, index) => {
-                            return (
-                                <DetailLink key={index} to={`user/menu/${item.userId}`}>
-                                    <SuggestionList>
-                                        {item.busName.slice(0, value.length)}
-                                        <Result>
-                                            {item.busName.slice(value.length)}
-                                        </Result>
-                                        {/* {" "} */}
-                                    </SuggestionList>
-                                </DetailLink>
-                            )
-                        })}
-                    </UnorderedList>
-                </>
-            </SearchContainer>}
-        </Container>
+        // <Container>
+        //     {/* <CgSearch /> */}
+        //     <SearchInput
+        //         type="text"
+        //         placeholder="Search here"
+        //         onChange={(event) => setValue(event.target.value)}
+        //     />
+        //     {filteredInput.length !== 0 && <SearchContainer>
+        //         <>
+        //             <UnorderedList>
+        //                 {filteredInput.map((item, index) => {
+        //                     return (
+        //                         <DetailLink key={index} to={`user/menu/${item.userId}`}>
+        //                             <SuggestionList>
+        //                                 {item.busName.slice(0, value.length)}
+        //                                 <Result>
+        //                                     {item.busName.slice(value.length)}
+        //                                 </Result>
+        //                                 {/* {" "} */}
+        //                             </SuggestionList>
+        //                         </DetailLink>
+        //                     )
+        //                 })}
+        //             </UnorderedList>
+        //         </>
+        //     </SearchContainer>}
+        // </Container>
+        <>
+        </>
     )
 };
 

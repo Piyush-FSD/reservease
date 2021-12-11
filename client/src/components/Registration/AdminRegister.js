@@ -51,23 +51,23 @@ export const AdminRegister = () => {
         })
         const data = await response.json();
         if (data.status === 200) {
+            setAdminRegistration({
+                busName: "",
+                firstName: "",
+                lastName: "",
+                email: "",
+                password: "",
+                address: "",
+                postalCode: "",
+                province: "",
+                city: "",
+                phone: "",
+                website: ""
+            });
+            formHistory.push("/");
+            toast("Successfully registered as a host!")
         }
-        setAdminRegistration({
-            busName: "",
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            address: "",
-            postalCode: "",
-            province: "",
-            city: "",
-            phone: "",
-            website: ""
-        });
-        formHistory.push("/");
-        toast("Successfully registered as a host!")
-    }
+    };
 
     return (
         <Wrapper>

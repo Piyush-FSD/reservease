@@ -11,7 +11,6 @@ import { UserMenu } from './components/UserMenu';
 import { About } from './components/About';
 import { AllAdmins } from './components/AllAdmins';
 import { Orders } from './components/Orders'
-
 import { SupremeTaco } from './SupremeTaco';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,10 +23,19 @@ export const App = () => {
   // state which will hold user's first name to display on homepage upon login
   const [userLoginData, setUserLoginData] = useState();
 
+  // state that will hold busName for header
+  const [adminLoginData, setAdminLoginData] = useState();
+
+
   useEffect(() => {
     const isUserLoggedIn = localStorage.getItem("userLoggedIn");
     if (isUserLoggedIn) {
       setUserLoginData(JSON.parse(isUserLoggedIn))
+    }
+
+    const isAdminLoggedIn = localStorage.getItem("adminLoggedIn");
+    if (isAdminLoggedIn) {
+      setAdminLoginData()
     }
   }, []);
 

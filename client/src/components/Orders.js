@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { apiUrl } from '../urls'
 
-
 export const Orders = (props) => {
     const { userId, admin } = props.userLoginData || {};
 
@@ -26,7 +25,7 @@ export const Orders = (props) => {
     }, [userId, admin]);
 
     // filter orders which have a items in them and not and map through them
-    const orderArr = orders && orders.filter(item => item.order).map(item => ({ order: item.order, userId: item.userId, status: item.status, _id: item._id }))
+    const orderArr = orders && orders.filter((item) => item.order).map(item => ({ order: item.order, userId: item.userId, status: item.status, _id: item._id }))
 
 
     // PATCH - update order status

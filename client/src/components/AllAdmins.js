@@ -3,14 +3,13 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { apiUrl } from '../urls'
 
-
-
 export const AllAdmins = () => {
     const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         const getBusNames = async () => {
-            const response = await fetch(`${apiUrl}/search/results`)
+            const response = await fetch(`${apiUrl}/search/results`);
+            console.log(response, 'res pon ')
             const data = await response.json();
 
             setSearchResults(data.data.map((item) => {
