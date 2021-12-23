@@ -42,7 +42,7 @@ export const AddMenuModal = ({ setItemData }) => {
         const storageData = JSON.parse(localStorage.getItem("userLoggedIn"));
 
         // data to send to backend (menu info & image)
-        const payload = { ...menuItemInput, image: previewSource, ...storageData }
+        const payload = { ...menuItemInput, itemImage: previewSource, ...storageData }
 
         const response = await fetch(`${apiUrl}/menu/add`, {
             method: 'POST',

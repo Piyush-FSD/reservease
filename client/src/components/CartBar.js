@@ -20,22 +20,21 @@ export const CartBar = (userLoginData) => {
     const handleSubmitOrder = async (event) => {
         event.preventDefault();
 
-        const userIdStorageInfo = JSON.parse(localStorage.getItem("userLoggedIn"));
-        const userId = userIdStorageInfo.userId;
+        const userInfo = JSON.parse(localStorage.getItem("userLoggedIn"));
 
-        const adminIdStorageInfo = sessionStorage.getItem("adminId");
+        const businessId = sessionStorage.getItem("adminId");
 
-        if (!adminIdStorageInfo) return;
+        if (!businessId) return;
 
         // initial order status when order is placed
-        const status = 'order placed';
+        const status = 'Order Placed';
 
         const response = await fetch(`${apiUrl}/order`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ adminIdStorageInfo, userId, state, status: status })
+            body: JSON.stringify({ businessId, userId: userInfo._id, orders: state.orders, status })
         });
         const result = await response.json();
         if (result.status === 201) {

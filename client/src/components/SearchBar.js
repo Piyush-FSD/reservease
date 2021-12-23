@@ -6,73 +6,73 @@ import { apiUrl } from '../urls';
 // import { UserMenu } from './UserMenu';
 // import { CgSearch } from 'react-icons/cg';
 
+function getBusinesses(oldSearchValue) {
+
+    return function search(newSearchValue) {
+
+        setTimeout(async () => {
+
+            if (oldSearchValue === newSearchValue) {
+                const response = await fetch(`${apiUrl}/searchResults?prefix=${oldSearchValue}`)
+                const searchData = await response.json();
+
+                return searchData;
+                // setSearchResults(searchData.data.map((result) => {
+                //     //TODO change userID
+                //     return { busName: result.busName, userId: result.userId }
+                // }))
+            }
+        }, 2000);
+    }
+
+}
 // search bar to display all Businesses
 export const SearchBar = () => {
     const [searchResults, setSearchResults] = useState([]);
     const [value, setValue] = useState("");
-    const [filteredInput, setFilteredInput] = useState([]);
 
     // business's information fetch
     useEffect(() => {
-        const getBusNames = async () => {
-            const response = await fetch(`${apiUrl}/search/results`)
-            const data = await response.json();
-            console.log(data, 'dataa ')
 
-            // setSearchResults(data.data.map((item) => {
-            //     return { busName: item.busName, userId: item.userId }
-            // }))
-        }
-        getBusNames();
-    }, [])
+        console.log('inside useffect')
 
-    // console.log(searchResults, 'search res')
-
-
-    // filter through business names
-    // --> used below to map and return matched results
-    useEffect(() => {
-
-        if (searchResults.length === 0) return;
         if (!value) return;
 
-        const filteredValue = searchResults.filter((item) => {
-            return item.busName.toLowerCase().includes(value.toLowerCase());
-        })
+        const searchIt = getBusinesses(value);
 
-        setFilteredInput(filteredValue)
-    }, [value, searchResults])
+        searchIt(value)
+
+    }, [value])
 
     return (
-        // <Container>
-        //     {/* <CgSearch /> */}
-        //     <SearchInput
-        //         type="text"
-        //         placeholder="Search here"
-        //         onChange={(event) => setValue(event.target.value)}
-        //     />
-        //     {filteredInput.length !== 0 && <SearchContainer>
-        //         <>
-        //             <UnorderedList>
-        //                 {filteredInput.map((item, index) => {
-        //                     return (
-        //                         <DetailLink key={index} to={`user/menu/${item.userId}`}>
-        //                             <SuggestionList>
-        //                                 {item.busName.slice(0, value.length)}
-        //                                 <Result>
-        //                                     {item.busName.slice(value.length)}
-        //                                 </Result>
-        //                                 {/* {" "} */}
-        //                             </SuggestionList>
-        //                         </DetailLink>
-        //                     )
-        //                 })}
-        //             </UnorderedList>
-        //         </>
-        //     </SearchContainer>}
-        // </Container>
-        <>
-        </>
+        <Container>
+            {/* <CgSearch /> */}
+            <SearchInput
+                type="text"
+                placeholder="Search here"
+                onChange={(event) => setValue(event.target.value)}
+            />
+            {searchResults.length !== 0 && <SearchContainer>
+                <>
+                    <UnorderedList>
+                        {searchResults.map((item, index) => {
+                            return (
+                                <DetailLink key={index} to={`user/menu/${item.userId}`}>
+                                    <SuggestionList>
+                                        {item.busName.slice(0, value.length)}
+                                        <Result>
+                                            {item.busName.slice(value.length)}
+                                        </Result>
+                                        {/* {" "} */}
+                                    </SuggestionList>
+                                </DetailLink>
+                            )
+                        })}
+                    </UnorderedList>
+                </>
+            </SearchContainer>
+            }
+        </Container>
     )
 };
 

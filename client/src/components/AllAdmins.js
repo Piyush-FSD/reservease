@@ -9,7 +9,6 @@ export const AllAdmins = () => {
     useEffect(() => {
         const getBusNames = async () => {
             const response = await fetch(`${apiUrl}/search/results`);
-            console.log(response, 'res pon ')
             const data = await response.json();
 
             setSearchResults(data.data.map((item) => {

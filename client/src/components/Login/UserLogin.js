@@ -12,9 +12,6 @@ export const UserLogin = ({ userLoginData, setUserLoginData, userLogin, setUserL
         const name = event.target.name;
         const value = event.target.value;
 
-        console.log(name, 'name name name ');
-        console.log(value, 'val val val')
-
         setUserLogin({ ...userLogin, [name]: value })
     };
 

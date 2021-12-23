@@ -31,7 +31,9 @@ export const App = () => {
     const isUserLoggedIn = localStorage.getItem("userLoggedIn");
     if (isUserLoggedIn) {
       setUserLoginData(JSON.parse(isUserLoggedIn))
-    }
+    };
+
+    console.log(userLoginData, 'is the user loggedin?')
 
     const isAdminLoggedIn = localStorage.getItem("adminLoggedIn");
     if (isAdminLoggedIn) {
@@ -43,7 +45,6 @@ export const App = () => {
   const [showCart, setShowCart] = useState(false);
   // track onClick in [showCart] based on true/false toggle
   useEffect(() => { }, [showCart]);
-
 
   return (
 

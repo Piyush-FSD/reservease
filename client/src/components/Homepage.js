@@ -2,8 +2,6 @@ import React from "react";
 import styled from 'styled-components';
 import { SearchBar } from './SearchBar';
 // import homepage from '../Logo/homepage.jpg'
-// import homepage from '../Logo/homepage.jpg'
-
 
 export const Homepage = () => {
     return (

@@ -24,12 +24,10 @@ width: 100%;
 display: inline-block;
 text-align: center;
 
-
 @media screen and (max-width: 767px) {
     overflow: hidden;
     width: 100%;
 }
-
 `;
 
 const NavLinks = styled(Link)`

@@ -5,6 +5,7 @@ import { apiUrl } from '../urls'
 
 export const Orders = (props) => {
     const { userId, admin } = props.userLoginData || {};
+    console.log(userId, ' user IDDDDD')
 
     // inital state which will hold users orders
     const [orders, setOrders] = useState(null);
@@ -14,11 +15,11 @@ export const Orders = (props) => {
     useEffect(() => {
         if (typeof admin !== "boolean") return;
         if (admin) {
-            fetch(`${apiUrl}/order/all/${userId}`)
+            fetch(`${apiUrl}/order/${userId}`)
                 .then((res) => res.json())
                 .then((data) => setOrders(data.data))
         } else {
-            fetch(`${apiUrl}/order/info/${userId}`)
+            fetch(`${apiUrl}/order/${userId}`)
                 .then((res) => res.json())
                 .then((data) => setOrders(data.data))
         }
